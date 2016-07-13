@@ -8,9 +8,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.gsfh.myteamwork.vmovie.fragment.MainFragment;
 import java.util.ArrayList;
@@ -22,6 +23,10 @@ public class MainActivity extends AppCompatActivity {
      */
     private ArrayList<Fragment> fragmentList;
     private PopupWindow popupWindow;
+    private RadioGroup radioGroup;
+    private RadioButton[] rbArray;
+    private int curIndex;
+    private int preIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +35,21 @@ public class MainActivity extends AppCompatActivity {
 
         initView();
         initData();
+        initListener();
     }
 
     private void initView() {
+
+        //初始化RadioGroup
+        View windowView = LayoutInflater.from(this).inflate(R.layout.slide_window,null);
+        radioGroup = (RadioGroup) windowView.findViewById(R.id.slide_guide_rb);
+
+        rbArray = new RadioButton[radioGroup.getChildCount()];
+
+        for (int i = 0; i < rbArray.length; i++) {
+
+            rbArray[i] = (RadioButton) radioGroup.getChildAt(i);
+        }
 
     }
 
@@ -62,14 +79,42 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void initListener() {
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                for(int i=0;i<rbArray.length;i++){
+
+                    if(checkedId == rbArray[i].getId()){
+                        switchFragment(i);
+                    }
+                }
+            }
+        });
+    }
+
     /**
      * 切换Fragment
      */
-    public void switchFragment(){
+    public void switchFragment(int i){
+        //当前
+        curIndex = i;
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
 
-//        FragmentManager manager = getSupportFragmentManager();
-//        FragmentTransaction transaction = manager.beginTransaction();
+        Fragment cur_fragment = fragmentList.get(curIndex);
+        Fragment pre_fragment = fragmentList.get(preIndex);
+        if(!cur_fragment.isAdded()){
 
+            transaction.hide(pre_fragment).add(R.id.fl_container, cur_fragment);
+        }else{
+            transaction.hide(pre_fragment).show(cur_fragment);
+        }
+        transaction.commit();
+        //保留上一个位置信息
+        preIndex=curIndex;
 
     }
 
@@ -90,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
 
         View contentView = LayoutInflater.from(this).inflate(R.layout.slide_window,null);
 
+        radioGroup.check(preIndex);
+
         popupWindow = new PopupWindow(contentView,
                 WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT,true);
 
@@ -97,6 +144,18 @@ public class MainActivity extends AppCompatActivity {
 
         popupWindow.showAtLocation(view, Gravity.CENTER,0,0);
 
+    }
+
+    /**
+     * 点击事件，关闭弹出窗口
+     * @param view
+     */
+    public void closeWindow(View view){
+
+        if (null != popupWindow && popupWindow.isShowing()){
+
+            popupWindow.dismiss();
+        }
     }
 
     @Override

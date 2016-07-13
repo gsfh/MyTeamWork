@@ -52,34 +52,53 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8">
+        android:layout_weight="8"
+        android:orientation="vertical">
 
         <RadioGroup
+            android:id="@+id/slide_guide_rb"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
             android:orientation="vertical">
             <RadioButton
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:button="@null"
                 android:text="首页"
                 android:textColor="@color/slide_text_color_home"
                 android:drawableLeft="@drawable/select_slide_main"/>
             <RadioButton
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:button="@null"
                 android:text="系列"
                 android:textColor="@color/slide_text_color_home"
                 android:drawableLeft="@drawable/select_slide_series"/>
             <RadioButton
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:button="@null"
                 android:text="幕后"
                 android:textColor="@color/slide_text_color_home"
                 android:drawableLeft="@drawable/select_slide_backstage"/>
         </RadioGroup>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/slide_close_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/side_close"
+                android:onClick="closeWindow"/>
+        </RelativeLayout>
     </LinearLayout>
 
 </LinearLayout>
