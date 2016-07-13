@@ -13,7 +13,12 @@ import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.gsfh.myteamwork.vmovie.fragment.BackStageDetailFragment;
+import com.gsfh.myteamwork.vmovie.fragment.BackStageFragment;
+import com.gsfh.myteamwork.vmovie.fragment.ChannelFragment;
 import com.gsfh.myteamwork.vmovie.fragment.MainFragment;
+import com.gsfh.myteamwork.vmovie.fragment.SeriesFragment;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -72,10 +77,16 @@ public class MainActivity extends AppCompatActivity {
 
         //在此创建Fragment
         Fragment fragment1 = new MainFragment();
+        Bundle bundle=new Bundle();
+     //   Fragment fragment1 =  ;
 
         fragmentList = new ArrayList<>();
         //在此添加Fragment
-        fragmentList.add(fragment1);
+       fragmentList.add(BackStageFragment.newInstance(bundle));
+//        fragmentList.add(ChannelFragment.newInstance(bundle));//第一页右边硬编码的，数据都没解析
+      //  fragmentList.add(fragment1);//第二页已经调好，按钮暂时没写，订阅人数字体有差异，
+        fragmentList.add(SeriesFragment.newInstance(bundle));//第二页已经调好，按钮暂时没写，订阅人数字体有差异，
+        fragmentList.add(SeriesFragment.newInstance(bundle));//第二页已经调好，按钮暂时没写，订阅人数字体有差异，
 
     }
 
