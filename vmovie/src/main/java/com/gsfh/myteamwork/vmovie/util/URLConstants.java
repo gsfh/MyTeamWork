@@ -5,6 +5,8 @@ package com.gsfh.myteamwork.vmovie.util;
  */
 public class URLConstants {
 
+      public static final String MAIN_BANNER_URL = "http://app.vmoiver.com/apiv3/index/getBanner";
+
       //系列    post
       public static String  URL_SERIES ="http://app.vmoiver.com/apiv3/series/getList";
 

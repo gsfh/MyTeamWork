@@ -11,10 +11,8 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.gsfh.myteamwork.vmovie.R;
-import com.gsfh.myteamwork.vmovie.adapter.BackStageDetailLvAdapter;
 import com.gsfh.myteamwork.vmovie.adapter.SeriesLvAdapter;
-import com.gsfh.myteamwork.vmovie.been.BeenBackStage;
-import com.gsfh.myteamwork.vmovie.been.BeenSeries;
+import com.gsfh.myteamwork.vmovie.bean.SeriesBean;
 import com.gsfh.myteamwork.vmovie.util.IOKCallBack;
 import com.gsfh.myteamwork.vmovie.util.OkHttpTool;
 import com.gsfh.myteamwork.vmovie.util.URLConstants;
@@ -31,7 +29,7 @@ public class SeriesFragment extends Fragment {
    //需要数据
    private Context mContext;
 
-    private List<BeenSeries.DataBean> mList =new ArrayList<>();;
+    private List<SeriesBean.DataBean> mList =new ArrayList<>();;
    //需求控件
     private ListView mListView;
     private SeriesLvAdapter mLVAdapter;
@@ -92,7 +90,7 @@ public class SeriesFragment extends Fragment {
             public void success(String result) {
                 if (null != result) {
                     Gson gson = new Gson();
-                    BeenSeries beenSeries = gson.fromJson(result, BeenSeries.class);
+                    SeriesBean beenSeries = gson.fromJson(result, SeriesBean.class);
                     mList.addAll(beenSeries.getData());
 
                 }

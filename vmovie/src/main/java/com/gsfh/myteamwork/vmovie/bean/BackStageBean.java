@@ -1,4 +1,4 @@
-package com.gsfh.myteamwork.vmovie.been;
+package com.gsfh.myteamwork.vmovie.bean;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import java.util.List;
  * 幕后页面需要的所有数据been 不含刷新数据
  * Created by admin on 2016/7/13.
  */
-public class BeenBackStage {
+public class BackStageBean {
 
 
     /**

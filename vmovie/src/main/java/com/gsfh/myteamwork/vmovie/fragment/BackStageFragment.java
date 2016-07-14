@@ -1,12 +1,10 @@
 package com.gsfh.myteamwork.vmovie.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +12,10 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.gsfh.myteamwork.vmovie.adapter.BackStageVPAdapter;
 import com.gsfh.myteamwork.vmovie.R;
-import com.gsfh.myteamwork.vmovie.been.BeenBackStageTitle;
+import com.gsfh.myteamwork.vmovie.bean.BackStageTitleBean;
 import com.gsfh.myteamwork.vmovie.util.IOKCallBack;
 import com.gsfh.myteamwork.vmovie.util.OkHttpTool;
 import com.gsfh.myteamwork.vmovie.util.URLConstants;
-import com.gsfh.myteamwork.vmovie.widget.SlidingTabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +114,7 @@ public class BackStageFragment extends Fragment {
             public void success(String result) {
                 if(null!=result){
                     Gson gson=new Gson();
-                    BeenBackStageTitle beenBackStageTitle=gson.fromJson(result,BeenBackStageTitle.class);
+                    BackStageTitleBean beenBackStageTitle=gson.fromJson(result,BackStageTitleBean.class);
                    for (int i=0;i<beenBackStageTitle.getData().size();i++){
                        tablist.add(beenBackStageTitle.getData().get(i).getCatename()+"   |");
                     tabmap.add(beenBackStageTitle.getData().get(i).getCateid());}
@@ -142,7 +139,7 @@ public class BackStageFragment extends Fragment {
             bundle.putStringArrayList("list", tablist);
             bundle.putInt("index", i);
             bundle.putStringArrayList("map", tabmap);
-            fragmentList.add(BackStageDetailFragment.newInstance(bundle));
+            fragmentList.add(BackStageSortFragment.newInstance(bundle));
 
         }
 

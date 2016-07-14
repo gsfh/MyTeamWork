@@ -13,9 +13,7 @@ import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.gsfh.myteamwork.vmovie.fragment.BackStageDetailFragment;
 import com.gsfh.myteamwork.vmovie.fragment.BackStageFragment;
-import com.gsfh.myteamwork.vmovie.fragment.ChannelFragment;
 import com.gsfh.myteamwork.vmovie.fragment.MainFragment;
 import com.gsfh.myteamwork.vmovie.fragment.SeriesFragment;
 

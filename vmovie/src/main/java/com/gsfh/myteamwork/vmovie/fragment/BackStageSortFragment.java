@@ -3,10 +3,7 @@ package com.gsfh.myteamwork.vmovie.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +11,8 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.gsfh.myteamwork.vmovie.R;
-import com.gsfh.myteamwork.vmovie.adapter.BackStageDetailLvAdapter;
-import com.gsfh.myteamwork.vmovie.adapter.BackStageVPAdapter;
-import com.gsfh.myteamwork.vmovie.been.BeenBackStage;
-import com.gsfh.myteamwork.vmovie.been.BeenBackStageTitle;
+import com.gsfh.myteamwork.vmovie.adapter.BackStageSortLvAdapter;
+import com.gsfh.myteamwork.vmovie.bean.BackStageBean;
 import com.gsfh.myteamwork.vmovie.util.IOKCallBack;
 import com.gsfh.myteamwork.vmovie.util.OkHttpTool;
 import com.gsfh.myteamwork.vmovie.util.URLConstants;
@@ -30,7 +25,7 @@ import java.util.List;
  * 幕后文章页面  第三页
  * Created by admin on 2016/7/13.
  */
-public class BackStageDetailFragment extends Fragment {
+public class BackStageSortFragment extends Fragment {
    //需要数据
    private Context mContext;
     private int  pageIndex;
@@ -38,9 +33,9 @@ public class BackStageDetailFragment extends Fragment {
     private ArrayList<String> compassdatamap=new ArrayList<>();
    //需求控件
     private ListView mListView;
-    private BackStageDetailLvAdapter mLVAdapter;
+    private BackStageSortLvAdapter mLVAdapter;
     //创建fragment需要进入适配器的数据
-    List<BeenBackStage.DataBean>datalist=new ArrayList<>();
+    List<BackStageBean.DataBean>datalist=new ArrayList<>();
 
 
     /**
@@ -48,9 +43,9 @@ public class BackStageDetailFragment extends Fragment {
      * @param args
      * @return
      */
-    public static BackStageDetailFragment newInstance(Bundle args){
+    public static BackStageSortFragment newInstance(Bundle args){
 
-          BackStageDetailFragment fragment=new BackStageDetailFragment();
+          BackStageSortFragment fragment=new BackStageSortFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -85,7 +80,7 @@ public class BackStageDetailFragment extends Fragment {
      * 绑定适配器
      */
     private void bindAdapter() {
-        mLVAdapter=new BackStageDetailLvAdapter(mContext,datalist);
+        mLVAdapter=new BackStageSortLvAdapter(mContext,datalist);
         mListView.setAdapter(mLVAdapter);
     }
 
@@ -100,7 +95,7 @@ public class BackStageDetailFragment extends Fragment {
             public void success(String result) {
                 if (null != result) {
                     Gson gson = new Gson();
-                    BeenBackStage beenBackStage = gson.fromJson(result, BeenBackStage.class);
+                    BackStageBean beenBackStage = gson.fromJson(result, BackStageBean.class);
                   //动态更改数据
                   chooseData(beenBackStage);
                     mLVAdapter.notifyDataSetChanged();
@@ -125,7 +120,7 @@ public class BackStageDetailFragment extends Fragment {
      * @ 董传亮
      * 进入Fragment 的数据
      */
-    private void chooseData( BeenBackStage beenBackStage) {
+    private void chooseData( BackStageBean beenBackStage) {
         if(pageIndex==0) {
             datalist.clear();
             datalist.addAll(beenBackStage.getData());

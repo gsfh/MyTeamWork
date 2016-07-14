@@ -1,11 +1,11 @@
-package com.gsfh.myteamwork.vmovie.been;
+package com.gsfh.myteamwork.vmovie.bean;
 
 import java.util.List;
 
 /**
  * Created by admin on 2016/7/13.
  */
-public class BeenBackStageTitle {
+public class BackStageTitleBean {
     /**
      * status : 0
      * msg : OK

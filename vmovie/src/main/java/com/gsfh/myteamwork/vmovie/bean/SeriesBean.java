@@ -1,4 +1,4 @@
-package com.gsfh.myteamwork.vmovie.been;
+package com.gsfh.myteamwork.vmovie.bean;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import java.util.List;
  * 系列的总体数据been
  * Created by admin on 2016/7/13.
  */
-public class BeenSeries {
+public class SeriesBean {
     /**
      * status : 0
      * msg : ok

@@ -5,12 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gsfh.myteamwork.vmovie.R;
-import com.gsfh.myteamwork.vmovie.been.BeenSeries;
+import com.gsfh.myteamwork.vmovie.bean.SeriesBean;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -21,10 +20,10 @@ import java.util.List;
  */
 public class SeriesLvAdapter extends BaseAdapter {
     private Context mContext;
-    private List<BeenSeries.DataBean> mList=new ArrayList<>();
+    private List<SeriesBean.DataBean> mList=new ArrayList<>();
 
     //  final int a=View.TEXT_ALIGNMENT_CENTER;
-    public SeriesLvAdapter(Context context, List<BeenSeries.DataBean> mList) {
+    public SeriesLvAdapter(Context context, List<SeriesBean.DataBean> mList) {
         this.mList = mList;
         this.mContext = context;
 

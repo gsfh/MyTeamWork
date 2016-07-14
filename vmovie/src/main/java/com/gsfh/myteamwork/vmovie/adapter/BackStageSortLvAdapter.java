@@ -1,8 +1,6 @@
 package com.gsfh.myteamwork.vmovie.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +10,7 @@ import android.widget.TextView;
 
 
 import com.gsfh.myteamwork.vmovie.R;
-import com.gsfh.myteamwork.vmovie.been.BeenBackStage;
+import com.gsfh.myteamwork.vmovie.bean.BackStageBean;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -20,12 +18,12 @@ import java.util.List;
 /**
  * Created by admin on 2016/7/7.
  */
-public class BackStageDetailLvAdapter extends BaseAdapter {
+public class BackStageSortLvAdapter extends BaseAdapter {
     private Context context;
-   private List<BeenBackStage.DataBean> mBeenlist;
+   private List<BackStageBean.DataBean> mBeenlist;
 
     //  final int a=View.TEXT_ALIGNMENT_CENTER;
-    public BackStageDetailLvAdapter(Context context, List<BeenBackStage.DataBean> datalist) {
+    public BackStageSortLvAdapter(Context context, List<BackStageBean.DataBean> datalist) {
         this.mBeenlist = datalist;
         this.context = context;
 
