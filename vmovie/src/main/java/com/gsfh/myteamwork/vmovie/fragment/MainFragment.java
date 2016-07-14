@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
@@ -14,6 +15,7 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.google.gson.Gson;
 import com.gsfh.myteamwork.vmovie.R;
+import com.gsfh.myteamwork.vmovie.bean.LatestBean;
 import com.gsfh.myteamwork.vmovie.bean.MainBannerBean;
 import com.gsfh.myteamwork.vmovie.util.IOKCallBack;
 import com.gsfh.myteamwork.vmovie.util.OkHttpTool;
@@ -31,6 +33,7 @@ public class MainFragment extends Fragment {
     private ConvenientBanner convenientBanner;
     private List<MainBannerBean.DataBean> bannerDataList = new ArrayList<>();
     private List<String> bannerUrlList = new ArrayList<>();
+    private List<LatestBean.DataBean> latestList = new ArrayList<>();
     private PullToRefreshExpandableListView listView;
 
     @Nullable
@@ -43,15 +46,41 @@ public class MainFragment extends Fragment {
         View bannerView = inflater.inflate(R.layout.main_header_view,null);
         convenientBanner = (ConvenientBanner) bannerView.findViewById(R.id.convenientBanner);
 
+        ExpandableListView reFreshListView = listView.getRefreshableView();
 
+//        reFreshListView.addHeaderView(convenientBanner);
+
+        initAdapter();
         initData();
 
         return view;
     }
 
+    private void initAdapter() {
+
+
+    }
+
     private void initData() {
 
-        OkHttpTool.newInstance().start(URLConstants.MAIN_BANNER_URL).callback(new IOKCallBack() {
+        OkHttpTool.newInstance().start(URLConstants.LATEST_URL).callback(new IOKCallBack() {
+            @Override
+            public void success(String result) {
+
+                if (null == result){
+                    return;
+                }
+
+                Gson gson = new Gson();
+                LatestBean latestBean = gson.fromJson(result,LatestBean.class);
+                latestList.addAll(latestBean.getData());
+
+//                String time =
+
+            }
+        });
+
+        OkHttpTool.newInstance().start(URLConstants.LATEST_BANNER_URL).callback(new IOKCallBack() {
             @Override
             public void success(String result) {
 
@@ -89,6 +118,7 @@ public class MainFragment extends Fragment {
 
 
     public class LocalImageHolderView implements Holder<Integer> {
+
         private ImageView imageView;
         @Override
         public View createView(Context context) {

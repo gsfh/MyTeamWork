@@ -9,9 +9,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.gsfh.myteamwork.vmovie.fragment.BackStageFragment;
 import com.gsfh.myteamwork.vmovie.fragment.MainFragment;
@@ -28,8 +30,9 @@ public class MainActivity extends AppCompatActivity {
     private PopupWindow popupWindow;
     private RadioGroup radioGroup;
     private RadioButton[] rbArray;
-    private int curIndex;
-    private int preIndex = 0;
+    private ImageView closeIv;
+    private int preFragmentTag = 0;
+    private ImageView sideSelectMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +46,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
 
-        //初始化RadioGroup
+        sideSelectMenu = (ImageView) findViewById(R.id.main_side_select_menu_iv);
+
         View windowView = LayoutInflater.from(this).inflate(R.layout.slide_window,null);
-        radioGroup = (RadioGroup) windowView.findViewById(R.id.slide_guide_rb);
+
+        closeIv = (ImageView) windowView.findViewById(R.id.slide_close_iv);
+        //初始化RadioGroup
+        radioGroup = (RadioGroup) windowView.findViewById(R.id.slide_guide_rg);
 
         rbArray = new RadioButton[radioGroup.getChildCount()];
 
@@ -75,20 +82,25 @@ public class MainActivity extends AppCompatActivity {
 
         //在此创建Fragment
         Fragment fragment1 = new MainFragment();
-        Bundle bundle=new Bundle();
-     //   Fragment fragment1 =  ;
 
         fragmentList = new ArrayList<>();
+
         //在此添加Fragment
-       fragmentList.add(BackStageFragment.newInstance(bundle));
-//        fragmentList.add(ChannelFragment.newInstance(bundle));//第一页右边硬编码的，数据都没解析
-      //  fragmentList.add(fragment1);//第二页已经调好，按钮暂时没写，订阅人数字体有差异，
-        fragmentList.add(SeriesFragment.newInstance(bundle));//第二页已经调好，按钮暂时没写，订阅人数字体有差异，
-        fragmentList.add(SeriesFragment.newInstance(bundle));//第二页已经调好，按钮暂时没写，订阅人数字体有差异，
+        fragmentList.add(fragment1);
+        Bundle bundle=new Bundle();
+        fragmentList.add(SeriesFragment.newInstance(bundle));
+        fragmentList.add(BackStageFragment.newInstance(bundle));
 
     }
 
     private void initListener() {
+
+        sideSelectMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showWindow(v);
+            }
+        });
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -97,43 +109,12 @@ public class MainActivity extends AppCompatActivity {
                 for(int i=0;i<rbArray.length;i++){
 
                     if(checkedId == rbArray[i].getId()){
-                        switchFragment(i);
+//                        switchFragment(i);
+                        close();
                     }
                 }
             }
         });
-    }
-
-    /**
-     * 切换Fragment
-     */
-    public void switchFragment(int i){
-        //当前
-        curIndex = i;
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-
-        Fragment cur_fragment = fragmentList.get(curIndex);
-        Fragment pre_fragment = fragmentList.get(preIndex);
-        if(!cur_fragment.isAdded()){
-
-            transaction.hide(pre_fragment).add(R.id.fl_container, cur_fragment);
-        }else{
-            transaction.hide(pre_fragment).show(cur_fragment);
-        }
-        transaction.commit();
-        //保留上一个位置信息
-        preIndex=curIndex;
-
-    }
-
-    /**
-     * slide_window的点击事件
-     * @param view
-     */
-    public void select(View view){
-
-        showWindow(view);
     }
 
     /**
@@ -144,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
         View contentView = LayoutInflater.from(this).inflate(R.layout.slide_window,null);
 
-        radioGroup.check(preIndex);
+//        radioGroup.check();
 
         popupWindow = new PopupWindow(contentView,
                 WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT,true);
@@ -155,12 +136,68 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    public void toHome(View view){
+
+        switchFragment(0);
+        close();
+    }
+
+    public void toSeries(View view){
+
+        switchFragment(1);
+        close();
+    }
+
+    public void toBackStage(View view){
+
+        switchFragment(2);
+        close();
+    }
+
+    /**
+     * 切换Fragment
+     */
+    public void switchFragment(int curFragmentTag){
+
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+
+        Fragment pre_fragment = fragmentList.get(0);
+        switch (preFragmentTag){
+            case 0:
+                pre_fragment = fragmentList.get(0);
+                break;
+            case 1:
+                pre_fragment = fragmentList.get(1);
+                break;
+            case 2:
+                pre_fragment = fragmentList.get(2);
+                break;
+        }
+
+        Fragment cur_fragment = fragmentList.get(curFragmentTag);
+        if(!cur_fragment.isAdded()){
+
+            transaction.hide(pre_fragment).add(R.id.fl_container, cur_fragment);
+        }else{
+            transaction.hide(pre_fragment).show(cur_fragment);
+        }
+        transaction.commit();
+
+        preFragmentTag = curFragmentTag;
+    }
+
     /**
      * 点击事件，关闭弹出窗口
      * @param view
      */
     public void closeWindow(View view){
 
+        close();
+    }
+
+    private void close() {
         if (null != popupWindow && popupWindow.isShowing()){
 
             popupWindow.dismiss();

@@ -56,35 +56,41 @@
         android:orientation="vertical">
 
         <RadioGroup
-            android:id="@+id/slide_guide_rb"
+            android:id="@+id/slide_guide_rg"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="3"
             android:orientation="vertical">
             <RadioButton
+                android:id="@+id/slide_guide_rb_home"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:button="@null"
                 android:text="首页"
                 android:textColor="@color/slide_text_color_home"
-                android:drawableLeft="@drawable/select_slide_main"/>
+                android:drawableLeft="@drawable/select_slide_main"
+                android:onClick="toHome"/>
             <RadioButton
+                android:id="@+id/slide_guide_rb_series"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:button="@null"
                 android:text="系列"
                 android:textColor="@color/slide_text_color_home"
-                android:drawableLeft="@drawable/select_slide_series"/>
+                android:drawableLeft="@drawable/select_slide_series"
+                android:onClick="toSeries"/>
             <RadioButton
+                android:id="@+id/slide_guide_rb_backstage"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:button="@null"
                 android:text="幕后"
                 android:textColor="@color/slide_text_color_home"
-                android:drawableLeft="@drawable/select_slide_backstage"/>
+                android:drawableLeft="@drawable/select_slide_backstage"
+                android:onClick="toBackStage"/>
         </RadioGroup>
 
         <RelativeLayout
