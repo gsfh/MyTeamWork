@@ -75,7 +75,7 @@ public class SeriesFragment extends Fragment {
      * 绑定适配器
      */
     private void bindAdapter() {
-        mLVAdapter=new SeriesLvAdapter(mContext,mList);
+        mLVAdapter=new SeriesLvAdapter(mContext,mList,getActivity());
         mListView.setAdapter(mLVAdapter);
     }
 
@@ -90,8 +90,8 @@ public class SeriesFragment extends Fragment {
             public void success(String result) {
                 if (null != result) {
                     Gson gson = new Gson();
-                    SeriesBean beenSeries = gson.fromJson(result, SeriesBean.class);
-                    mList.addAll(beenSeries.getData());
+                    SeriesBean seriesBean = gson.fromJson(result, SeriesBean.class);
+                    mList.addAll(seriesBean.getData());
 
                 }
                 mLVAdapter.notifyDataSetChanged();

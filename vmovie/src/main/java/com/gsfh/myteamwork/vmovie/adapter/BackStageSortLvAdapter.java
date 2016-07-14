@@ -49,12 +49,12 @@ public class BackStageSortLvAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final viewHoder hoder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_backstagedetail_lv_item, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_backstagesort_lv_item, parent, false);
             hoder = new viewHoder();
-            hoder.title = (TextView) convertView.findViewById(R.id.backstagedetail_title_show_tv);
-            hoder.share = (TextView) convertView.findViewById(R.id.backstagedetail_share_tv);
-            hoder.collect = (TextView) convertView.findViewById(R.id.backstagedetail_collect_tv);
-            hoder.imageView = (ImageView) convertView.findViewById(R.id.backstagedetail_iv);
+            hoder.title = (TextView) convertView.findViewById(R.id.backstagesort_title_show_tv);
+            hoder.share = (TextView) convertView.findViewById(R.id.backstagesort_share_tv);
+            hoder.collect = (TextView) convertView.findViewById(R.id.backstagesort_collect_tv);
+            hoder.imageView = (ImageView) convertView.findViewById(R.id.backstagesort_iv);
             convertView.setTag(hoder);
         } else {
             hoder = (viewHoder) convertView.getTag();

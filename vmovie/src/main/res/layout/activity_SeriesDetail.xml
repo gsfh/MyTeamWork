@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gsfh.myteamwork.vmovie.MainActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_backstagedetail_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimaryDark">
+
+        <ImageView
+            android:id="@+id/backstagedetail_back_im"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="15dp"
+            android:src="@drawable/abc_ab_back_alphai"
+            android:onClick="onClick"/>
+        <TextView
+            android:id="@+id/backstagedetail_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:text="幕后文章"/>
+        <ImageView
+            android:id="@+id/backstagedetail_share_iv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="15dp"
+            android:src="@drawable/video_lan_share"/>
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="播放器占位"
+        android:layout_weight="5"
+        />
+    <ListView
+        android:id="@+id/activity_seriesdetail_show_lv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"/>
+    <LinearLayout
+        android:id="@+id/ll_backstagedetail_buttom_bar2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimaryDark">
+
+        <ImageView
+            android:id="@+id/main_side_select_menu_iv2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="15dp"
+
+            android:src="@drawable/home_like"
+            android:onClick="onClick"/>
+        <ImageView
+            android:id="@+id/s22"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="15dp"
+            android:src="@drawable/movie_detail_bottom_share_icon"
+            android:onClick="onClick"/>
+        <TextView
+            android:id="@+id/main_title2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:text="幕后文章"/>
+        <ImageView
+            android:id="@+id/main_search_iv2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="15dp"
+            android:src="@drawable/video_lan_share"/>
+
+    </LinearLayout>
+</LinearLayout>

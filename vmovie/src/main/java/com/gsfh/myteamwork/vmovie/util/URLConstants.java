@@ -15,6 +15,16 @@ public class URLConstants {
       public static final String  URL_SERIES ="http://app.vmoiver.com/apiv3/series/getList";
 
 
+      //系列 详情小视屏    GET
+      public static final String  URL_SERIESDETAIL="http://bsy.qiniu.vmovier.vmoiver.com/5772693e88d92.mp4";
+
+
+
+
+
+
+
+
       //幕后文章
       public static final String  URL_BACKTITLE ="http://app.vmoiver.com/apiv3/backstage/getCate";
 
