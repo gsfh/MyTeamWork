@@ -13,10 +13,15 @@ public class URLConstants {
 
       //系列    post
       public static final String  URL_SERIES ="http://app.vmoiver.com/apiv3/series/getList";
+      public static final String  URL_SERIESVIEW ="http://app.vmoiver.com/apiv3/series/view";
+    //系列跳转进去后的视频分页列表
+    public static final String  URL_SERIESVEDIOLIST ="http://app.vmoiver.com/apiv3/series/getVideo";
+    //系列跳进去后的聊天列表
+      public static final String  URL_SERIESCOMMENT ="http://app.vmoiver.com/apiv3/comment/getLists";
 
 
-      //系列 详情小视屏    GET
-      public static final String  URL_SERIESDETAIL="http://bsy.qiniu.vmovier.vmoiver.com/5772693e88d92.mp4";
+
+
 
 
 

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="5dp"
+    android:paddingLeft="10dp"
+    android:paddingBottom="5dp">
+    <RelativeLayout
+        android:layout_width="150dp"
+        android:layout_height="90dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="centerCrop"
+            android:id="@+id/seriesdetailitem_lv_im"/>
+        <TextView
+            android:id="@+id/seriesdetailitem_playing_lv_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/colorwrite"
+            android:text="正在播放"/>
+        <TextView
+            android:id="@+id/seriesdetailitem_duration_lv_im"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorwrite"
+            android:text="10:10"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="2dp"
+            android:layout_marginRight="4dp"
+           />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="15dp"
+        android:layout_height="100dp"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/seriesdetailitem_title_lv_tv"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:textSize="14sp"
+            android:lines="2"
+            android:textColor="@color/colorblack"
+            android:text=" d"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="60dp"
+            android:text="更新时间:"
+            android:textSize="12sp"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"/>
+
+        <TextView
+            android:id="@+id/seriesdetailitem_update_lv_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="2015.6.18"
+            android:textSize="12sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+          />
+    </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
