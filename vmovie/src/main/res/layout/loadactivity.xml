@@ -6,7 +6,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/indicator_bg_top"
+        android:background="@drawable/login_bg"
         android:layout_weight="6">
         <Button
             android:layout_width="wrap_content"
@@ -78,13 +78,16 @@
         android:layout_weight="1">
         <Button
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:drawableTop="@drawable/login_icon3"/>
         <Button
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:drawableTop="@drawable/login_icon1"/>
         <Button
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:drawableTop="@drawable/login_icon2"/>
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"
