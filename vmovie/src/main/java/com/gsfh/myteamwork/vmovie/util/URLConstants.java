@@ -11,6 +11,9 @@ public class URLConstants {
       //首页最新
       public static final String LATEST_URL = "http://app.vmoiver.com/apiv3/post/getPostByTab";
 
+      //首页最新详情
+      public static final String LATEST_DETAIL_URL = "http://app.vmoiver.com/apiv3/post/view";
+
       //系列    post
       public static final String  URL_SERIES ="http://app.vmoiver.com/apiv3/series/getList";
       public static final String  URL_SERIESVIEW ="http://app.vmoiver.com/apiv3/series/view";

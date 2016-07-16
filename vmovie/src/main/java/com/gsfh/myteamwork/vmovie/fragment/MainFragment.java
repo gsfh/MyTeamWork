@@ -15,6 +15,7 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.google.gson.Gson;
 import com.gsfh.myteamwork.vmovie.R;
+import com.gsfh.myteamwork.vmovie.adapter.LatestAdapter;
 import com.gsfh.myteamwork.vmovie.bean.LatestBean;
 import com.gsfh.myteamwork.vmovie.bean.MainBannerBean;
 import com.gsfh.myteamwork.vmovie.util.IOKCallBack;
@@ -22,8 +23,12 @@ import com.gsfh.myteamwork.vmovie.util.OkHttpTool;
 import com.gsfh.myteamwork.vmovie.util.URLConstants;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by GSFH on 2016-7-13.
@@ -35,6 +40,10 @@ public class MainFragment extends Fragment {
     private List<String> bannerUrlList = new ArrayList<>();
     private List<LatestBean.DataBean> latestList = new ArrayList<>();
     private PullToRefreshExpandableListView listView;
+    private ExpandableListView reFreshListView;
+    private ArrayList<String> dateList = new ArrayList<>();
+    private Map<String,List<LatestBean.DataBean>> map = new LinkedHashMap<>();
+    private LatestAdapter latestAdapter;
 
     @Nullable
     @Override
@@ -46,9 +55,9 @@ public class MainFragment extends Fragment {
         View bannerView = inflater.inflate(R.layout.main_header_view,null);
         convenientBanner = (ConvenientBanner) bannerView.findViewById(R.id.convenientBanner);
 
-        ExpandableListView reFreshListView = listView.getRefreshableView();
+        reFreshListView = listView.getRefreshableView();
 
-//        reFreshListView.addHeaderView(convenientBanner);
+//        reFreshListView.addHeaderView(bannerView);
 
         initAdapter();
         initData();
@@ -58,11 +67,24 @@ public class MainFragment extends Fragment {
 
     private void initAdapter() {
 
+        latestAdapter = new LatestAdapter(getContext(),map,dateList);
+        reFreshListView.setAdapter(latestAdapter);
+
+//        设置ExpandableListView点击不收缩
+        reFreshListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                return true;
+            }
+        });
 
     }
 
     private void initData() {
 
+        /**
+         * 列表数据的网络请求
+         */
         OkHttpTool.newInstance().start(URLConstants.LATEST_URL).callback(new IOKCallBack() {
             @Override
             public void success(String result) {
@@ -75,11 +97,57 @@ public class MainFragment extends Fragment {
                 LatestBean latestBean = gson.fromJson(result,LatestBean.class);
                 latestList.addAll(latestBean.getData());
 
-//                String time =
+                long firstTime = latestList.get(0).getPublish_time();
+                SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
+                String firstDate = sdf.format(new Date(firstTime*1000));
+                //添加第一条日期到日期列表
+                dateList.add(firstDate);
+                //创建第一个内容列表
+                List<LatestBean.DataBean> childList = new ArrayList<>();
+                //添加第一条数据到map
+                map.put(firstDate,childList);
+                //遍历所有数据
+                for (int i = 0; i < latestList.size(); i++) {
+
+                    LatestBean.DataBean bean = latestList.get(i);
+                    long time = bean.getPublish_time();
+                    String date = sdf.format(new Date(time*1000));
+
+                    if (date.equals(firstDate)){
+                        //添加一个日期内的内容
+                        childList.add(bean);
+                    }else {
+                        //不同日期则创建一个新的内容列表
+                        childList = new ArrayList<>();
+                        //添加新的数据到map中
+                        map.put(date,childList);
+                        //添加新的内容数据
+                        childList.add(bean);
+                        //添加新的日期到日期列表
+                        dateList.add(date);
+                        firstDate = date;
+                    }
+
+                }
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        latestAdapter.notifyDataSetChanged();
+                        //默认所有的Group全部展开
+                        for (int i = 0; i < dateList.size(); i++) {
+                            reFreshListView.expandGroup(i);
+                        }
+                    }
+                });
 
             }
         });
 
+        /**
+         * 头部视图的网络数据请求
+         */
         OkHttpTool.newInstance().start(URLConstants.LATEST_BANNER_URL).callback(new IOKCallBack() {
             @Override
             public void success(String result) {

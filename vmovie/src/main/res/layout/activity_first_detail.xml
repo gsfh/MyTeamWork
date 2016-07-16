@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gsfh.myteamwork.vmovie.activity.FirstDetailActivity">
+
+    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+        android:id="@+id/custom_videoplayer_standard"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+
+    <com.github.lzyzsd.jsbridge.BridgeWebView
+        android:id="@+id/first_detail_webview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/custom_videoplayer_standard">
+    </com.github.lzyzsd.jsbridge.BridgeWebView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/first_detail_bottom_like_counts"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:gravity="center_vertical"
+            android:drawableLeft="@drawable/details_bottom_like"
+            android:text="43"/>
+        <TextView
+            android:id="@+id/first_detail_bottom_share_counts"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:gravity="center_vertical"
+            android:drawableLeft="@drawable/detail_bottom_share"
+            android:text="70"/>
+        <TextView
+            android:id="@+id/first_detail_bottom_comment_counts"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:gravity="center_vertical"
+            android:drawableLeft="@drawable/details_bottom_comment"
+            android:text="13"/>
+        <TextView
+            android:id="@+id/first_detail_bottom_cache"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:gravity="center_vertical"
+            android:drawableLeft="@drawable/details_bottom_cache"
+            android:text="缓存"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

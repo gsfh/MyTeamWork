@@ -1,5 +1,6 @@
 package com.gsfh.myteamwork.vmovie;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.gsfh.myteamwork.vmovie.activity.FirstDetailActivity;
 import com.gsfh.myteamwork.vmovie.fragment.BackStageFragment;
 import com.gsfh.myteamwork.vmovie.fragment.MainFragment;
 import com.gsfh.myteamwork.vmovie.fragment.SeriesFragment;
@@ -213,5 +215,12 @@ public class MainActivity extends AppCompatActivity {
         }else {
             super.onBackPressed();
         }
+    }
+
+    public void search(View view){
+
+        Intent intent = new Intent(MainActivity.this, FirstDetailActivity.class);
+        intent.putExtra("id","3958");
+        startActivity(intent);
     }
 }

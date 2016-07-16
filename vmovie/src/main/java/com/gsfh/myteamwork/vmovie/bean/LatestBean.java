@@ -82,7 +82,7 @@ public class LatestBean {
         private String image;
         private String rating;
         private String duration;
-        private String publish_time;
+        private long publish_time;
         private String like_num;
         private String share_num;
         private String request_url;
@@ -221,11 +221,11 @@ public class LatestBean {
             this.duration = duration;
         }
 
-        public String getPublish_time() {
+        public long getPublish_time() {
             return publish_time;
         }
 
-        public void setPublish_time(String publish_time) {
+        public void setPublish_time(long publish_time) {
             this.publish_time = publish_time;
         }
 

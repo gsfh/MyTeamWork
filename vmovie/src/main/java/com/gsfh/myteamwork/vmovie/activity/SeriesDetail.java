@@ -64,7 +64,7 @@ public class SeriesDetail extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_seriesdetail);
+        setContentView(R.layout.activity_series_detail);
         //c从上个页面获得数据
         initData();
         //初始化控件
