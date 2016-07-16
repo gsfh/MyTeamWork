@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
+import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.gsfh.myteamwork.vmovie.R;
 
 /**
@@ -14,7 +15,7 @@ import com.gsfh.myteamwork.vmovie.R;
  * Created by admin on 2016/7/14.
  */
 public class BackStageDetail extends AppCompatActivity {
-    private WebView webView;
+    private BridgeWebView webView;
     private String mURL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class BackStageDetail extends AppCompatActivity {
      * 初始化当前页面需要控件
      */
     private void initWebView() {
-        webView= (WebView) findViewById(R.id.activity_backstagedetail_webv);
+        webView= (BridgeWebView) findViewById(R.id.activity_backstagedetail_webv);
         webView.setWebChromeClient(new WebChromeClient(){
             @Override
             public void onProgressChanged(WebView view, int newProgress) {

@@ -3,21 +3,24 @@ package com.gsfh.myteamwork.vmovie.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.gsfh.myteamwork.vmovie.R;
 import com.gsfh.myteamwork.vmovie.adapter.SeriesDetailItemVPAdapter;
+import com.gsfh.myteamwork.vmovie.adapter.SeriesDetailitemLvAdapter;
 import com.gsfh.myteamwork.vmovie.adapter.SeriesSortLvAdapter;
 import com.gsfh.myteamwork.vmovie.bean.SeriesDetailBean;
 import com.gsfh.myteamwork.vmovie.fragment.SeriesDetailItemFragment;
 import com.gsfh.myteamwork.vmovie.util.URLConstants;
+import com.gsfh.myteamwork.vmovie.widget.SlidingTabLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,7 +39,7 @@ import okhttp3.Response;
  * 系列页面的详情内容
  * Created by admin on 2016/7/14.
  */
-public class SeriesDetail extends AppCompatActivity {
+public class SeriesDetail extends AppCompatActivity implements View.OnClickListener ,SeriesDetailitemLvAdapter.SeriesDetailItemListener {
     //展示的listView
     private ListView mlistView;
     private SeriesSortLvAdapter mSortAdapter;
@@ -48,7 +51,9 @@ public class SeriesDetail extends AppCompatActivity {
     //网络Post请求
     private OkHttpClient okHttpClient = new OkHttpClient();
     //切换展示页
-    private TabLayout mTabLayout;
+    private SlidingTabLayout mSlidingTabLayout;
+    /*每个 tab 的 item*/
+    //private List<PagerItem> mTab = new ArrayList<>() ;
     private ViewPager mViewPager;
     private SeriesDetailItemVPAdapter mVPAdapter;
     private ArrayList<String>tabNameList=new ArrayList<>();
@@ -60,6 +65,7 @@ public class SeriesDetail extends AppCompatActivity {
     private TextView textUpdate;
     private TextView textType;
     private TextView textDetai;
+    private TextView textshowall;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,23 +75,73 @@ public class SeriesDetail extends AppCompatActivity {
         initData();
         //初始化控件
         initView();
+        //监听事件
+        initListener();
+
     }
 
     /**
      * @ 董传亮
-     * 初始化控件
+     * 所有监听事件
+     */
+    private void initListener() {
+        //showall按钮与detail交互 part2
+        initDetailListener();
+    }
+
+    /**
+     * @ 董传亮
+     * showall按钮与detail交互 part2
+     */
+    private void initDetailListener() {
+
+        textshowall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String detaik= (String) textDetai.getText();
+                if(detaik==null){
+                return;
+                }
+                if(detaik.length()>60 && textshowall.getText().toString().equals("查看全部")){
+                    textDetai.setLines(10);
+                    textshowall.setText("收起简介");
+                    textshowall.setCompoundDrawables(null,null,getResources().getDrawable(R.drawable.dropup),null);
+                }else{
+                    textDetai.setLines(2);
+                    textshowall.setText("查看全部");
+                    textshowall.setCompoundDrawables(null,null,getResources().getDrawable(R.drawable.dropdown),null);
+                }
+            }
+        });
+
+    }
+
+    /**
+     * @ 董传亮
+     * 初始化控件 所有控件
      */
     private void initView() {
 
-        //信息部分 part1
-       initSortView();
-
-
+        //视频部分 part1
+        initvideoview();
         mSortAdapter=new SeriesSortLvAdapter(SeriesDetail.this);
+
+
+
+        //信息部分 part2
+        initSortView();
 
 
         //列表部分  part3
         initBanner();
+    }
+
+    /**
+     * @ 董传亮
+     * video控件的初始化
+     */
+    private void initvideoview() {
+
     }
 
     /**
@@ -95,9 +151,11 @@ public class SeriesDetail extends AppCompatActivity {
     private void initBanner() {
         //列表部分  part3
 //        mTabLayout= (TabLayout) findViewById(R.id.activity_seriesdetail_title_tabll);
+        mSlidingTabLayout= (SlidingTabLayout) findViewById(R.id.activity_seriesdetail_tabs_tabll);
         mViewPager= (ViewPager) findViewById(R.id.activity_seriesdetail_title_vp);
         mVPAdapter=new SeriesDetailItemVPAdapter(tabNameList,mfragmentList,getSupportFragmentManager());
         mViewPager.setAdapter(mVPAdapter);
+  //mViewPAGER在网络请求来初始化
     }
 
     /**
@@ -111,6 +169,8 @@ public class SeriesDetail extends AppCompatActivity {
             textUpdate= (TextView) findViewById(R.id.seriesdetail_itemsort_update_tv);
             textType= (TextView) findViewById(R.id.seriesdetail_itemsort_type_tv);
             textDetai= (TextView) findViewById(R.id.seriesdetail_itemsort_detail_tv);
+           //底部按钮用于和detail交互
+        textshowall= (TextView) findViewById(R.id.seriesdetail_itemsort_showall_tv);
     }
 
     /**
@@ -120,7 +180,6 @@ public class SeriesDetail extends AppCompatActivity {
     private void initData() {
         Intent intent=getIntent();
         seriesid=intent.getStringExtra("seriesid");
-
         asyncRequest(seriesid,1);
 
     }
@@ -172,14 +231,24 @@ public class SeriesDetail extends AppCompatActivity {
                 Gson gson=new Gson();
                 SeriesDetailBean seriesDetailBean=gson.fromJson(result,SeriesDetailBean.class);
                     mSerieslist.add(seriesDetailBean.getData());//所有数据的bean对象
+                                          //所有的标题按钮的名字
                 List<SeriesDetailBean.DataBean.PostsBean> lvlist=new ArrayList<>();
                 lvlist.addAll( mSerieslist.get(0).getPosts());                         //创建viewpager的fragment所需要的数据
+                for(int i=0;i<lvlist.size();i++){
+                tabNameList.add(lvlist.get(i).getFrom_to());}
+                Log.i("ddsfec", "onResponse: "+tabNameList.get(0));
                 makeFragmentList(lvlist,id,p);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
 
-                        setSortText(mSerieslist.get(0).getTitle(),mSerieslist.get(0).getUpdate_to(),mSerieslist.get(0).getWeekly(),mSerieslist.get(0).getUpdate_to(),mSerieslist.get(0).getTag_name(),mSerieslist.get(0).getContent());
+                        setSortText(mSerieslist.get(0).getTitle(),mSerieslist.get(0).getUpdate_to(),
+                                mSerieslist.get(0).getWeekly(),mSerieslist.get(0).getUpdate_to(),
+                                mSerieslist.get(0).getTag_name(),mSerieslist.get(0).getContent(),
+                                mSerieslist.get(0).getPosts().get(0).getList().get(0).getTitle(),
+                                mSerieslist.get(0).getPosts().get(0).getList().get(0).getNumber()
+                        );
+                        mSlidingTabLayout.setViewPager(mViewPager);
                         mVPAdapter.notifyDataSetChanged();
                     }
                 });
@@ -192,8 +261,11 @@ public class SeriesDetail extends AppCompatActivity {
      * @ 董传亮
      * 用于刷新显示页面
      */
-    private void  setSortText(String title,String name ,String weekly,String many,String type,String detail){
-
+    private void  setSortText(String title,String name ,String weekly,String many,String type,String detail,String posttitle,String postnum){
+        String post=posttitle;//85（集）后面的
+        String num=postnum;//85(集)
+         String realtitle="第"+num+"集"+" "+post;
+        textTitle.setText(realtitle);
         textName.setText(title);
         String mweekly="更新:"+weekly;
         textUpdate.setText(mweekly);
@@ -202,14 +274,21 @@ public class SeriesDetail extends AppCompatActivity {
         String mtype="类型:"+type;//0k
         textType.setText(mtype);//0k
         textDetai.setText(detail);//ok
+        if (detail.length()>60 && detail!=null){
+            textshowall.setVisibility(View.VISIBLE);
+
+        }
 
     }
     /**
      * @ 董传亮
      * 标题动态加载
      */
-    private void setDetailText(String num,String title  ){
-        textTitle.setText(title);
+    private void setDetailText(String num,String title ,String alltitle ){
+        if(alltitle!=null){
+            textTitle.setText(alltitle);
+        }else {
+        textTitle.setText(title);}
     };
 
     /**
@@ -246,14 +325,6 @@ public class SeriesDetail extends AppCompatActivity {
                     return;
                 }
 
-                Log.i("ddsfec", "onResponse:    "+result);
-
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        setSortText(mSerieslist.get(0).getTitle(),mSerieslist.get(0).getUpdate_to(),mSerieslist.get(0).getWeekly(),mSerieslist.get(0).getUpdate_to(),mSerieslist.get(0).getTag_name(),mSerieslist.get(0).getContent());
-//                    }
-//                });
 
 
             }
@@ -303,6 +374,26 @@ public class SeriesDetail extends AppCompatActivity {
 
             }
         });
+    }
+
+    /**
+     * @ 董传亮
+     * 点击事件
+     */
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.seriesdetail_back_im :  finish();  ;break;
+        }
+
+}
+
+    @Override
+    public void itemClick(String mTitle, String mURL, String mID) {
+
+        setDetailText(null,null,mTitle);//NestscrollView,设置
+                                         //播放器开始播放
+                                         //标题栏更改
+
     }
 
 

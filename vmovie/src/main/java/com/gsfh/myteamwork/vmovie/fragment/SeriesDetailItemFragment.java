@@ -4,13 +4,17 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.gsfh.myteamwork.vmovie.R;
+import com.gsfh.myteamwork.vmovie.activity.SeriesDetail;
 import com.gsfh.myteamwork.vmovie.adapter.SeriesDetailitemLvAdapter;
 import com.gsfh.myteamwork.vmovie.bean.BackStageBean;
 import com.gsfh.myteamwork.vmovie.bean.SeriesDetailBean;
@@ -37,7 +41,7 @@ public class SeriesDetailItemFragment extends Fragment {
     //网络Post请求
     private OkHttpClient okHttpClient = new OkHttpClient();
     //需要数据
-    private Context mContext;
+    private SeriesDetail mContext;
     private int index;
     private String id;
     private int p;
@@ -66,7 +70,7 @@ public class SeriesDetailItemFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.mContext = getContext();//获取上下文
+        this.mContext = (SeriesDetail) getActivity();//获取上下文
         index = getArguments().getInt("index");//页面位置值
         id = getArguments().getString("id");
         p = getArguments().getInt("p");
@@ -92,6 +96,13 @@ public class SeriesDetailItemFragment extends Fragment {
      * 监听事件跳转
      */
     private void initListener() {
+//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Log.i("ddsfec", "onItemClick: "+"ddddddddddddd");
+//                Toast.makeText(mContext,"ddd", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
     }
 
@@ -137,9 +148,11 @@ public class SeriesDetailItemFragment extends Fragment {
     /**
      * @param index
      * @param id
+     * // id=45  p=1
      * @ 董传亮
      */
     private void asyncRequest(final int index, String id, int p) {
+
         String page = p + "";
         //封装Post请求的参数
         FormBody formBody = new FormBody.Builder()
