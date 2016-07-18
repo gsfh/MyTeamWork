@@ -105,10 +105,7 @@ public class BackStageSortFragment extends Fragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-  //              Intent intent = new Intent(getActivity(), BackStageDetail.class);
-//                String webUrl = datalist.get(position).getRequest_url();
-//                Log.i("ddsfec", "initWebView: "+webUrl);
-//                intent.putExtra("backurl", webUrl);
+
                 Intent intent=new Intent(getActivity(), SecondDetailActivity.class);
                 String postid=datalist.get(position).getPostid();
                 intent.putExtra("from","backstage");
