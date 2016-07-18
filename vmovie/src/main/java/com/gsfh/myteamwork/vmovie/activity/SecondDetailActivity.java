@@ -35,6 +35,8 @@ public class SecondDetailActivity extends AppCompatActivity {
     private TextView like_counts;
     private TextView share_counts;
     private TextView comment_counts;
+    private TextView cache_btn;
+    private String from;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +57,14 @@ public class SecondDetailActivity extends AppCompatActivity {
         like_counts = (TextView) findViewById(R.id.second_detail_bottom_like_counts);
         share_counts = (TextView) findViewById(R.id.second_detail_bottom_share_counts);
         comment_counts = (TextView) findViewById(R.id.second_detail_bottom_comment_counts);
+        cache_btn = (TextView) findViewById(R.id.second_detail_bottom_cache);
 
     }
 
     private void initData() {
 
         String postid = getIntent().getStringExtra("id");
+        from = getIntent().getStringExtra("from");
 
         postRequest(postid);
 
@@ -103,6 +107,11 @@ public class SecondDetailActivity extends AppCompatActivity {
 
         jcVideoPlayer.setUp(videoAdress, "");
 
+        if ("backstage".equals(from)){
+            jcVideoPlayer.setVisibility(View.GONE);
+            cache_btn.setVisibility(View.GONE);
+        }
+
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(webAdress);
     }
@@ -140,6 +149,10 @@ public class SecondDetailActivity extends AppCompatActivity {
 
                 int videoIdx = videoListBean.getVideoIdx();
                 String videoAdress = videoAdressList.get(videoIdx).getQiniu_url();
+
+                if ("backstage".equals(from)){
+                    jcVideoPlayer.setVisibility(View.VISIBLE);
+                }
 
                 jcVideoPlayer.release();
                 jcVideoPlayer.setUp(videoAdress,"");

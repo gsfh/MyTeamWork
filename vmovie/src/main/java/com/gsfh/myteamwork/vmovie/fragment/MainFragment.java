@@ -258,6 +258,7 @@ public class MainFragment extends Fragment {
                 }
 
                 intent.putExtra("id",postid);
+                intent.putExtra("from","latest");
 
                 startActivity(intent);
 
