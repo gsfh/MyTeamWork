@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,9 +108,11 @@ public class BackStageSortFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent=new Intent(getActivity(), SecondDetailActivity.class);
-                String postid=datalist.get(position).getPostid();
+                String postid=datalist.get(position-1).getPostid();
+
                 intent.putExtra("from","backstage");
                 intent.putExtra("id",postid);
+                Log.i("ddsfec", "onItemClick: "+postid+"  "+position);
                 startActivity(intent);
 
             }
