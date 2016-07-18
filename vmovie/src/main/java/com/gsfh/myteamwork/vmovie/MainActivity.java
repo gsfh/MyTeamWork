@@ -17,6 +17,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.gsfh.myteamwork.vmovie.activity.FirstDetailActivity;
+import com.gsfh.myteamwork.vmovie.activity.LoadingActivity;
 import com.gsfh.myteamwork.vmovie.fragment.BackStageFragment;
 import com.gsfh.myteamwork.vmovie.fragment.MainFragment;
 import com.gsfh.myteamwork.vmovie.fragment.SeriesFragment;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private ArrayList<Fragment> fragmentList;
     private PopupWindow popupWindow;
+    private ImageView mImageViewLoad;
     private RadioGroup radioGroup;
     private RadioButton[] rbArray;
     private ImageView closeIv;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        mImageViewLoad= (ImageView) findViewById(R.id.slide_window_load);
 
         sideSelectMenu = (ImageView) findViewById(R.id.main_side_select_menu_iv);
 
@@ -97,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initListener() {
 
+
         sideSelectMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,6 +148,12 @@ public class MainActivity extends AppCompatActivity {
         switchFragment(0);
         close();
     }
+
+//    public void toload(View v){
+//Toast.makeText(MainActivity.this,"ddsfec",Toast.LENGTH_SHORT).show();
+////                    Intent intent = new Intent(MainActivity.this, LoadingActivity.class);
+////                     startActivity(intent);
+//    }
 
     public void toSeries(View view){
 

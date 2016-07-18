@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/activity_series_buttom_bar2_ll"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/colorwrite"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/activity_series_detail_comment_reply_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawableRight="@drawable/reply_edit"
+            android:layout_marginRight="10dp"
+
+
+            />
+        <EditText
+            android:id="@+id/activity_series_detail_editv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:hint="我来说两句..."
+            android:completionThreshold="1"
+            android:lines="1"
+            android:textCursorDrawable="@null"
+            android:background="@null"
+
+
+            />
+
+
+        <TextView
+            android:id="@+id/activity_series_detail_comment_cach_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+
+
+            android:drawableLeft="@drawable/details_bottom_cache"
+            />
+        <TextView
+            android:id="@+id/activity_series_detail_comment_title2_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="20"
+
+            android:drawableLeft="@drawable/details_bottom_comment"
+            />
+
+    </LinearLayout>
+</LinearLayout>

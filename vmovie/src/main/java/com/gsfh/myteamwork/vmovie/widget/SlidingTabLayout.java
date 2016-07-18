@@ -220,7 +220,9 @@ public class SlidingTabLayout extends LinearLayout {
         textView.setLayoutParams(layoutParams);
         int padding = (int) (DEFAULT_TEXT_PADDING * getResources().getDisplayMetrics().density);
      //   textView.setPadding(padding, padding, padding, padding);
-       textView.setPadding(0,10,0,0);
+       textView.setPadding(10,5,10,5);
+        textView.setLines(1);
+
 
         textView.setAllCaps(true);
         return textView;

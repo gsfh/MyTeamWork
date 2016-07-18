@@ -21,6 +21,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textColor="@color/colorwrite"
+            android:visibility="invisible"
             android:text="正在播放"/>
         <TextView
             android:id="@+id/seriesdetailitem_duration_lv_im"

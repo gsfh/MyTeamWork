@@ -2,8 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-<ListView
-    android:id="@+id/seriesdetailitem_tv"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"></ListView>
+
+    <!--<ListView-->
+        <!--android:id="@+id/seriesdetailitem_tv"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+    <!--</ListView>-->
+    <com.gsfh.myteamwork.vmovie.widget.MyListView
+        android:layout_width="match_parent"
+        android:id="@+id/seriesdetailitem_tv"
+        android:layout_height="match_parent">
+
+    </com.gsfh.myteamwork.vmovie.widget.MyListView>
 </LinearLayout>

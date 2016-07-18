@@ -21,45 +21,53 @@ import java.util.List;
 /**
  * Created by admin on 2016/7/7.
  */
-public class SeriesDetailitemLvAdapter extends BaseAdapter  {
+public class SeriesDetailitemLvAdapter extends BaseAdapter {
     private Context mContext;
-   private List<SeriesDetailBean.DataBean.PostsBean.ListBean> mBeenlist;
+    private List<SeriesDetailBean.DataBean.PostsBean.ListBean> mBeenlist;
     private SeriesDetailItemListener mSeriesDetailItemListener;
 
-    public static int isplaying=-1;
-    private String mTitle ;//传出的值
-    private  String mURL;//传出的网页
-    private  String mID;//传出的网页
-    private  View mView;
+    private int isplaying = -1;
+    public static int pubplaying = -1;
+    private String mTitle;//传出的值
+    private String mURL;//传出的网页
+    private String mID;//传出的网页
+    private View mView;
+
 
     /**
      * @ 董传亮
      * 传动修改适配器参数
      */
-    public void setParams(  int position, String realtitle, String msouerlink, String id ){
-        isplaying=position;//正在播放按钮状态
-        mTitle=realtitle;
-        mURL=msouerlink;
-        mID=id;
-        mSeriesDetailItemListener.itemClick(mTitle,mURL,mID);
+    public void setParams(int position, String realtitle, String msouerlink, String id) {
+        isplaying = position;//正在播放按钮状态
+        pubplaying = position;//正在播放按钮状态
+        mTitle = realtitle;
+        mURL = msouerlink;
+        Log.i("ddsfec", "setParams: " + msouerlink);
+        mID = id;
+        mSeriesDetailItemListener.itemClick(mTitle, mURL, mID);
+        // isplaying= mSeriesDetailItemListener.itemIsPalying();
         this.notifyDataSetChanged();
 
     }
 
     public SeriesDetailitemLvAdapter(SeriesDetail mContext, List<SeriesDetailBean.DataBean.PostsBean.ListBean> mlist) {
-        this.mContext=mContext;
-        this.mBeenlist=mlist;
+        this.mContext = mContext;
+        this.mBeenlist = mlist;
         setSeriesDetailitener(mContext);
     }
+
     //传入对象
-    public void setSeriesDetailitener( SeriesDetailItemListener mSeriesDetailItemListener){
-            this.mSeriesDetailItemListener=mSeriesDetailItemListener;
-    };
+    public void setSeriesDetailitener(SeriesDetailItemListener mSeriesDetailItemListener) {
+        this.mSeriesDetailItemListener = mSeriesDetailItemListener;
+    }
+
+    ;
 
 
     @Override
     public int getCount() {
-      //  return 10;
+        //  return 10;
         return mBeenlist == null ? 0 : mBeenlist.size();
     }
 
@@ -90,45 +98,46 @@ public class SeriesDetailitemLvAdapter extends BaseAdapter  {
         }
 
         //当前页面的播放状态保存
-        if(isplaying==position){
+        if (pubplaying == position && isplaying == position) {
             hoder.playing.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             hoder.playing.setVisibility(View.INVISIBLE);
         }
 
 
+        final String title = mBeenlist.get(position).getTitle();//85（集）后面的
+        String num = mBeenlist.get(position).getNumber();//85(集)
+        final String realtitle = "第" + num + "集" + " " + title;
+        String playing = "正在播放";
+        String duration = mBeenlist.get(position).getDuration();
+        String updata = mBeenlist.get(position).getAddtime();
+        final String mUrl = mBeenlist.get(position).getThumbnail();
+        final String msouerlink = mBeenlist.get(position).getSeries_postid();
+        final String id = mBeenlist.get(position).getSeries_postid();
 
 
-        final String title=mBeenlist.get(position).getTitle();//85（集）后面的
-        String num=mBeenlist.get(position).getNumber();//85(集)
-        final String realtitle="第"+num+"集"+" "+title;
-        String playing="正在播放";
-        String duration=mBeenlist.get(position).getDuration();
-        String updata=mBeenlist.get(position).getAddtime();
-        final String mUrl=mBeenlist.get(position).getThumbnail();
-         final String msouerlink=mBeenlist.get(position).getSeries_postid();
-        final String id=mBeenlist.get(position).getSeries_postid();
+        // String num=mBeenlist.get(position).getNumber();//85(集)
 
 
-       // String num=mBeenlist.get(position).getNumber();//85(集)
+        hoder.title.setText(realtitle);
+        hoder.playing.setText(playing);
+        hoder.duration.setText(duration);
+        hoder.updata.setText(updata);
+        Picasso.with(mContext).load(mUrl).into(hoder.imageView);
 
-
-     hoder.title.setText(realtitle);
-     hoder.playing.setText(playing);
-     hoder.duration.setText(duration);
-     hoder.updata.setText(updata);
-     Picasso.with(mContext).load(mUrl).into(hoder.imageView);
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 setParams(position,realtitle,msouerlink,id);
+                setParams(position, realtitle, msouerlink, id);
             }
         });
         return convertView;
     }
+
     //暴露值接口
-    public interface SeriesDetailItemListener{
+    public interface SeriesDetailItemListener {
         void itemClick(String mTitle, String mURL, String mID);
+
     }
 
     class viewHoder {
@@ -140,4 +149,5 @@ public class SeriesDetailitemLvAdapter extends BaseAdapter  {
         private ImageView imageView;
 
     }
+
 }

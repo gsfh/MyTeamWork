@@ -11,7 +11,7 @@
         android:layout_weight="3">
 
         <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
-            android:id="@+id/activity_series_detail_videoplayer_standard"
+            android:id="@+id/activity_backstagedetail_videoplayer_standard"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:visibility="gone"/>
@@ -61,7 +61,7 @@
 
 
     <com.github.lzyzsd.jsbridge.BridgeWebView
-        android:id="@+id/first_detail_webview"
+        android:id="@+id/activity_backstagedetail_bwebview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="10"

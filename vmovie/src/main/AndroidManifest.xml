@@ -17,9 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.FirstDetailActivity" />
-        <activity android:name=".activity.BackStageDetail" />
-        <activity android:name=".activity.SeriesDetail" />
+        <activity android:name=".activity.FirstDetailActivity"></activity>
+        <activity android:name=".activity.BackStageDetail"/>
+        <activity android:name=".activity.LoadingActivity"/>
+        <activity android:name=".activity.SeriesDetail"/><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.

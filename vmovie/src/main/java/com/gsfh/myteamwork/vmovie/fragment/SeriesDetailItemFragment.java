@@ -19,6 +19,7 @@ import com.gsfh.myteamwork.vmovie.adapter.SeriesDetailitemLvAdapter;
 import com.gsfh.myteamwork.vmovie.bean.BackStageBean;
 import com.gsfh.myteamwork.vmovie.bean.SeriesDetailBean;
 import com.gsfh.myteamwork.vmovie.util.URLConstants;
+import com.gsfh.myteamwork.vmovie.widget.MyListView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,8 +49,10 @@ public class SeriesDetailItemFragment extends Fragment {
     //适配器需要的数据
     private List<SeriesDetailBean.DataBean.PostsBean.ListBean> mlist = new ArrayList<>();
     //需求控件
-    private ListView mListView;
+  //  private ListView mListView;
+   private  MyListView mListView;
     private SeriesDetailitemLvAdapter mLVAdapter;
+    private SeriesDetailitemLvAdapter mLVAdapter2;
     //创建fragment需要进入适配器的数据
     List<BackStageBean.DataBean> datalist = new ArrayList<>();
 
@@ -130,7 +133,8 @@ public class SeriesDetailItemFragment extends Fragment {
      * 初始化当前页控件
      */
     private void initView(View view) {
-        mListView = (ListView) view.findViewById(R.id.seriesdetailitem_tv);
+        //mListView = (ListView) view.findViewById(R.id.seriesdetailitem_tv);
+        mListView = (MyListView) view.findViewById(R.id.seriesdetailitem_tv);
     }
 
     /**
@@ -195,6 +199,7 @@ public class SeriesDetailItemFragment extends Fragment {
             }
         });
     }
+
 
 
 }

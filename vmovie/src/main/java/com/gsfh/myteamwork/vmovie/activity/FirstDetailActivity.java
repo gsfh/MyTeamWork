@@ -3,6 +3,7 @@ package com.gsfh.myteamwork.vmovie.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
@@ -74,6 +75,7 @@ public class FirstDetailActivity extends AppCompatActivity {
                 if (null == result) {
                     return;
                 }
+
                 Gson gson = new Gson();
                 FirstDetailBean firstDetailBean = gson.fromJson(result, FirstDetailBean.class);
 
@@ -112,6 +114,7 @@ public class FirstDetailActivity extends AppCompatActivity {
                 if (null == data) {
                     return;
                 }
+
                 Gson gson = new Gson();
                 MainDetailNewViewBean newViewBean = gson.fromJson(data, MainDetailNewViewBean.class);
 

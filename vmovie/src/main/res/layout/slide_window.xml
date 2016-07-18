@@ -11,10 +11,13 @@
         android:layout_weight="5">
 
         <ImageView
+            android:id="@+id/slide_window_load"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/default_avatar"/>
+            android:src="@drawable/default_avatar"
+            android:clickable="true"
+            android:onClick="toLoad"/>
     </RelativeLayout>
 
     <LinearLayout
