@@ -3,29 +3,33 @@ package com.gsfh.myteamwork.vmovie.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
 import com.gsfh.myteamwork.vmovie.R;
 import com.gsfh.myteamwork.vmovie.bean.FirstDetailBean;
 import com.gsfh.myteamwork.vmovie.bean.MainDetailNewViewBean;
+import com.gsfh.myteamwork.vmovie.bean.VideoListBean;
 import com.gsfh.myteamwork.vmovie.util.IOKCallBack;
 import com.gsfh.myteamwork.vmovie.util.OkHttpTool;
 import com.gsfh.myteamwork.vmovie.util.URLConstants;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
-public class FirstDetailActivity extends AppCompatActivity {
+public class SecondDetailActivity extends AppCompatActivity {
 
     private FirstDetailBean.DataBean firstDetailData = new FirstDetailBean.DataBean();
+    private List<FirstDetailBean.DataBean.ContentBean.VideoBean> videoAdressList = new ArrayList<>();
     private JCVideoPlayerStandard jcVideoPlayer;
     private BridgeWebView webView;
     private TextView like_counts;
@@ -35,7 +39,7 @@ public class FirstDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first_detail);
+        setContentView(R.layout.activity_second_detail);
 
         initView();
         initData();
@@ -44,13 +48,13 @@ public class FirstDetailActivity extends AppCompatActivity {
 
     private void initView() {
 
-        jcVideoPlayer = (JCVideoPlayerStandard) findViewById(R.id.first_detail_videoplayer);
+        jcVideoPlayer = (JCVideoPlayerStandard) findViewById(R.id.second_detail_videoplayer);
 
-        webView = (BridgeWebView) findViewById(R.id.first_detail_webview);
+        webView = (BridgeWebView) findViewById(R.id.second_detail_webview);
 
-        like_counts = (TextView) findViewById(R.id.first_detail_bottom_like_counts);
-        share_counts = (TextView) findViewById(R.id.first_detail_bottom_share_counts);
-        comment_counts = (TextView) findViewById(R.id.first_detail_bottom_comment_counts);
+        like_counts = (TextView) findViewById(R.id.second_detail_bottom_like_counts);
+        share_counts = (TextView) findViewById(R.id.second_detail_bottom_share_counts);
+        comment_counts = (TextView) findViewById(R.id.second_detail_bottom_comment_counts);
 
     }
 
@@ -87,7 +91,8 @@ public class FirstDetailActivity extends AppCompatActivity {
     private void initPageDetail(String postid) {
 
         String webAdress = "http://app.vmoiver.com/"+postid+"?qingapp=app_new";
-        String videoAdress = firstDetailData.getContent().getVideo().get(0).getQiniu_url();
+        videoAdressList = firstDetailData.getContent().getVideo();
+        String videoAdress = videoAdressList.get(0).getQiniu_url();
         String count_like = firstDetailData.getCount_like();
         String count_share = firstDetailData.getCount_share();
         String count_comment = firstDetailData.getCount_comment();
@@ -97,7 +102,6 @@ public class FirstDetailActivity extends AppCompatActivity {
         comment_counts.setText(count_comment);
 
         jcVideoPlayer.setUp(videoAdress, "");
-//        jcVideoPlayer.thumbImageView.setThumbInCustomProject("");
 
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(webAdress);
@@ -116,9 +120,29 @@ public class FirstDetailActivity extends AppCompatActivity {
                 MainDetailNewViewBean newViewBean = gson.fromJson(data, MainDetailNewViewBean.class);
 
                 String id = newViewBean.getId();
-                Intent intent = new Intent(FirstDetailActivity.this, FirstDetailActivity.class);
+                Intent intent = new Intent(SecondDetailActivity.this, FirstDetailActivity.class);
                 intent.putExtra("id", id);
                 startActivity(intent);
+
+                function.onCallBack("submitFromWeb exe, response data from Java");
+            }
+        });
+
+        webView.registerHandler("handlerVideo", new BridgeHandler() {
+            @Override
+            public void handler(String data, CallBackFunction function) {
+                //data ---->  {"videoIdx":0,"type":0}
+                if (null == data) {
+                    return;
+                }
+                Gson gson = new Gson();
+                VideoListBean videoListBean = gson.fromJson(data,VideoListBean.class);
+
+                int videoIdx = videoListBean.getVideoIdx();
+                String videoAdress = videoAdressList.get(videoIdx).getQiniu_url();
+
+                jcVideoPlayer.release();
+                jcVideoPlayer.setUp(videoAdress,"");
 
                 function.onCallBack("submitFromWeb exe, response data from Java");
             }

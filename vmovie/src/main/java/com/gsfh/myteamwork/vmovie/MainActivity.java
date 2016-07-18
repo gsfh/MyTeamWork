@@ -219,8 +219,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void search(View view){
 
-        Intent intent = new Intent(MainActivity.this, FirstDetailActivity.class);
-        intent.putExtra("id","3958");
-        startActivity(intent);
+//        Intent intent = new Intent(MainActivity.this, FirstDetailActivity.class);
+//        intent.putExtra("id","3958");
+//        startActivity(intent);
     }
 }

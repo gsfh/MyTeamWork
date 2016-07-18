@@ -117,7 +117,8 @@ public class LatestAdapter extends BaseExpandableListAdapter {
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return false;
+        //返回值为true时子Item才能点击
+        return true;
     }
 
     class GroupViewHolder{

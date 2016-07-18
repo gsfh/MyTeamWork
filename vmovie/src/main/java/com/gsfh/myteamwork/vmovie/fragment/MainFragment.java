@@ -1,12 +1,14 @@
 package com.gsfh.myteamwork.vmovie.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 
@@ -15,17 +17,21 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.google.gson.Gson;
 import com.gsfh.myteamwork.vmovie.R;
+import com.gsfh.myteamwork.vmovie.activity.FirstDetailActivity;
+import com.gsfh.myteamwork.vmovie.activity.SecondDetailActivity;
 import com.gsfh.myteamwork.vmovie.adapter.LatestAdapter;
 import com.gsfh.myteamwork.vmovie.bean.LatestBean;
 import com.gsfh.myteamwork.vmovie.bean.MainBannerBean;
 import com.gsfh.myteamwork.vmovie.util.IOKCallBack;
 import com.gsfh.myteamwork.vmovie.util.OkHttpTool;
 import com.gsfh.myteamwork.vmovie.util.URLConstants;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +50,7 @@ public class MainFragment extends Fragment {
     private ArrayList<String> dateList = new ArrayList<>();
     private Map<String,List<LatestBean.DataBean>> map = new LinkedHashMap<>();
     private LatestAdapter latestAdapter;
+    private int page = 1;
 
     @Nullable
     @Override
@@ -51,6 +58,7 @@ public class MainFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_main,null);
         listView = (PullToRefreshExpandableListView) view.findViewById(R.id.pe_lv_main);
+        listView.setMode(PullToRefreshBase.Mode.BOTH);
 
         View bannerView = inflater.inflate(R.layout.main_header_view,null);
         convenientBanner = (ConvenientBanner) bannerView.findViewById(R.id.convenientBanner);
@@ -60,7 +68,8 @@ public class MainFragment extends Fragment {
 //        reFreshListView.addHeaderView(bannerView);
 
         initAdapter();
-        initData();
+        initData(1);
+        initLinstener();
 
         return view;
     }
@@ -80,12 +89,18 @@ public class MainFragment extends Fragment {
 
     }
 
-    private void initData() {
+    private void initData(Integer page) {
 
         /**
          * 列表数据的网络请求
          */
-        OkHttpTool.newInstance().start(URLConstants.LATEST_URL).callback(new IOKCallBack() {
+        String p = page.toString();
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("p", p);
+        paramMap.put("size","20");
+        paramMap.put("tab","latest");
+
+        OkHttpTool.newInstance().post(paramMap).start(URLConstants.LATEST_URL).callback(new IOKCallBack() {
             @Override
             public void success(String result) {
 
@@ -95,6 +110,7 @@ public class MainFragment extends Fragment {
 
                 Gson gson = new Gson();
                 LatestBean latestBean = gson.fromJson(result,LatestBean.class);
+                latestList.clear();
                 latestList.addAll(latestBean.getData());
 
                 long firstTime = latestList.get(0).getPublish_time();
@@ -184,21 +200,70 @@ public class MainFragment extends Fragment {
 
     }
 
-
     public class LocalImageHolderView implements Holder<Integer> {
 
+
         private ImageView imageView;
+
         @Override
         public View createView(Context context) {
             imageView = new ImageView(context);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             return imageView;
         }
-
         @Override
         public void UpdateUI(Context context, final int position, Integer data) {
             imageView.setImageResource(data);
         }
+
+    }
+
+    private void initLinstener() {
+
+        listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ExpandableListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ExpandableListView> refreshView) {
+
+                listView.onRefreshComplete();
+                dateList.clear();
+                map.clear();
+                initData(1);
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ExpandableListView> refreshView) {
+
+                page ++;
+                initData(page);
+                listView.onRefreshComplete();
+            }
+        });
+
+
+        reFreshListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+                String postid = latestList.get(childPosition).getPostid();
+                String cateId = latestList.get(childPosition).getCates().get(0).getCateid();
+
+                Intent intent = new Intent();
+
+                if("6".equals(cateId)){
+
+                    intent.setClass(getActivity(), SecondDetailActivity.class);
+                }else {
+
+                    intent.setClass(getActivity(), FirstDetailActivity.class);
+                }
+
+                intent.putExtra("id",postid);
+
+                startActivity(intent);
+
+                return true;
+            }
+        });
     }
 
 }
