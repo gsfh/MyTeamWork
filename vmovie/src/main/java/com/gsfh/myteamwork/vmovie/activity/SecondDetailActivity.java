@@ -96,7 +96,13 @@ public class SecondDetailActivity extends AppCompatActivity {
 
         String webAdress = "http://app.vmoiver.com/"+postid+"?qingapp=app_new";
         videoAdressList = firstDetailData.getContent().getVideo();
-        String videoAdress = videoAdressList.get(0).getQiniu_url();
+
+        if (videoAdressList.size() != 0){
+
+            String videoAdress = videoAdressList.get(0).getQiniu_url();
+            jcVideoPlayer.setUp(videoAdress, "");
+        }
+
         String count_like = firstDetailData.getCount_like();
         String count_share = firstDetailData.getCount_share();
         String count_comment = firstDetailData.getCount_comment();
@@ -104,8 +110,6 @@ public class SecondDetailActivity extends AppCompatActivity {
         like_counts.setText(count_like);
         share_counts.setText(count_share);
         comment_counts.setText(count_comment);
-
-        jcVideoPlayer.setUp(videoAdress, "");
 
         if ("backstage".equals(from)){
             jcVideoPlayer.setVisibility(View.GONE);
@@ -147,15 +151,17 @@ public class SecondDetailActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 VideoListBean videoListBean = gson.fromJson(data,VideoListBean.class);
 
-                int videoIdx = videoListBean.getVideoIdx();
-                String videoAdress = videoAdressList.get(videoIdx).getQiniu_url();
-
                 if ("backstage".equals(from)){
                     jcVideoPlayer.setVisibility(View.VISIBLE);
                 }
 
                 jcVideoPlayer.release();
-                jcVideoPlayer.setUp(videoAdress,"");
+                if (videoAdressList.size() != 0){
+
+                    int videoIdx = videoListBean.getVideoIdx();
+                    String videoAdress = videoAdressList.get(videoIdx).getQiniu_url();
+                    jcVideoPlayer.setUp(videoAdress,"");
+                }
 
                 function.onCallBack("submitFromWeb exe, response data from Java");
             }

@@ -21,7 +21,6 @@
         <activity android:name=".activity.SecondDetailActivity"/>
         <activity android:name=".activity.LoadingActivity"/>
         <activity android:name=".activity.SeriesDetail"/>
-
     </application>
 
 </manifest>
