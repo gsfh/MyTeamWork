@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,7 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.gsfh.myteamwork.vmovie.R;
-import com.gsfh.myteamwork.vmovie.activity.SecondDetailActivity;
+import com.gsfh.myteamwork.vmovie.activity.FirstDetailActivity;
 import com.gsfh.myteamwork.vmovie.adapter.BackStageSortLvAdapter;
 import com.gsfh.myteamwork.vmovie.bean.BackStageBean;
 import com.gsfh.myteamwork.vmovie.util.URLConstants;
@@ -103,16 +102,17 @@ public class BackStageSortFragment extends Fragment {
      * 监听事件跳转
      */
     private void initListener() {
+
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent=new Intent(getActivity(), SecondDetailActivity.class);
-                String postid=datalist.get(position-1).getPostid();
+                String postid = datalist.get(position - 1).getPostid();
 
-                intent.putExtra("from","backstage");
+                Intent intent = new Intent(getActivity(), FirstDetailActivity.class);
+
                 intent.putExtra("id",postid);
-                Log.i("ddsfec", "onItemClick: "+postid+"  "+position);
+
                 startActivity(intent);
 
             }

@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 
@@ -18,7 +17,6 @@ import com.bigkoo.convenientbanner.holder.Holder;
 import com.google.gson.Gson;
 import com.gsfh.myteamwork.vmovie.R;
 import com.gsfh.myteamwork.vmovie.activity.FirstDetailActivity;
-import com.gsfh.myteamwork.vmovie.activity.SecondDetailActivity;
 import com.gsfh.myteamwork.vmovie.adapter.LatestAdapter;
 import com.gsfh.myteamwork.vmovie.bean.LatestBean;
 import com.gsfh.myteamwork.vmovie.bean.MainBannerBean;
@@ -176,10 +174,12 @@ public class MainFragment extends Fragment {
 
                 Gson gson = new Gson();
                 MainBannerBean bannerBean = gson.fromJson(result,MainBannerBean.class);
+
+                bannerDataList.clear();
                 bannerDataList.addAll(bannerBean.getData());
+
                 bannerUrlList.clear();
                 for (MainBannerBean.DataBean data : bannerDataList) {
-
                     bannerUrlList.add(data.getImage());
                 }
 
@@ -189,8 +189,6 @@ public class MainFragment extends Fragment {
     }
 
     private void initBanner() {
-
-        bannerDataList.clear();
 
         convenientBanner.setPages(new CBViewHolderCreator<LocalImageHolderView>() {
 
@@ -227,17 +225,12 @@ public class MainFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-                    MainBannerBean.DataBean.ExtraDataBean extraDataBean = bannerDataList.get(position).getExtra_data();
-                    Intent intent = new Intent();
-                    String postid = extraDataBean.getApp_banner_param();
-                    String isAlbum = extraDataBean.getIs_album();
-                    if ("1".equals(isAlbum)){
-                        intent.setClass(getActivity(),SecondDetailActivity.class);
-                        intent.putExtra("from","bannerAlbum");
-                    }else {
-                        intent.setClass(getActivity(),FirstDetailActivity.class);
-                    }
+                    String postid = bannerDataList.get(position).getExtra_data().getApp_banner_param();
+
+                    Intent intent = new Intent(getActivity(),FirstDetailActivity.class);
+
                     intent.putExtra("id",postid);
+
                     startActivity(intent);
                 }
             });
@@ -284,22 +277,11 @@ public class MainFragment extends Fragment {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 
-
                 String postid = map.get(dateList.get(groupPosition)).get(childPosition).getPostid();
-                String cateId = map.get(dateList.get(groupPosition)).get(childPosition).getCates().get(0).getCateid();
 
-                Intent intent = new Intent();
-
-                if("6".equals(cateId)){
-
-                    intent.setClass(getActivity(), SecondDetailActivity.class);
-                }else {
-
-                    intent.setClass(getActivity(), FirstDetailActivity.class);
-                }
+                Intent intent = new Intent(getActivity(), FirstDetailActivity.class);
 
                 intent.putExtra("id",postid);
-                intent.putExtra("from","latest");
 
                 startActivity(intent);
 
