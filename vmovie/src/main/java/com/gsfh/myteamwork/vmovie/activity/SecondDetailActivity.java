@@ -111,9 +111,9 @@ public class SecondDetailActivity extends AppCompatActivity {
         share_counts.setText(count_share);
         comment_counts.setText(count_comment);
 
-        if ("backstage".equals(from)){
-            jcVideoPlayer.setVisibility(View.GONE);
-            cache_btn.setVisibility(View.GONE);
+        if (!"backstage".equals(from) && !"bannerAlbum".equals(from)){
+            jcVideoPlayer.setVisibility(View.VISIBLE);
+            cache_btn.setVisibility(View.VISIBLE);
         }
 
         webView.getSettings().setJavaScriptEnabled(true);
@@ -151,10 +151,7 @@ public class SecondDetailActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 VideoListBean videoListBean = gson.fromJson(data,VideoListBean.class);
 
-                if ("backstage".equals(from)){
-                    jcVideoPlayer.setVisibility(View.VISIBLE);
-                }
-
+                jcVideoPlayer.setVisibility(View.VISIBLE);
                 jcVideoPlayer.release();
                 if (videoAdressList.size() != 0){
 

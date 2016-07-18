@@ -27,6 +27,7 @@ import com.gsfh.myteamwork.vmovie.util.OkHttpTool;
 import com.gsfh.myteamwork.vmovie.util.URLConstants;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class MainFragment extends Fragment {
     private List<LatestBean.DataBean> latestList = new ArrayList<>();
     private PullToRefreshExpandableListView listView;
     private ExpandableListView reFreshListView;
-    private ArrayList<String> dateList = new ArrayList<>();
+    private List<String> dateList = new ArrayList<>();
     private Map<String,List<LatestBean.DataBean>> map = new LinkedHashMap<>();
     private LatestAdapter latestAdapter;
     private int page = 1;
@@ -65,7 +66,7 @@ public class MainFragment extends Fragment {
 
         reFreshListView = listView.getRefreshableView();
 
-//        reFreshListView.addHeaderView(bannerView);
+        reFreshListView.addHeaderView(bannerView);
 
         initAdapter();
         initData(1);
@@ -110,17 +111,18 @@ public class MainFragment extends Fragment {
 
                 Gson gson = new Gson();
                 LatestBean latestBean = gson.fromJson(result,LatestBean.class);
-                latestList.clear();
                 latestList.addAll(latestBean.getData());
 
                 long firstTime = latestList.get(0).getPublish_time();
                 SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
                 String firstDate = sdf.format(new Date(firstTime*1000));
                 //添加第一条日期到日期列表
+                dateList.clear();
                 dateList.add(firstDate);
                 //创建第一个内容列表
                 List<LatestBean.DataBean> childList = new ArrayList<>();
                 //添加第一条数据到map
+                map.clear();
                 map.put(firstDate,childList);
                 //遍历所有数据
                 for (int i = 0; i < latestList.size(); i++) {
@@ -175,7 +177,7 @@ public class MainFragment extends Fragment {
                 Gson gson = new Gson();
                 MainBannerBean bannerBean = gson.fromJson(result,MainBannerBean.class);
                 bannerDataList.addAll(bannerBean.getData());
-
+                bannerUrlList.clear();
                 for (MainBannerBean.DataBean data : bannerDataList) {
 
                     bannerUrlList.add(data.getImage());
@@ -188,34 +190,73 @@ public class MainFragment extends Fragment {
 
     private void initBanner() {
 
+        bannerDataList.clear();
+
         convenientBanner.setPages(new CBViewHolderCreator<LocalImageHolderView>() {
 
             @Override
             public LocalImageHolderView createHolder() {
+
                 return new LocalImageHolderView();
             }
         },bannerUrlList)
                 .setPageIndicator(new int[]{R.drawable.main_header_dot_n,R.drawable.main_header_dot_s})
-                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT);
+                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
 
     }
 
-    public class LocalImageHolderView implements Holder<Integer> {
-
+    public class LocalImageHolderView implements Holder<String> {
 
         private ImageView imageView;
 
         @Override
         public View createView(Context context) {
+
             imageView = new ImageView(context);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
             return imageView;
         }
+
         @Override
-        public void UpdateUI(Context context, final int position, Integer data) {
-            imageView.setImageResource(data);
+        public void UpdateUI(Context context, final int position, String data) {
+
+            Picasso.with(context).load(data).into(imageView);
+
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    MainBannerBean.DataBean.ExtraDataBean extraDataBean = bannerDataList.get(position).getExtra_data();
+                    Intent intent = new Intent();
+                    String postid = extraDataBean.getApp_banner_param();
+                    String isAlbum = extraDataBean.getIs_album();
+                    if ("1".equals(isAlbum)){
+                        intent.setClass(getActivity(),SecondDetailActivity.class);
+                        intent.putExtra("from","bannerAlbum");
+                    }else {
+                        intent.setClass(getActivity(),FirstDetailActivity.class);
+                    }
+                    intent.putExtra("id",postid);
+                    startActivity(intent);
+                }
+            });
         }
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //开始自动滚动
+        convenientBanner.startTurning(3000);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        //停止滚动
+        convenientBanner.stopTurning();
     }
 
     private void initLinstener() {
@@ -225,8 +266,7 @@ public class MainFragment extends Fragment {
             public void onPullDownToRefresh(PullToRefreshBase<ExpandableListView> refreshView) {
 
                 listView.onRefreshComplete();
-                dateList.clear();
-                map.clear();
+                latestList.clear();
                 initData(1);
             }
 
@@ -244,8 +284,9 @@ public class MainFragment extends Fragment {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 
-                String postid = latestList.get(childPosition).getPostid();
-                String cateId = latestList.get(childPosition).getCates().get(0).getCateid();
+
+                String postid = map.get(dateList.get(groupPosition)).get(childPosition).getPostid();
+                String cateId = map.get(dateList.get(groupPosition)).get(childPosition).getCates().get(0).getCateid();
 
                 Intent intent = new Intent();
 

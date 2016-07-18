@@ -8,7 +8,8 @@
     <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
         android:id="@+id/second_detail_videoplayer"
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+        android:layout_height="200dp"
+        android:visibility="gone"/>
 
     <com.github.lzyzsd.jsbridge.BridgeWebView
         android:id="@+id/second_detail_webview"
@@ -60,7 +61,8 @@
             android:padding="10dp"
             android:gravity="center_vertical"
             android:drawableLeft="@drawable/details_bottom_cache"
-            android:text="缓存"/>
+            android:text="缓存"
+            android:visibility="gone"/>
 
     </LinearLayout>
 </RelativeLayout>

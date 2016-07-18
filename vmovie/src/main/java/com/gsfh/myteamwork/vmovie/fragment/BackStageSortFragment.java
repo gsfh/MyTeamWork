@@ -128,6 +128,7 @@ public class BackStageSortFragment extends Fragment {
         pullToRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase refreshView) {
+                pullToRefreshListView.onRefreshComplete();
                 //获取每个按钮的id 例如 电影自习室 id是47 index=1；
                 String id = compassdatamap.get(pageIndex);
                 datalist.clear();
@@ -135,20 +136,19 @@ public class BackStageSortFragment extends Fragment {
                 int p = STARTPAGE + ADDP;//p=1
                 //进行Post请求
                 asyncRequest(id, p);
-                pullToRefreshListView.onRefreshComplete();
             }
         });
 
         pullToRefreshListView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
             @Override
             public void onLastItemVisible() {
+                pullToRefreshListView.onRefreshComplete();
                 //获取每个按钮的id 例如 电影自习室 id是47 index=1；
                 String id = compassdatamap.get(pageIndex);
                 ADDP += 1;
                 int p= STARTPAGE + ADDP;
                 //进行Post请求
                 asyncRequest(id, p);
-                pullToRefreshListView.onRefreshComplete();
             }
         });
     }

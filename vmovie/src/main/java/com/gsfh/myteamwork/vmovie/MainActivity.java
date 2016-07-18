@@ -142,6 +142,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void toLoad(View view){
+
+        Intent intent = new Intent(MainActivity.this,LoadingActivity.class);
+        startActivity(intent);
+    }
 
     public void toHome(View view){
 
