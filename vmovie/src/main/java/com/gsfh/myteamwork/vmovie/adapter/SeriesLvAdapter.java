@@ -3,15 +3,16 @@ package com.gsfh.myteamwork.vmovie.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gsfh.myteamwork.vmovie.R;
+
 import com.gsfh.myteamwork.vmovie.activity.SeriesDetail;
 import com.gsfh.myteamwork.vmovie.bean.SeriesBean;
 import com.squareup.picasso.Picasso;
@@ -85,8 +86,13 @@ public class SeriesLvAdapter extends BaseAdapter {
             public void onClick(View v) {
 
                 Intent intent=new Intent(activity,SeriesDetail.class);
-                intent.putExtra("seriesid",mList.get(position).getSeriesid());
-                activity.startActivity(intent);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("beans", (Serializable) mList);
+//                intent.putExtra("bundle",bundle);
+                 intent.putExtra("seriesid",mList.get(position).getSeriesid());
+                 Log.i("ddsfec", "onClick: "+mList.get(position).getSeriesid());
+                 activity.startActivity(intent);
+
 
             }
         });

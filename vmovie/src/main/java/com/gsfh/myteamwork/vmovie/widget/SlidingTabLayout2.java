@@ -1,6 +1,5 @@
 package com.gsfh.myteamwork.vmovie.widget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -12,22 +11,16 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gsfh.myteamwork.vmovie.R;
-import com.gsfh.myteamwork.vmovie.adapter.SeriesDetailitemLvAdapter;
-
-import java.util.ArrayList;
 
 
 /**
  * Created by moon.zhong on 2015/3/9.
  */
-public class SlidingTabLayout extends LinearLayout {
+public class SlidingTabLayout2 extends LinearLayout {
     /*默认的页卡颜色*/
     private final int DEFAULT_INDICATOR_COLOR = 0xffff00ff;
     /*默认分割线的颜色*/
@@ -48,8 +41,6 @@ public class SlidingTabLayout extends LinearLayout {
     private final int DEFAULT_BOTTOM_LINE_COLOR = 0xff000000;
     /*页面*/
     private ViewPager mViewPager;
-    private MyListView mListView;
-     private ArrayList<String> tabNameList=new ArrayList<>();
     /*页面切换监听事件*/
     private ViewPager.OnPageChangeListener mListener;
     /*页卡的颜色*/
@@ -63,7 +54,7 @@ public class SlidingTabLayout extends LinearLayout {
     /*分割线画笔*/
     private Paint mDividerPaint;
     /*获取 tab 每个 item 的信息*/
-                                                              //item
+    private TabItemName mItemName;                                                              //item
     /*当前选中的页面位置*/
     private int mSelectedPosition;
     /*页面的偏移量*/
@@ -79,19 +70,15 @@ public class SlidingTabLayout extends LinearLayout {
     /*底部线条的画笔*/
     private Paint mBottomPaint ;
 
-
-     private SlidingTabClickListener  mSlidingTabClickListener;
-
-
-    public SlidingTabLayout(Context context) {
+    public SlidingTabLayout2(Context context) {
         this(context, null);
     }
 
-    public SlidingTabLayout(Context context, AttributeSet attrs) {
+    public SlidingTabLayout2(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public SlidingTabLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SlidingTabLayout2(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         /*获取TypedArray*/
         TypedArray typedArray = getResources().obtainAttributes(attrs, R.styleable.SlidingTabLayout);
@@ -181,48 +168,41 @@ public class SlidingTabLayout extends LinearLayout {
         }
     }
 
-
-
     /**
      * 设置viewPager，初始化SlidingTab，
      * 在这个方法中为SlidingLayout设置
      * 内容，
      *
-     *
+     * @param viewPager
      */
-    public void setDataChange(ArrayList<String> tabNameList, Activity interfaceActivity) {
-        this.mSlidingTabClickListener= (SlidingTabClickListener) interfaceActivity;
+    public void setViewPager(ViewPager viewPager) {
         /*先移除所以已经填充的内容*/
         removeAllViews();
-        this.tabNameList=tabNameList;
+        /* viewPager 不能为空*/
+        if (viewPager == null) {
+            throw new RuntimeException("ViewPager不能为空");
+        }
+        mViewPager = viewPager;
+        mViewPager.setOnPageChangeListener(new InternalViewPagerChange());
         populateTabLayout();
     }
 
+    public void setViewPagerOnChangeListener(ViewPager.OnPageChangeListener pagerOnChangeListener) {
+        mListener = pagerOnChangeListener;
+    }
 
     /**
      * 填充layout，设置其内容
      */
     private void populateTabLayout() {
-
+        final PagerAdapter adapter = mViewPager.getAdapter();
         final OnClickListener tabOnClickListener = new TabOnClickListener();
-
-        for (int i = 0; i < tabNameList.size(); i++) {
+        mItemName = (TabItemName) adapter;
+        for (int i = 0; i < adapter.getCount(); i++) {
             TextView textView = createDefaultTabView(getContext());
             textView.setOnClickListener(tabOnClickListener);
-            textView.setText(tabNameList.get(i));
+            textView.setText(mItemName.getTabName(i));
             addView(textView);
-        }
-    }
-    private class TabOnClickListener implements OnClickListener {
-        @Override
-        public void onClick(View v) {
-            for (int i = 0; i < getChildCount(); i++) {
-                if (v == getChildAt(i)) {
-                  mSlidingTabClickListener.giveYouTheTabName(tabNameList.get(i),i);
-
-                    return;
-                }
-            }
         }
     }
 
@@ -239,8 +219,8 @@ public class SlidingTabLayout extends LinearLayout {
         LayoutParams layoutParams = new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
         textView.setLayoutParams(layoutParams);
         int padding = (int) (DEFAULT_TEXT_PADDING * getResources().getDisplayMetrics().density);
-        //   textView.setPadding(padding, padding, padding, padding);
-        textView.setPadding(10,5,10,5);
+     //   textView.setPadding(padding, padding, padding, padding);
+       textView.setPadding(10,5,10,5);
         textView.setLines(1);
 
 
@@ -248,21 +228,73 @@ public class SlidingTabLayout extends LinearLayout {
         return textView;
     }
 
+    private class TabOnClickListener implements OnClickListener {
+        @Override
+        public void onClick(View v) {
+            for (int i = 0; i < getChildCount(); i++) {
+                if (v == getChildAt(i)) {
+                    mViewPager.setCurrentItem(i);
+                    return;
+                }
+            }
+        }
+    }
 
+    /**
+     * @param position
+     * @param positionOffset
+     */
+    private void viewPagerChange(int position, float positionOffset) {
+        mSelectedPosition = position;
+        mSelectionOffset = positionOffset;
+        invalidate();
+    }
 
+    private class InternalViewPagerChange implements ViewPager.OnPageChangeListener {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            Log.v("zgy", "=============position=" + position + ",====positionOffset=" + positionOffset);
+            /*
+            * 规律：
+            * 当positionOffset为0时，position就是当前view的位置
+            * 当positionOffset不为0时，position为左边页面的位置
+            *                         position + 1为右边页面的位置
+            * */
+
+            viewPagerChange(position, positionOffset);
+            if (mListener != null) {
+                mListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+
+            if (mListener != null) {
+                mListener.onPageSelected(position);
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+            if (mListener != null) {
+                mListener.onPageScrollStateChanged(state);
+            }
+        }
+    }
 
     /**
      * 回调获取 item name 的接口
      */
-    public interface SlidingTabClickListener {
+    public interface TabItemName {
         /**
          * 获取 tab name
          *
-
+         * @param position
          * @return
          */
-        void giveYouTheTabName(String tabname,int nameIndex);
+        String getTabName(int position);
     }
-
 }

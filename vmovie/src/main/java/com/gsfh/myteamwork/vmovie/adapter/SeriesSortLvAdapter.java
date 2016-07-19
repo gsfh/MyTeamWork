@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gsfh.myteamwork.vmovie.R;
-import com.gsfh.myteamwork.vmovie.activity.SeriesDetail;
+
 import com.gsfh.myteamwork.vmovie.bean.SeriesBean;
 import com.squareup.picasso.Picasso;
 

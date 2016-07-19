@@ -105,6 +105,7 @@ public class SeriesFragment extends Fragment {
      * 初始化当前页控件
      */
     private void  initView(View view) {
-        mListView= (ListView) view.findViewById(R.id.series_show_lv);
+        mListView= (ListView) view.findViewById(R.id.series_show_lv2);
+
     }
 }

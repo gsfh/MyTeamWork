@@ -1,5 +1,6 @@
 package com.gsfh.myteamwork.vmovie.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  * 系列的总体数据been
  * Created by admin on 2016/7/13.
  */
-public class SeriesBean {
+public class SeriesBean implements Serializable{
     /**
      * status : 0
      * msg : ok
@@ -55,7 +56,7 @@ public class SeriesBean {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         private String seriesid;
         private String title;
         private String image;

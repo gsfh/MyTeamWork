@@ -8,15 +8,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gsfh.myteamwork.vmovie.R;
+
 import com.gsfh.myteamwork.vmovie.activity.SeriesDetail;
-import com.gsfh.myteamwork.vmovie.bean.BackStageBean;
 import com.gsfh.myteamwork.vmovie.bean.SeriesDetailBean;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by admin on 2016/7/7.
@@ -24,14 +25,23 @@ import java.util.List;
 public class SeriesDetailitemLvAdapter extends BaseAdapter {
     private Context mContext;
     private List<SeriesDetailBean.DataBean.PostsBean.ListBean> mBeenlist;
+    private   ArrayList<String> tabNameList;
     private SeriesDetailItemListener mSeriesDetailItemListener;
-
+    private Map<String, List<SeriesDetailBean.DataBean.PostsBean.ListBean>> mMap;
     private int isplaying = -1;
     public static int pubplaying = -1;
     private String mTitle;//传出的值
     private String mURL;//传出的网页
     private String mID;//传出的网页
-    private View mView;
+    private int startnum=0;//第一页的值
+
+    public SeriesDetailitemLvAdapter(SeriesDetail seriesDetail2, Map<String, List<SeriesDetailBean.DataBean.PostsBean.ListBean>> mMap, ArrayList<String> tabNameList) {
+               this.mSeriesDetailItemListener=seriesDetail2;
+               this.mMap=mMap;
+               this.tabNameList=tabNameList;
+        this.mContext = seriesDetail2;
+
+    }
 
 
     /**
@@ -48,26 +58,14 @@ public class SeriesDetailitemLvAdapter extends BaseAdapter {
         mSeriesDetailItemListener.itemClick(mTitle, mURL, mID);
         // isplaying= mSeriesDetailItemListener.itemIsPalying();
         this.notifyDataSetChanged();
-
     }
-
-    public SeriesDetailitemLvAdapter(SeriesDetail mContext, List<SeriesDetailBean.DataBean.PostsBean.ListBean> mlist) {
-        this.mContext = mContext;
-        this.mBeenlist = mlist;
-        setSeriesDetailitener(mContext);
+    //设置页面参数修改关键值
+    public void setStartnum(int startnum ){
+        this.startnum=startnum;
     }
-
-    //传入对象
-    public void setSeriesDetailitener(SeriesDetailItemListener mSeriesDetailItemListener) {
-        this.mSeriesDetailItemListener = mSeriesDetailItemListener;
-    }
-
-    ;
-
-
     @Override
     public int getCount() {
-        //  return 10;
+        mBeenlist=  mMap.get(tabNameList.get(startnum));
         return mBeenlist == null ? 0 : mBeenlist.size();
     }
 
@@ -83,9 +81,11 @@ public class SeriesDetailitemLvAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+
+
         final viewHoder hoder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_seriesdetailitem_lv_item, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_seriesdetailitem_lv_item, null);
             hoder = new viewHoder();
             hoder.title = (TextView) convertView.findViewById(R.id.seriesdetailitem_title_lv_tv);
             hoder.playing = (TextView) convertView.findViewById(R.id.seriesdetailitem_playing_lv_tv);//正在播放的按钮隐藏
@@ -103,7 +103,6 @@ public class SeriesDetailitemLvAdapter extends BaseAdapter {
         } else {
             hoder.playing.setVisibility(View.INVISIBLE);
         }
-
 
         final String title = mBeenlist.get(position).getTitle();//85（集）后面的
         String num = mBeenlist.get(position).getNumber();//85(集)
