@@ -7,7 +7,8 @@
     <com.handmark.pulltorefresh.library.PullToRefreshExpandableListView
         android:id="@+id/pe_lv_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:divider="#000000">
 
     </com.handmark.pulltorefresh.library.PullToRefreshExpandableListView>
 

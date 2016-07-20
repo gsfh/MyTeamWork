@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -32,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Fragment> fragmentList;
     private PopupWindow popupWindow;
     private int preFragmentTag = 0;
+    private LinearLayout ll_home;
+    private LinearLayout ll_series;
+    private LinearLayout ll_backstage;
+    //保留菜单的记住状态
+    private int where = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,8 +109,22 @@ public class MainActivity extends AppCompatActivity {
     private void showWindow(View view) {
 
         View contentView = LayoutInflater.from(this).inflate(R.layout.slide_window,null);
+        ll_home = (LinearLayout) contentView.findViewById(R.id.ll_slide_home);
+        ll_series = (LinearLayout) contentView.findViewById(R.id.ll_slide_series);
+        ll_backstage = (LinearLayout) contentView.findViewById(R.id.ll_slide_backstage);
 
-//        radioGroup.check();
+        //设置菜单的记住状态
+        switch (where){
+            case 0:
+                ll_home.setSelected(true);
+                break;
+            case 1:
+                ll_series.setSelected(true);
+                break;
+            case 2:
+                ll_backstage.setSelected(true);
+                break;
+        }
 
         popupWindow = new PopupWindow(contentView,
                 WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT,true);
@@ -127,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void toHome(View view){
 
+        where = 0;
         switchFragment(0);
         close();
     }
@@ -134,12 +155,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void toSeries(View view){
 
+        where = 1;
         switchFragment(1);
         close();
     }
 
     public void toBackStage(View view){
 
+        where = 2;
         switchFragment(2);
         close();
     }

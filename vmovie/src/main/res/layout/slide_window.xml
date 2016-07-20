@@ -174,6 +174,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_slide_home"
                 android:layout_width="fill_parent"
                 android:layout_height="50.0dip"
                 android:background="@drawable/side_item_bg_selector"
@@ -187,7 +188,7 @@
                     android:layout_marginLeft="45.0dip"
                     android:duplicateParentState="true"
                     android:scaleType="fitXY"
-                    android:src="@drawable/select_slide_main" />
+                    android:src="@drawable/side_home_selector" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -200,6 +201,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_slide_series"
                 android:layout_width="fill_parent"
                 android:layout_height="50.0dip"
                 android:background="@drawable/side_item_bg_selector"
@@ -213,7 +215,7 @@
                     android:layout_marginLeft="45.0dip"
                     android:duplicateParentState="true"
                     android:scaleType="fitXY"
-                    android:src="@drawable/select_slide_series" />
+                    android:src="@drawable/side_series_selector" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -226,6 +228,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_slide_backstage"
                 android:layout_width="fill_parent"
                 android:layout_height="50.0dip"
                 android:background="@drawable/side_item_bg_selector"
@@ -239,7 +242,7 @@
                     android:layout_marginLeft="45.0dip"
                     android:duplicateParentState="true"
                     android:scaleType="fitXY"
-                    android:src="@drawable/select_slide_backstage" />
+                    android:src="@drawable/side_behind_selector" />
 
                 <TextView
                     android:layout_width="wrap_content"

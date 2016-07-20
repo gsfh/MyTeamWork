@@ -242,7 +242,7 @@ public class LatestFragment extends Fragment {
     public void onStart() {
         super.onStart();
         //开始自动滚动
-        convenientBanner.startTurning(3000);
+        convenientBanner.startTurning(4000);
     }
 
     @Override
