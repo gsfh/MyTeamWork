@@ -1,83 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<ImageView
-    android:layout_width="match_parent"
-    android:layout_height="220dp"
-    android:src="@mipmap/ic_launcher"
-    android:scaleType="centerCrop"
-    android:id="@+id/item_series_show_im"/>
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp"
-    android:orientation="vertical"
-    >
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp">
-        <TextView
-            android:id="@+id/item_series_title_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TITLE"
-            android:textSize="20sp"
-            android:textColor="@color/colorblack"
-            />
-        <!--<Button-->
-            <!--android:id="@+id/item_series_clicked_btn"-->
-            <!--android:layout_width="23dp"-->
-            <!--android:layout_height="23dp"-->
-
-
-            <!--android:background="@drawable/slt_bg_view"-->
-            <!--android:layout_alignBottom="@+id/item_series_title_tv"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:layout_marginRight="20dp"-->
-            <!--android:layout_marginEnd="20dp" />-->
-
-    </RelativeLayout>
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="已更新至"/>
-         <TextView
-             android:id="@+id/item_series_num_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="5"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="集    "/>
-         <TextView
-             android:id="@+id/item_series_peoplenum_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="999"/>
-         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="人已订阅"/>
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
+        <ImageView
+            android:id="@+id/item_series_show_im"
+            android:layout_width="fill_parent"
+            android:layout_height="188.0dip"
+            android:background="@color/image_loading_bg"
+            android:scaleType="fitXY" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:background="#00000000"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13.0dip"
+                android:layout_weight="1.0"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/item_series_title_tv"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.2"
+                    android:maxLines="2"
+                    android:text="电影自习室"
+                    android:textColor="@color/black"
+                    android:textSize="18.0dip" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4.0dip"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="已更新至"
+                        android:textColor="#ff818181"
+                        android:textSize="10.0dip" />
+
+                    <TextView
+                        android:id="@+id/item_series_num_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:textColor="#ff818181"
+                        android:textSize="10.0dip" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="集    "
+                        android:textColor="#ff818181"
+                        android:textSize="10.0dip" />
+
+                    <TextView
+                        android:id="@+id/item_series_peoplenum_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="999"
+                        android:textColor="#ff818181"
+                        android:textSize="10.0dip" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="人已订阅"
+                        android:textColor="#ff818181"
+                        android:textSize="10.0dip" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="15.0dip"
+                android:layout_marginTop="15.0dip"
+                android:src="@drawable/attention" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/item_series_context_tv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="35.0dip"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:layout_marginTop="16.0dip"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.2"
+            android:maxLines="2"
+            android:text="神创意机关惊险刺激短片《多米诺接力打破 次元墙》"
+            android:textColor="@color/black"
+            android:textSize="13.0dip" />
     </LinearLayout>
-    <TextView
-        android:id="@+id/item_series_context_tv"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:textColor="@color/colorblack"
-        android:textSize="12sp"
-        android:text="内容"
-        android:lines="2"/>
-
-</LinearLayout>
-
-
 </LinearLayout>

@@ -31,10 +31,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private ArrayList<Fragment> fragmentList;
     private PopupWindow popupWindow;
-    private RadioGroup radioGroup;
-    private RadioButton[] rbArray;
     private int preFragmentTag = 0;
-    private ImageView sideSelectMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,19 +46,9 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
 
         View view = LayoutInflater.from(this).inflate(R.layout.fragment_main,null);
-        sideSelectMenu = (ImageView) view.findViewById(R.id.main_side_select_menu_iv);
 
         View windowView = LayoutInflater.from(this).inflate(R.layout.slide_window,null);
 
-        //初始化RadioGroup
-        radioGroup = (RadioGroup) windowView.findViewById(R.id.slide_guide_rg);
-
-        rbArray = new RadioButton[radioGroup.getChildCount()];
-
-        for (int i = 0; i < rbArray.length; i++) {
-
-            rbArray[i] = (RadioButton) radioGroup.getChildAt(i);
-        }
 
     }
 
@@ -97,21 +84,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void initListener() {
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-                for(int i=0;i<rbArray.length;i++){
-
-                    if(checkedId == rbArray[i].getId()){
-//                        switchFragment(i);
-                        close();
-                    }
-                }
-            }
-        });
     }
 
+    /**
+     * onClick点击事件
+     * @param view
+     */
     public void showMenu(View view){
 
         showWindow(view);
@@ -136,6 +115,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * onClick
+     * @param view
+     */
     public void toLoad(View view){
 
         Intent intent = new Intent(MainActivity.this,LoadingActivity.class);

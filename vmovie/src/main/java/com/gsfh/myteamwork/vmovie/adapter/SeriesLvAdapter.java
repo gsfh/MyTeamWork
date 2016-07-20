@@ -58,7 +58,7 @@ public class SeriesLvAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         final viewHoder hoder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_series_lv_item, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_series_lv_item, parent,false);
             hoder = new viewHoder();
             hoder.title = (TextView) convertView.findViewById(R.id.item_series_title_tv);
             hoder.num = (TextView) convertView.findViewById(R.id.item_series_num_tv);
