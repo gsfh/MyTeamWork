@@ -44,4 +44,5 @@ dependencies {
     compile 'fm.jiecao:jiecaovideoplayer:3.6.3'
     compile 'com.github.lzyzsd:jsbridge:1.0.4'
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+    compile 'org.greenrobot:greendao:2.2.0'
 }

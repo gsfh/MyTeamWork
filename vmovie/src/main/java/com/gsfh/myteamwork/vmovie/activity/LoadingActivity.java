@@ -2,6 +2,7 @@ package com.gsfh.myteamwork.vmovie.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.gsfh.myteamwork.vmovie.R;
 
@@ -10,10 +11,16 @@ import com.gsfh.myteamwork.vmovie.R;
  * 登录界面
  * Created by admin on 2016/7/17.
  */
-public class LoadingActivity  extends AppCompatActivity {
+public class LoadingActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loadactivity);
 
-    }}
+    }
+
+    public void back(View view){
+        onBackPressed();
+    }
+}

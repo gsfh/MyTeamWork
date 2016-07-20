@@ -1,1 +1,1 @@
-include ':vmovie', ':library'
+include ':vmovie', ':library', ':greendao'

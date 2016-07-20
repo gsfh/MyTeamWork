@@ -1,15 +1,18 @@
 package com.gsfh.myteamwork.vmovie.activity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,16 +20,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.google.gson.Gson;
 import com.gsfh.myteamwork.vmovie.R;
+import com.gsfh.myteamwork.vmovie.adapter.SearchHistoryAdapter;
 import com.gsfh.myteamwork.vmovie.adapter.SearchResultAdapter;
 import com.gsfh.myteamwork.vmovie.bean.SearchBean;
+import com.gsfh.myteamwork.vmovie.dao.Customer;
+import com.gsfh.myteamwork.vmovie.dao.CustomerDao;
+import com.gsfh.myteamwork.vmovie.dao.DaoMaster;
+import com.gsfh.myteamwork.vmovie.dao.DaoSession;
 import com.gsfh.myteamwork.vmovie.util.IOKCallBack;
 import com.gsfh.myteamwork.vmovie.util.OkHttpTool;
 import com.gsfh.myteamwork.vmovie.util.URLConstants;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +42,7 @@ import java.util.List;
 public class SearchActivity extends AppCompatActivity {
 
     private EditText mInputWord;
-    private TextView mClearBtn;
+    private TextView mClearHistoryBtn;
     private ImageView mInputDelBtn;
     private List<SearchBean.DataBean> mDataBeanList = new ArrayList<>();
     private SearchResultAdapter resultAdapter;
@@ -46,6 +52,10 @@ public class SearchActivity extends AppCompatActivity {
     private PullToRefreshListView listView;
     private ListView reListView;
     private int page = 1;
+    private CustomerDao customerDao;
+    private List<Customer> customerList;
+    private ListView historyListView;
+    private SearchHistoryAdapter historyAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,15 +63,38 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         initView();
+        initDataBase();
+        initHistory();
         initListener();
+    }
+
+    private void initDataBase() {
+
+        //创建一个开发环境的Helper类，如果是正式环境调用DaoMaster.OpenHelper
+        DaoMaster.DevOpenHelper mHelper = new DaoMaster.DevOpenHelper(this,"androidxx",null);
+        //通过Handler类获得数据库对象
+        SQLiteDatabase readableDatabase = mHelper.getReadableDatabase();
+        //通过数据库对象生成DaoMaster对象
+        DaoMaster daoMaster = new DaoMaster(readableDatabase);
+        //获取DaoSession对象
+        DaoSession daoSession = daoMaster.newSession();
+        //通过DaoSeesion对象获得CustomerDao对象
+        customerDao = daoSession.getCustomerDao();
+        updateHistoryList();
+
+    }
+
+    private void updateHistoryList(){
+        customerList = customerDao.loadAll();
     }
 
     private void initView() {
 
         mInputWord = (EditText) findViewById(R.id.search_edit_text);
         mInputDelBtn = (ImageView) findViewById(R.id.search_input_del);
-        mClearBtn = (TextView) findViewById(R.id.search_clear_history_btn);
+        mClearHistoryBtn = (TextView) findViewById(R.id.search_clear_history_btn);
         listView = (PullToRefreshListView) findViewById(R.id.search_listview);
+        historyListView = (ListView) findViewById(R.id.search_history_lv);
         View mHeaderView = LayoutInflater.from(this).inflate(R.layout.search_header_view,null);
         mHeaderContent = (TextView)mHeaderView.findViewById(R.id.search_header_tv);
 
@@ -69,6 +102,12 @@ public class SearchActivity extends AppCompatActivity {
         reListView.addHeaderView(mHeaderView);
 
         listView.setMode(PullToRefreshBase.Mode.BOTH);
+    }
+
+    private void initHistory() {
+
+        historyAdapter = new SearchHistoryAdapter(this,R.layout.search_history_item,customerList);
+        historyListView.setAdapter(historyAdapter);
     }
 
     private void initListener() {
@@ -99,12 +138,28 @@ public class SearchActivity extends AppCompatActivity {
         mInputDelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 mInputWord.setText("");
                 mInputDelBtn.setVisibility(View.GONE);
-                mClearBtn.setVisibility(View.VISIBLE);
+                mClearHistoryBtn.setVisibility(View.VISIBLE);
                 reListView.setVisibility(View.GONE);
+
+                historyAdapter.notifyDataSetChanged();
+                historyListView.setVisibility(View.VISIBLE);
+
                 mDataBeanList.clear();
                 page = 1;
+            }
+        });
+
+        //点击清空历史纪录
+        mClearHistoryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                customerDao.deleteAll();
+                customerList.clear();
+                historyAdapter.notifyDataSetChanged();
             }
         });
 
@@ -113,18 +168,27 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
-                mClearBtn.setVisibility(View.GONE);
+                mClearHistoryBtn.setVisibility(View.GONE);
                 reListView.setVisibility(View.VISIBLE);
                 keyWord = mInputWord.getText().toString().trim();
                 if (!keyWord.isEmpty()){
 
-                    initData(keyWord,1);
-                }
+//                    InputMethodManager im = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+//                    im.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
 
-                return false;
+                    historyListView.setVisibility(View.GONE);
+                    listView.setVisibility(View.VISIBLE);
+                    initData(keyWord,1);
+                    Customer customer = new Customer();
+                    customer.setCustomerName(keyWord);
+                    customerDao.insert(customer);
+                    updateHistoryList();
+                }
+                return true;
             }
         });
 
+        //搜索结果列表的监听
         reListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

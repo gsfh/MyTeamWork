@@ -17,7 +17,7 @@
 
             <ImageView
                 android:layout_width="fill_parent"
-                android:layout_height="250dp"
+                android:layout_height="wrap_content"
                 android:scaleType="fitXY"
                 android:src="@drawable/login_bg" />
 
@@ -102,8 +102,7 @@
                     android:layout_marginTop="60.0dip"
                     android:background="@drawable/login_btn_bg_selector"
                     android:clickable="true"
-                    android:textColor="#ffffff"
-                    android:textSize="15sp"
+                    android:onClick="onClick"
                     android:text="登录" />
 
                 <RelativeLayout
@@ -132,27 +131,33 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="22.0dip"
+                    android:layout_marginTop="15.0dip"
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="43.0dip"
+                        android:layout_height="43.0dip"
                         android:clickable="true"
+                        android:onClick="onClick"
+                        android:scaleType="center"
                         android:src="@drawable/login_icon3" />
 
                     <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:layout_marginLeft="70.0dip"
-                        android:layout_marginRight="70.0dip"
+                        android:layout_width="43.0dip"
+                        android:layout_height="43.0dip"
+                        android:layout_marginLeft="50.0dip"
+                        android:layout_marginRight="50.0dip"
                         android:clickable="true"
+                        android:onClick="onClick"
+                        android:scaleType="center"
                         android:src="@drawable/login_icon1" />
 
                     <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="43.0dip"
+                        android:layout_height="43.0dip"
                         android:clickable="true"
+                        android:onClick="onClick"
+                        android:scaleType="center"
                         android:src="@drawable/login_icon2" />
                 </LinearLayout>
 
@@ -173,7 +178,6 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:onClick="back"
             android:paddingLeft="18.0dip"
             android:paddingRight="28.0dip"
             android:src="@drawable/back_icon" />

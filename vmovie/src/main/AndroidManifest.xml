@@ -17,9 +17,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SearchActivity"/>
+        <activity android:name=".activity.SearchActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.LoadingActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".activity.FirstDetailActivity"/>
-        <activity android:name=".activity.LoadingActivity"/>
         <activity android:name=".activity.SeriesDetail"/>
         <activity android:name=".activity.ChannelSort_HotActivity"/>
 
