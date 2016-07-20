@@ -101,4 +101,6 @@
     <color name="white_ed">#ffededed</color>
     <color name="white_f6">#fff6f6f6</color>
     <color name="white_f9">#fff9f9f9</color>
+    <color name="colormiddlegary">#d7dadb</color>
+    <color name="colormiddlexgary">#afb2b3</color>
 </resources>

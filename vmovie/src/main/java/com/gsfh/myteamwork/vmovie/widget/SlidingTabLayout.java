@@ -173,10 +173,11 @@ public class SlidingTabLayout extends LinearLayout {
         /*绘制滑动的页卡*/
         canvas.drawRect(left, height - mIndicatorHeight, right, height, mIndicatorPaint);
         canvas.drawRect(0,height - mBottomLineHeight,getWidth(),height,mBottomPaint);
-        for (int i = 0; i < getChildCount() - 1; i++) {
+        int bili=2;
+        for (int i = 0; i < getChildCount() - 0; i++) {//改了建议。divider
             View child = getChildAt(i);
-            canvas.drawLine(child.getRight(), mDividerMargin,
-                    child.getRight(), height - mDividerMargin,
+            canvas.drawLine(child.getRight(), mDividerMargin*bili,
+                    child.getRight(), height - mDividerMargin*bili,
                     mDividerPaint);
         }
     }
@@ -240,7 +241,7 @@ public class SlidingTabLayout extends LinearLayout {
         textView.setLayoutParams(layoutParams);
         int padding = (int) (DEFAULT_TEXT_PADDING * getResources().getDisplayMetrics().density);
         //   textView.setPadding(padding, padding, padding, padding);
-        textView.setPadding(10,5,10,5);
+        textView.setPadding(10,10,10,5);
         textView.setLines(1);
 
 

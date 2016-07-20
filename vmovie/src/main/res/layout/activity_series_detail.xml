@@ -66,6 +66,7 @@
         android:paddingLeft="10dp">
 
         <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nestscrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -75,9 +76,10 @@
                 android:orientation="vertical">
 
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="10dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="10dp" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -96,13 +98,15 @@
                         android:textSize="20sp" />
 
                     <TextView
+                        android:id="@+id/seriesdetail_itemsort_readcount_tv"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:clickable="true"
                         android:drawableTop="@drawable/attention"
                         android:gravity="center"
-                        android:text="999人订阅" />
+                        android:padding="10dp"
+                        android:text="0人订阅" />
 
 
                 </LinearLayout>
@@ -159,36 +163,31 @@
                     android:text="查看全部"
                     android:visibility="gone" />
 
-            
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="40dp"
-    android:orientation="horizontal">
-    <com.gsfh.myteamwork.vmovie.widget.SlidingTabLayout
-        android:id="@+id/activity_seriesdetail_tabs_tabll"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        zgy:bottomLineHeight="0dp"
-        android:background="@color/colorgary"
-        zgy:indicatorHeight="2dp" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/colorgary"
-        />
-</LinearLayout>
-                    
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <com.gsfh.myteamwork.vmovie.widget.SlidingTabLayout
+                        android:id="@+id/activity_seriesdetail_tabs_tabll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@color/colorgary"
+                        zgy:bottomLineHeight="0dp"
+                        zgy:indicatorHeight="0dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@color/colorgary" />
+                </LinearLayout>
 
 
-
-               <com.gsfh.myteamwork.vmovie.widget.MyListView
-                   android:id="@+id/series_show_lv"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"/>
-                <!--<ListView-->
-                   <!--android:id="@+id/series_show_lv"-->
-                   <!--android:layout_width="match_parent"-->
-                   <!--android:layout_height="wrap_content"/>-->
+                <com.gsfh.myteamwork.vmovie.widget.MyListView
+                    android:id="@+id/series_show_lv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
@@ -196,9 +195,6 @@
         </android.support.v4.widget.NestedScrollView>
 
     </LinearLayout>
-
-
-
 
 
     <LinearLayout
@@ -212,51 +208,35 @@
         android:paddingRight="5dp">
 
         <TextView
-            android:id="@+id/activity_series_detail_comment_reply_tv"
+            android:id="@+id/activity_series_detail_share_tv"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:clickable="true"
-            android:drawableRight="@drawable/reply_edit"
-
-
-            />
-
-        <EditText
-            android:id="@+id/activity_series_detail_editv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:background="@null"
-            android:completionThreshold="1"
-            android:hint="我来说两句..."
-            android:lines="1"
-            android:textCursorDrawable="@null"
-
-
-            />
+            android:drawableLeft="@drawable/detail_bottom_share"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="0" />
 
 
         <TextView
-            android:id="@+id/activity_series_detail_comment_cach_tv"
+            android:id="@+id/activity_series_detail_comment_tv2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawableLeft="@drawable/details_bottom_comment"
+            android:gravity="center_vertical"
+            android:text="0" />
+
+        <TextView
+            android:id="@+id/activity_series_detail_cach_tv"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:drawableLeft="@drawable/details_bottom_cache"
+            android:gravity="center_vertical"
+            android:text="已缓存" />
 
-
-            android:gravity="center" />
-
-        <TextView
-            android:id="@+id/activity_series_detail_comment_title2_tv"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:drawableLeft="@drawable/details_bottom_comment"
-            android:gravity="center"
-
-            android:text="20" />
 
     </LinearLayout>
 
