@@ -21,6 +21,8 @@
         <activity android:name=".activity.FirstDetailActivity"/>
         <activity android:name=".activity.LoadingActivity"/>
         <activity android:name=".activity.SeriesDetail"/>
+        <activity android:name=".activity.ChannelSort_HotActivity"/>
+
     </application>
 
 </manifest>

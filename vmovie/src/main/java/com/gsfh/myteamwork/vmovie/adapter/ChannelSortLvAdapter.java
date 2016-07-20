@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.gsfh.myteamwork.vmovie.R;
 import com.gsfh.myteamwork.vmovie.activity.ChannelSort_HotActivity;
 import com.gsfh.myteamwork.vmovie.bean.BackStageBean;
+import com.gsfh.myteamwork.vmovie.bean.ChannelDetailBean;
 import com.gsfh.myteamwork.vmovie.bean.ChannelSortBean;
 import com.squareup.picasso.Picasso;
 
@@ -23,17 +24,21 @@ import java.util.List;
  */
 public class ChannelSortLvAdapter extends BaseAdapter {
     private Context context;
-   private List<ChannelSortBean.DataBean> mBeenlist;
+    private List<ChannelDetailBean.DataBean> mBeenlist;
+    private OnitemClickListener onitemClickListener;
 
-    public ChannelSortLvAdapter(ChannelSort_HotActivity channelSort_hotActivity, List<ChannelSortBean.DataBean> sortList) {
+    public ChannelSortLvAdapter(ChannelSort_HotActivity channelSort_hotActivity, List<ChannelDetailBean.DataBean> sortList) {
         this.mBeenlist = sortList;
-        this.context = context;
+        this.context = channelSort_hotActivity;
+    }
 
+    public void setOnitemClickListener(OnitemClickListener onitemClickListener){
+       this.onitemClickListener=onitemClickListener;
     }
 
     @Override
     public int getCount() {
-      //  return 10;
+        //  return 10;
         return mBeenlist == null ? 0 : mBeenlist.size();
     }
 
@@ -51,34 +56,48 @@ public class ChannelSortLvAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final viewHoder hoder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_backstagesort_lv_item, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_channelsort_lv_item, parent, false);
             hoder = new viewHoder();
-            hoder.title = (TextView) convertView.findViewById(R.id.backstagesort_title_show_tv);
-            hoder.share = (TextView) convertView.findViewById(R.id.backstagesort_share_tv);
-            hoder.collect = (TextView) convertView.findViewById(R.id.backstagesort_collect_tv);
-            hoder.imageView = (ImageView) convertView.findViewById(R.id.backstagesort_iv);
+            hoder.title = (TextView) convertView.findViewById(R.id.item_channelsort_lv_item_tv);
+            hoder.time = (TextView) convertView.findViewById(R.id.item_channelsort_time_item_tv);
+            hoder.imageView = (ImageView) convertView.findViewById(R.id.item_channelsort_lv_item_im);
             convertView.setTag(hoder);
         } else {
             hoder = (viewHoder) convertView.getTag();
         }
 
-        String title=mBeenlist.get(position).getTitle();
-        String share=mBeenlist.get(position).getShare_num();
-        String collect=mBeenlist.get(position).getLike_num();
-        String mUrl=mBeenlist.get(position).getImage();
+        String title = mBeenlist.get(position).getTitle();
+        String cate = mBeenlist.get(position).getCates().get(0).getCatename();
+        String duration = mBeenlist.get(position).getDuration();
+        Integer time = Integer.valueOf(duration);
+        String result = cate + " / " + time % 60 + ":" + time / 60;
+        String mUrl = mBeenlist.get(position).getImage();
 
-     hoder.title.setText(title);
-     hoder.share.setText(share);
-     hoder.collect.setText(collect);
+        hoder.title.setText(title);
+        hoder.time.setText(result);
         Picasso.with(context).load(mUrl).into(hoder.imageView);
+      final   String postid=mBeenlist.get(position).getPostid();
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onitemClickListener.itemClick(postid);
+            }
+        });
         return convertView;
     }
+
+
+
+
 
     class viewHoder {
 
         private TextView title;
-        private TextView share;
-        private TextView collect;
+        private TextView time;
         private ImageView imageView;
+    }
+
+    public interface OnitemClickListener{
+        void itemClick(String postid);
     }
 }

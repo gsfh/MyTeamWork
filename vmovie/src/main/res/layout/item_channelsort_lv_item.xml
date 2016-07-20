@@ -4,41 +4,34 @@
     android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/iv_latest_image"
+            android:id="@+id/item_channelsort_lv_item_im"
             android:layout_width="match_parent"
             android:layout_height="230dp"
             android:src="@mipmap/ic_launcher" />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_alignBottom="@id/iv_latest_image"
+            android:layout_height="230dp"
+            android:layout_alignBottom="@id/item_channelsort_lv_item_im"
             android:padding="10dp"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_latest_title"
+                android:id="@+id/item_channelsort_lv_item_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/tv_latest_sort"
+                android:layout_above="@+id/item_channelsort_time_item_tv"
                 android:text="斩获国内外9项大奖文艺片《路边野餐》终极预告片"
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/tv_latest_sort"
+                android:id="@+id/item_channelsort_time_item_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:text="科幻"
-                android:textColor="#ffffff" />
-            <TextView
-                android:id="@+id/tv_latest_video_play_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_toRightOf="@+id/tv_latest_sort"
-                android:text="4'39''"
-                android:textColor="#ffffff" />
+                android:text="科幻 / 4'39''"
+                android:textColor="@color/colorwrite"
+                />
         </RelativeLayout>
 </RelativeLayout>

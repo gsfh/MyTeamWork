@@ -1,7 +1,7 @@
 package com.gsfh.myteamwork.vmovie.fragment;
 
 import android.content.Context;
-import android.net.wifi.p2p.WifiP2pManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,15 +11,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.gsfh.myteamwork.vmovie.R;
+import com.gsfh.myteamwork.vmovie.activity.ChannelSort_HotActivity;
 import com.gsfh.myteamwork.vmovie.adapter.ChannelRCYAdapter;
-import com.gsfh.myteamwork.vmovie.bean.BackStageBean;
 import com.gsfh.myteamwork.vmovie.bean.ChannalBean;
-import com.gsfh.myteamwork.vmovie.util.IOKCallBack;
-import com.gsfh.myteamwork.vmovie.util.OkHttpTool;
 import com.gsfh.myteamwork.vmovie.util.URLConstants;
 
 import java.io.IOException;
@@ -93,6 +90,18 @@ public class ChannelFragment extends Fragment {
     private void bindAdapter() {
         mRCYAdapter = new ChannelRCYAdapter(mContext, mChannalList);
         mRecyclerView.setAdapter(mRCYAdapter);
+        mRCYAdapter.setOnItemClickListener(new ChannelRCYAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, String tab, String type, String cate_id) {
+                Log.i("ddsfec", "onItemClick: "+tab+" "+type+" "+cate_id);
+                Intent intent = new Intent(getActivity(), ChannelSort_HotActivity.class);
+                intent.putExtra("type", type);
+                intent.putExtra("tab", tab);
+                intent.putExtra("cateid", cate_id);
+                startActivity(intent);
+            }
+        });
+
     }
 
     /**
@@ -131,7 +140,7 @@ public class ChannelFragment extends Fragment {
                     @Override
                     public void run() {
                         bindAdapter();
-                        mRCYAdapter.notifyDataSetChanged();
+//                        mRCYAdapter.notifyItemChanged();
                     }
                 });
 
@@ -145,8 +154,9 @@ public class ChannelFragment extends Fragment {
      */
     private void initView(View view) {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.channel_show_lv);
-        mManager = new GridLayoutManager(mContext, 2);
+        mManager = new GridLayoutManager(getActivity(), 2);
         mRecyclerView.setLayoutManager(mManager);
+        mRecyclerView.setHasFixedSize(true);//设置无需便利检测item高度
 
     }
 }

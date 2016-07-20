@@ -2,9 +2,8 @@ package com.gsfh.myteamwork.vmovie.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -12,8 +11,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.gsfh.myteamwork.vmovie.R;
 import com.gsfh.myteamwork.vmovie.adapter.ChannelSortLvAdapter;
-import com.gsfh.myteamwork.vmovie.bean.ChannalBean;
-import com.gsfh.myteamwork.vmovie.bean.ChannelSortBean;
+import com.gsfh.myteamwork.vmovie.bean.ChannelDetailBean;
 import com.gsfh.myteamwork.vmovie.util.URLConstants;
 
 import java.io.IOException;
@@ -32,12 +30,13 @@ import okhttp3.Response;
  * 频道的跳转页面
  * Created by admin on 2016/7/20.
  */
-public class ChannelSort_HotActivity extends AppCompatActivity {
+public class ChannelSort_HotActivity extends AppCompatActivity implements ChannelSortLvAdapter.OnitemClickListener {
     //按钮名字
     private String tabname;
     private String tab;
+    private String cateid;
     private OkHttpClient okHttpClient = new OkHttpClient();
-    private List<ChannelSortBean.DataBean> sortList = new ArrayList<>();
+    private List<ChannelDetailBean.DataBean> sortList = new ArrayList<>();
 
     //控件
     private ImageView imageViewback;
@@ -47,17 +46,23 @@ public class ChannelSort_HotActivity extends AppCompatActivity {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channelsort_hot);
-
+        Log.i("ddsfec", "onCreate: ");
         //初始化数据
         initData();
         //初始化控件
         initView();
         //绑定适配器
         bindAdapter();
+        //点击事件
+        initListener();
 
+    }
+   //监听跳转
+    private void initListener() {
+        mLVAdapter.setOnitemClickListener(ChannelSort_HotActivity.this);
     }
 
     /**
@@ -88,9 +93,10 @@ public class ChannelSort_HotActivity extends AppCompatActivity {
         Intent intent = getIntent();
         tabname = intent.getStringExtra("type");
         tab = intent.getStringExtra("tab");
-
+        cateid = intent.getStringExtra("cateid");
+        Log.i("ddsfec", "onResponse: "+tab);
         //网络数据
-        asyncRequest(tab, 1);
+        asyncRequest(cateid, 1);
     }
 
     /**
@@ -102,13 +108,13 @@ public class ChannelSort_HotActivity extends AppCompatActivity {
         String page = p + "";
         //封装Post请求的参数
         FormBody formBody = new FormBody.Builder()
-                .add("tab", id)
+                .add("cateid", id)
                 .add("p", page)
                 .add("size", "10")
                 .build();
         //创建一个Request对象
         Request request = new Request.Builder()
-                .url(URLConstants.URL_CHANNEL) //网络请求地址
+                .url(URLConstants.URL_INCATE) //网络请求地址
                 .post(formBody) //Post请求，并且将Post请求需要的参数封装到FormBody中
                 .build();
 
@@ -125,8 +131,8 @@ public class ChannelSort_HotActivity extends AppCompatActivity {
                     return;
                 }
                 Gson gson = new Gson();
-                ChannelSortBean sortBean = gson.fromJson(result, ChannelSortBean.class);
-                sortList.addAll(sortBean.getData());
+                ChannelDetailBean detailBean = gson.fromJson(result,ChannelDetailBean .class);
+                sortList.addAll(detailBean.getData());
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -136,6 +142,15 @@ public class ChannelSort_HotActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void itemClick(String postid) {
+        Intent intent=new Intent(ChannelSort_HotActivity.this,FirstDetailActivity.class);
+        intent.putExtra("id",postid);
+        startActivity(intent);
+
+
     }
 }
 
