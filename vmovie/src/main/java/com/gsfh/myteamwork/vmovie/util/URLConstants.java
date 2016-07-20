@@ -13,6 +13,9 @@ public class URLConstants {
 
     //首页最新详情
     public static final String LATEST_DETAIL_URL = "http://app.vmoiver.com/apiv3/post/view";
+    //首页频道页面
+    public static final String URL_CHANNEL=" http://app.vmoiver.com/apiv3/cate/getList";
+
 
     //搜索
     public static final String SEARCH_URL = "http://app.vmoiver.com/apiv3/search/index";

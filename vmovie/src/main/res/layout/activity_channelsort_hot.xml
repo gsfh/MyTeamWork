@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gsfh.myteamwork.vmovie.MainActivity"
+    android:orientation="vertical">
+
+
+
+        <RelativeLayout
+            android:id="@+id/channelsort_hot_bar_ll"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+
+            android:background="@color/colorPrimaryDark"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/channelsort_hot_back_im"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onClick"
+                android:padding="15dp"
+                android:src="@drawable/abc_ab_back_alphai" />
+
+
+            <TextView
+                android:id="@+id/channelsort_hot_tab_tv"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:gravity="center"
+                android:text="可能热门"
+                android:textColor="#ffffff"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+    <ListView
+        android:id="@+id/channelsort_hot_show_lv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="11"
+       >
+    </ListView>
+
+</LinearLayout>
