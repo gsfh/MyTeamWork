@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="56.0dip"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0.0dip"
+            android:layout_height="33.0dip"
+            android:layout_marginLeft="13.0dip"
+            android:layout_weight="1.0"
+            android:background="#fff5f5f5"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_marginLeft="10.0dip"
+                android:src="@drawable/home_search_disable" />
+
+            <EditText
+                android:id="@+id/search_edit_text"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="9.0dip"
+                android:layout_weight="1.0"
+                android:background="@null"
+                android:hint="请输入要搜索的内容"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:maxLength="50"
+                android:singleLine="true"
+                android:textColor="#ff1f1f1f"
+                android:textColorHighlight="#ffa7a7a7"
+                android:textColorHint="#ffa7a7a7"
+                android:textSize="13.0dip" />
+
+            <ImageView
+                android:id="@+id/search_input_del"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12.0dip"
+                android:layout_marginRight="10.0dip"
+                android:padding="7dp"
+                android:src="@drawable/search_input_del"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:paddingLeft="15.0dip"
+            android:paddingRight="15.0dip"
+            android:text="取消"
+            android:textColor="#ff252525"
+            android:textSize="15.0dip"
+            android:onClick="cancel"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dip"
+        android:background="#ffebebeb" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+    <TextView
+        android:id="@+id/search_clear_history_btn"
+        android:layout_width="140.0dip"
+        android:layout_height="37.0dip"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="42.0dip"
+        android:background="@drawable/clear_btn_bg"
+        android:gravity="center"
+        android:text="清除历史记录"
+        android:textColor="#ffb8b8b8"
+        android:textSize="15.0dip" />
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/search_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

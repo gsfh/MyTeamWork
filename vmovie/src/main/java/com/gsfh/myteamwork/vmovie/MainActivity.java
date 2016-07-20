@@ -14,11 +14,11 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
-import com.gsfh.myteamwork.vmovie.activity.FirstDetailActivity;
 import com.gsfh.myteamwork.vmovie.activity.LoadingActivity;
+import com.gsfh.myteamwork.vmovie.activity.SearchActivity;
 import com.gsfh.myteamwork.vmovie.fragment.BackStageFragment;
+import com.gsfh.myteamwork.vmovie.fragment.LatestFragment;
 import com.gsfh.myteamwork.vmovie.fragment.MainFragment;
 import com.gsfh.myteamwork.vmovie.fragment.SeriesFragment;
 
@@ -31,10 +31,8 @@ public class MainActivity extends AppCompatActivity {
      */
     private ArrayList<Fragment> fragmentList;
     private PopupWindow popupWindow;
-    private ImageView mImageViewLoad;
     private RadioGroup radioGroup;
     private RadioButton[] rbArray;
-    private ImageView closeIv;
     private int preFragmentTag = 0;
     private ImageView sideSelectMenu;
 
@@ -49,13 +47,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        mImageViewLoad= (ImageView) findViewById(R.id.slide_window_load);
 
-        sideSelectMenu = (ImageView) findViewById(R.id.main_side_select_menu_iv);
+        View view = LayoutInflater.from(this).inflate(R.layout.fragment_main,null);
+        sideSelectMenu = (ImageView) view.findViewById(R.id.main_side_select_menu_iv);
 
         View windowView = LayoutInflater.from(this).inflate(R.layout.slide_window,null);
 
-        closeIv = (ImageView) windowView.findViewById(R.id.slide_close_iv);
         //初始化RadioGroup
         radioGroup = (RadioGroup) windowView.findViewById(R.id.slide_guide_rg);
 
@@ -100,14 +97,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initListener() {
 
-
-        sideSelectMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showWindow(v);
-            }
-        });
-
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -121,6 +110,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void showMenu(View view){
+
+        showWindow(view);
     }
 
     /**
@@ -154,11 +148,6 @@ public class MainActivity extends AppCompatActivity {
         close();
     }
 
-//    public void toload(View v){
-//Toast.makeText(MainActivity.this,"ddsfec",Toast.LENGTH_SHORT).show();
-////                    Intent intent = new Intent(MainActivity.this, LoadingActivity.class);
-////                     startActivity(intent);
-//    }
 
     public void toSeries(View view){
 
@@ -234,8 +223,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void search(View view){
 
-//        Intent intent = new Intent(MainActivity.this, FirstDetailActivity.class);
-//        intent.putExtra("id","3958");
-//        startActivity(intent);
+        Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+        startActivity(intent);
     }
 }

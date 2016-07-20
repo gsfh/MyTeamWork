@@ -40,9 +40,9 @@ public class OkHttpTool {
                 throw new NullPointerException("url is null");
             }
 
-            if (!url.matches(URL_REGEX)) {
-                throw new IllegalArgumentException("url is error");
-            }
+//            if (!url.matches(URL_REGEX)) {
+//                throw new IllegalArgumentException("url is error");
+//            }
 
             this.execute(url);
             return this;

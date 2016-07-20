@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="80.0dip"
+        android:layout_marginBottom="10.0dip"
+        android:layout_marginLeft="10.0dip"
+        android:layout_marginRight="10.0dip"
+        android:layout_marginTop="10.0dip"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="130.0dip"
+            android:layout_height="80.0dip"
+            android:layout_marginRight="16.0dip">
+
+            <ImageView
+                android:id="@+id/search_list_item_movie_image"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/image_loading_bg"
+                android:scaleType="fitXY" />
+
+            <TextView
+                android:id="@+id/search_item_play_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="5.0dip"
+                android:layout_marginRight="10.0dip"
+                android:text="09:11"
+                android:textColor="#ffffffff"
+                android:textSize="11.0dip" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/search_item_title"
+                    style="@style/msguserename_text"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3.0dip"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.1"
+                    android:maxLines="2"
+                    android:text="心中有一个梦想跟新至第25集个人股IE人hi而hi说哈安慰为高温高娃娃和阿尔" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12.0dip"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/search_item_rank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textSize="11.0dip"
+                    android:text="8分"/>
+
+                <TextView
+                    android:id="@+id/search_item_share_counts"
+                    style="@style/prompt_text"
+                    android:drawableLeft="@drawable/black_share_icon"
+                    android:drawablePadding="5.0dip"
+                    android:gravity="center_vertical"
+                    android:text="30660"
+                    android:textColor="#ff989898"
+                    android:textSize="11.0dip" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

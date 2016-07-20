@@ -17,6 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.SearchActivity"/>
         <activity android:name=".activity.FirstDetailActivity"/>
         <activity android:name=".activity.LoadingActivity"/>
         <activity android:name=".activity.SeriesDetail"/>

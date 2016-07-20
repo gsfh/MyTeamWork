@@ -1,293 +1,84 @@
 package com.gsfh.myteamwork.vmovie.fragment;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListView;
-import android.widget.ImageView;
 
-import com.bigkoo.convenientbanner.ConvenientBanner;
-import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
-import com.bigkoo.convenientbanner.holder.Holder;
-import com.google.gson.Gson;
 import com.gsfh.myteamwork.vmovie.R;
-import com.gsfh.myteamwork.vmovie.activity.FirstDetailActivity;
-import com.gsfh.myteamwork.vmovie.adapter.LatestAdapter;
-import com.gsfh.myteamwork.vmovie.bean.LatestBean;
-import com.gsfh.myteamwork.vmovie.bean.MainBannerBean;
-import com.gsfh.myteamwork.vmovie.util.IOKCallBack;
-import com.gsfh.myteamwork.vmovie.util.OkHttpTool;
-import com.gsfh.myteamwork.vmovie.util.URLConstants;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
-import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
-/**
- * Created by GSFH on 2016-7-13.
- */
 public class MainFragment extends Fragment {
 
-    private ConvenientBanner convenientBanner;
-    private List<MainBannerBean.DataBean> bannerDataList = new ArrayList<>();
-    private List<String> bannerUrlList = new ArrayList<>();
-    private List<LatestBean.DataBean> latestList = new ArrayList<>();
-    private PullToRefreshExpandableListView listView;
-    private ExpandableListView reFreshListView;
-    private List<String> dateList = new ArrayList<>();
-    private Map<String,List<LatestBean.DataBean>> map = new LinkedHashMap<>();
-    private LatestAdapter latestAdapter;
-    private int page = 1;
+    private TabLayout mTabLayout;
+    private ViewPager mViewPager;
 
-    @Nullable
+    private List<Fragment> fragmentList = new ArrayList<>();
+    private List<String> mTitleDatas = new ArrayList<>();
+    private MyViewPagerAdapter mViewPagerAdapter;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_main,null);
-        listView = (PullToRefreshExpandableListView) view.findViewById(R.id.pe_lv_main);
-        listView.setMode(PullToRefreshBase.Mode.BOTH);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        mTabLayout = (TabLayout) view.findViewById(R.id.main_fragment_tab);
+        mViewPager = (ViewPager) view.findViewById(R.id.main_fragment_vp);
 
-        View bannerView = inflater.inflate(R.layout.main_header_view,null);
-        convenientBanner = (ConvenientBanner) bannerView.findViewById(R.id.convenientBanner);
+        //1.准备数据源
+        initData();
+        initTitleDatas();
+        //2.创建适配器
+        mViewPagerAdapter = new MyViewPagerAdapter(getChildFragmentManager());
+        //3.关联适配器
+        mViewPager.setAdapter(mViewPagerAdapter);
 
-        reFreshListView = listView.getRefreshableView();
-
-        reFreshListView.addHeaderView(bannerView);
-
-        initAdapter();
-        initData(1);
-        initLinstener();
+        //4.TabLayout初始化
+        mTabLayout.setupWithViewPager(mViewPager);
 
         return view;
     }
 
-    private void initAdapter() {
+    private void initData() {
 
-        latestAdapter = new LatestAdapter(getContext(),map,dateList);
-        reFreshListView.setAdapter(latestAdapter);
-
-//        设置ExpandableListView点击不收缩
-        reFreshListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                return true;
-            }
-        });
+        fragmentList.add(new LatestFragment());
+        fragmentList.add(new ChannelFragment());
 
     }
 
-    private void initData(Integer page) {
+    private void initTitleDatas() {
 
-        /**
-         * 列表数据的网络请求
-         */
-        String p = page.toString();
-        Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("p", p);
-        paramMap.put("size","20");
-        paramMap.put("tab","latest");
-
-        OkHttpTool.newInstance().post(paramMap).start(URLConstants.LATEST_URL).callback(new IOKCallBack() {
-            @Override
-            public void success(String result) {
-
-                if (null == result){
-                    return;
-                }
-
-                Gson gson = new Gson();
-                LatestBean latestBean = gson.fromJson(result,LatestBean.class);
-                latestList.addAll(latestBean.getData());
-
-                long firstTime = latestList.get(0).getPublish_time();
-                SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
-                String firstDate = sdf.format(new Date(firstTime*1000));
-                //添加第一条日期到日期列表
-                dateList.clear();
-                dateList.add(firstDate);
-                //创建第一个内容列表
-                List<LatestBean.DataBean> childList = new ArrayList<>();
-                //添加第一条数据到map
-                map.clear();
-                map.put(firstDate,childList);
-                //遍历所有数据
-                for (int i = 0; i < latestList.size(); i++) {
-
-                    LatestBean.DataBean bean = latestList.get(i);
-                    long time = bean.getPublish_time();
-                    String date = sdf.format(new Date(time*1000));
-
-                    if (date.equals(firstDate)){
-                        //添加一个日期内的内容
-                        childList.add(bean);
-                    }else {
-                        //不同日期则创建一个新的内容列表
-                        childList = new ArrayList<>();
-                        //添加新的数据到map中
-                        map.put(date,childList);
-                        //添加新的内容数据
-                        childList.add(bean);
-                        //添加新的日期到日期列表
-                        dateList.add(date);
-                        firstDate = date;
-                    }
-
-                }
-
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        latestAdapter.notifyDataSetChanged();
-                        //默认所有的Group全部展开
-                        for (int i = 0; i < dateList.size(); i++) {
-                            reFreshListView.expandGroup(i);
-                        }
-                    }
-                });
-
-            }
-        });
-
-        /**
-         * 头部视图的网络数据请求
-         */
-        OkHttpTool.newInstance().start(URLConstants.LATEST_BANNER_URL).callback(new IOKCallBack() {
-            @Override
-            public void success(String result) {
-
-                if (null == result){
-                    return;
-                }
-
-                Gson gson = new Gson();
-                MainBannerBean bannerBean = gson.fromJson(result,MainBannerBean.class);
-
-                bannerDataList.clear();
-                bannerDataList.addAll(bannerBean.getData());
-
-                bannerUrlList.clear();
-                for (MainBannerBean.DataBean data : bannerDataList) {
-                    bannerUrlList.add(data.getImage());
-                }
-
-                initBanner();
-            }
-        });
-    }
-
-    private void initBanner() {
-
-        convenientBanner.setPages(new CBViewHolderCreator<LocalImageHolderView>() {
-
-            @Override
-            public LocalImageHolderView createHolder() {
-
-                return new LocalImageHolderView();
-            }
-        },bannerUrlList)
-                .setPageIndicator(new int[]{R.drawable.main_header_dot_n,R.drawable.main_header_dot_s})
-                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
+        mTitleDatas.add("最新");
+        mTitleDatas.add("频道");
 
     }
 
-    public class LocalImageHolderView implements Holder<String> {
+    class MyViewPagerAdapter extends FragmentPagerAdapter {
 
-        private ImageView imageView;
 
-        @Override
-        public View createView(Context context) {
-
-            imageView = new ImageView(context);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-            return imageView;
+        public MyViewPagerAdapter(FragmentManager fm) {
+            super(fm);
         }
 
         @Override
-        public void UpdateUI(Context context, final int position, String data) {
-
-            Picasso.with(context).load(data).into(imageView);
-
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    String postid = bannerDataList.get(position).getExtra_data().getApp_banner_param();
-
-                    Intent intent = new Intent(getActivity(),FirstDetailActivity.class);
-
-                    intent.putExtra("id",postid);
-
-                    startActivity(intent);
-                }
-            });
+        public Fragment getItem(int position) {
+            return fragmentList.get(position);
         }
 
+        @Override
+        public int getCount() {
+            return fragmentList == null ? 0 : fragmentList.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mTitleDatas.get(position);
+        }
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        //开始自动滚动
-        convenientBanner.startTurning(3000);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        //停止滚动
-        convenientBanner.stopTurning();
-    }
-
-    private void initLinstener() {
-
-        listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ExpandableListView>() {
-            @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ExpandableListView> refreshView) {
-
-                listView.onRefreshComplete();
-                latestList.clear();
-                initData(1);
-            }
-
-            @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ExpandableListView> refreshView) {
-
-                page ++;
-                initData(page);
-                listView.onRefreshComplete();
-            }
-        });
-
-
-        reFreshListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-
-                String postid = map.get(dateList.get(groupPosition)).get(childPosition).getPostid();
-
-                Intent intent = new Intent(getActivity(), FirstDetailActivity.class);
-
-                intent.putExtra("id",postid);
-
-                startActivity(intent);
-
-                return true;
-            }
-        });
-    }
-
 }

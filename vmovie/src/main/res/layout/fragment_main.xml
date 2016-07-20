@@ -1,14 +1,60 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.gsfh.myteamwork.vmovie.fragment.MainFragment">
 
-    <com.handmark.pulltorefresh.library.PullToRefreshExpandableListView
-        android:id="@+id/pe_lv_main"
+    <LinearLayout
+        android:id="@+id/ll_main_top_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal">
 
-    </com.handmark.pulltorefresh.library.PullToRefreshExpandableListView>
+        <ImageView
+            android:id="@+id/main_side_select_menu_iv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="15dp"
+            android:src="@drawable/home_side"
+            android:onClick="showMenu"/>
 
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:background="@color/colorPrimaryDark">
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/main_fragment_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                app:tabIndicatorColor="#ffffff"
+                app:tabSelectedTextColor="#ffffff"
+                app:tabTextColor="#a3a3a3" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/main_search_iv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="search"
+            android:padding="15dp"
+            android:src="@drawable/home_search" />
+
+    </LinearLayout>
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_fragment_vp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10" />
 </LinearLayout>

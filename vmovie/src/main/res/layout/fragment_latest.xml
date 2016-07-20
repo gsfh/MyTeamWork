@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gsfh.myteamwork.vmovie.MainActivity"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/fl_container"
+    <com.handmark.pulltorefresh.library.PullToRefreshExpandableListView
+        android:id="@+id/pe_lv_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+    </com.handmark.pulltorefresh.library.PullToRefreshExpandableListView>
 
 </LinearLayout>

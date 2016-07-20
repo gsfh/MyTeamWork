@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gsfh.myteamwork.vmovie.MainActivity"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/fl_container"
+    <TextView
+        android:id="@+id/search_header_tv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:textSize="11sp"
+        android:textColor="#ff989898"
+        android:text="搜索到？条关于XXX的内容"/>
 </LinearLayout>
