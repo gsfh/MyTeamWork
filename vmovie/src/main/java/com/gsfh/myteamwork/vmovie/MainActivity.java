@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
-import com.gsfh.myteamwork.vmovie.activity.LoadingActivity;
+import com.gsfh.myteamwork.vmovie.activity.LoginActivity;
 import com.gsfh.myteamwork.vmovie.activity.SearchActivity;
 import com.gsfh.myteamwork.vmovie.fragment.BackStageFragment;
 import com.gsfh.myteamwork.vmovie.fragment.MainFragment;
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void login(View view){
 
-        Intent intent = new Intent(MainActivity.this,LoadingActivity.class);
+        Intent intent = new Intent(MainActivity.this,LoginActivity.class);
         startActivity(intent);
         backCount = 0;
     }

@@ -9,7 +9,6 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/greendao" />
             <option value="$PROJECT_DIR$/library" />
             <option value="$PROJECT_DIR$/vmovie" />
           </set>
@@ -17,7 +16,6 @@
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/greendao" />
             <option value="$PROJECT_DIR$/library" />
             <option value="$PROJECT_DIR$/vmovie" />
           </set>

@@ -5,9 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -17,14 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.gsfh.myteamwork.vmovie.R;
@@ -55,7 +50,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import static com.gsfh.myteamwork.vmovie.R.id.activity_series_detail_comment_tv2;
-import static com.gsfh.myteamwork.vmovie.R.id.useLogo;
 
 
 /**
@@ -459,7 +453,7 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
         bluebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(SeriesDetail.this,LoadingActivity.class);
+                Intent intent=new Intent(SeriesDetail.this,LoginActivity.class);
                 startActivity(intent);
             }
         });

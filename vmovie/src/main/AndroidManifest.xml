@@ -19,7 +19,7 @@
         </activity>
         <activity android:name=".activity.SearchActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".activity.LoadingActivity"
+        <activity android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".activity.FirstDetailActivity"/>
         <activity android:name=".activity.SeriesDetail"/>
