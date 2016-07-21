@@ -8,10 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorgary" />
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-    />
+        android:layout_height="20dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,9 +21,13 @@
             android:id="@+id/seriesdetailcomment_explv_item_icon_iv"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:scaleType="centerCrop"
             android:layout_marginLeft="20dp"
-            android:src="@mipmap/ic_launcher" />
+            android:scaleType="centerCrop" />
+        <com.gsfh.myteamwork.vmovie.widget.CircleImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            />
 
         <TextView
 
@@ -31,7 +35,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentRight="true"
-            android:drawableLeft="@drawable/home_like"
+            android:drawableLeft="@drawable/comment_handle"
             android:gravity="center"
             android:paddingBottom="20dp"
             android:paddingRight="25dp"
@@ -40,9 +44,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/textView"
-
-
             android:layout_toRightOf="@+id/seriesdetailcomment_explv_item_icon_iv"
             android:orientation="vertical"
             android:paddingLeft="10dp">
@@ -51,7 +52,7 @@
                 android:id="@+id/seriesdetailcomment_explv_item_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="名字"
+                android:text="    "
                 android:textColor="@color/colormiddlexgary" />
 
 
@@ -60,21 +61,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:gravity="center"
-                android:text="张英涛"
+                android:text="   "
                 android:textColor="@color/colormiddlegary"
                 android:textSize="11sp" />
 
             <TextView
                 android:id="@+id/seriesdetailcomment_explv_item_context_tv"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:gravity="top"
-                android:lines="2"
-                android:text="评论"
+                android:maxLines="20"
+                android:minLines="2"
+                android:text="   "
                 android:textSize="16dp" />
 
         </LinearLayout>
-
     </RelativeLayout>
 
 </LinearLayout>

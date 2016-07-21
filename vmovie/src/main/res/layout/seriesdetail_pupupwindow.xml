@@ -26,7 +26,8 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:src="@drawable/login_input_del"
+            android:src="@drawable/share_dialog_close_icon"
+            android:padding="15dp"
             android:layout_gravity="center"
             />
     </LinearLayout>
@@ -35,7 +36,12 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
         android:layout_below="@id/seriesdetail_pupupwindow_top_ll"
-    android:id="@+id/seriesdetail_pupupwindow_detail_lv">
+    android:id="@+id/seriesdetail_pupupwindow_detail_lv"
+        android:divider="@null"
+        android:scrollbars="none"
+
+        >
+
 </com.handmark.pulltorefresh.library.PullToRefreshExpandableListView>
 
 

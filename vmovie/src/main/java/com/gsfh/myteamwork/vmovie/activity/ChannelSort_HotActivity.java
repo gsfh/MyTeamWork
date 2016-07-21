@@ -157,5 +157,11 @@ public class ChannelSort_HotActivity extends AppCompatActivity implements Channe
     public void back(View view) {
         finish();
     }
+
+        public void onClick(View v) {
+            finish();
+        }
+
+
 }
 

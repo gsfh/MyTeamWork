@@ -22,7 +22,7 @@ import java.util.List;
 public class SeriesDetailCommentEXLvAdapter extends BaseExpandableListAdapter {
     private Context mContext;
     List<CommentBean.DataBean> mCommentGroupList;
-    List<?> mCommentChildList ;
+    List<CommentBean.DataBean.SubcommentBean> mCommentChildList ;
     public SeriesDetailCommentEXLvAdapter(SeriesDetail seriesDetail, List<CommentBean.DataBean> mCommentList) {
         this.mContext=seriesDetail;
         this.mCommentGroupList=mCommentList;
@@ -36,8 +36,9 @@ public class SeriesDetailCommentEXLvAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        mCommentChildList= mCommentGroupList.get(groupPosition).getSubcomment();
-        return mCommentChildList==null ? 0:mCommentChildList.size();
+      mCommentChildList= mCommentGroupList.get(groupPosition).getSubcomment();
+        return mCommentGroupList.get(groupPosition).getSubcomment()==null ? 0:mCommentChildList.size();
+
     }
 
     @Override

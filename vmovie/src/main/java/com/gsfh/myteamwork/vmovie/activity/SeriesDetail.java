@@ -17,8 +17,10 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -93,6 +95,8 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
     // 评论部分
     private SeriesDetailCommentEXLvAdapter mEXLvAdapter;
     private TextView textShare;
+    private View sharelayout;
+    private View sendlayout;
     private TextView textComment;
     private TextView textCash;
     private List<CommentBean.DataBean> mCommentList = new ArrayList<>();
@@ -104,6 +108,7 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
     private JCVideoPlayerStandard jcVideoPlayer;
     private int nestHeight;
     private int wHeight;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -221,6 +226,8 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
      */
     private void initComment() {
         textShare = (TextView) findViewById(R.id.activity_series_detail_share_tv);
+         sharelayout=findViewById(R.id.seriesdetail_comment_ll);
+         sendlayout=findViewById(R.id.seriesdetail_send_show_ll);
         textComment = (TextView) findViewById(activity_series_detail_comment_tv2);
         textCash = (TextView) findViewById(R.id.activity_series_detail_cach_tv);
         mEXLvAdapter = new SeriesDetailCommentEXLvAdapter(SeriesDetail.this, mCommentList);
@@ -383,15 +390,17 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
                 //分享的网址在这里------------------getdata-- getshare_link----------------------------------
 
                 CommentBean commentbean = gson.fromJson(result, CommentBean.class);
-                if(mCommentList!=null && mP==1){
-                    mCommentList.clear();
-                }
+//                if(mCommentList!=null && mP==1){
+//                    mCommentList.clear();
+//                }
+                Log.i("ddsfec", "onResponse:表单数据 "+mCommentList.size());
                 mCommentList.addAll(commentbean.getData());
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         mEXLvAdapter.notifyDataSetChanged();//通知刷新
+
                     }
                 });
             }
@@ -416,6 +425,7 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
     private void initCommentListener() {
         textCash.setOnClickListener(this);
         textComment.setOnClickListener(this);
+        sharelayout.setOnClickListener(this);
         textShare.setOnClickListener(this);
     }
 
@@ -429,12 +439,11 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 String detaik = (String) textDetai.getText();
-                Log.i("ddsfec", "onClick: "+detaik.length());
                 if (detaik == null) {
                     return;
                 }
                 if (detaik.length() > 65 && textshowall.getText().toString().equals("查看全部")) {
-                    textDetai.setLines(10);
+                    textDetai.setMaxLines(10);
 
                     textshowall.setText("收起简介");
                     Drawable drawable1 = getResources().getDrawable(R.drawable.dropup);
@@ -442,10 +451,10 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
                     textshowall.setCompoundDrawables(null, null, drawable1, null);
                 } else {
 
-                    textDetai.setLines(2);
+                    textDetai.setMaxLines(2);
                     textshowall.setText("查看全部");
                     Drawable drawable2 = getResources().getDrawable(R.drawable.dropdown);
-                    drawable2.setBounds(0, 0, 20, 20);
+                    drawable2.setBounds(0, 3, 15, 17);
                     textshowall.setCompoundDrawables(null, null, drawable2, null);
                 }
             }
@@ -506,8 +515,13 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
             case R.id.activity_series_detail_share_tv:
 
                 break;
+            case R.id.seriesdetail_comment_ll:
+                showPopupWindow(v);
+               // sendlayout.setVisibility(View.VISIBLE);
+                break;
             case R.id.activity_series_detail_comment_tv2:
                 showPopupWindow(v);
+               // sendlayout.setVisibility(View.VISIBLE);
                 break;
         }
 
@@ -521,7 +535,7 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
         asyncRequestVideoID(mURL, -1);
         jcVideoPlayer.setUp(mURL, "");                               //播放器开始播放
         //标题栏更改
-         mCommentURL=mURL;
+         mCommentURL=mURL;                   //初始化可能会为空
         asyncRequestComment( mURL,1);   // 评论数据   mUR记录到全局
     }
 
@@ -561,29 +575,31 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
         //评论部分
 
         final PullToRefreshExpandableListView mPullToRefreshExpandableListView = (PullToRefreshExpandableListView) contentView.findViewById(R.id.seriesdetail_pupupwindow_detail_lv);
-        ExpandableListView mExpandableListView = mPullToRefreshExpandableListView.getRefreshableView();
+        ExpandableListView  mExpandableListView = mPullToRefreshExpandableListView.getRefreshableView();
         mExpandableListView.setGroupIndicator(null);
 
 
-        mPullToRefreshExpandableListView.setMode(PullToRefreshBase.Mode.BOTH);// 设置下拉刷新模式
-        mPullToRefreshExpandableListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ExpandableListView>() {
-            @Override
-            public void onRefresh(PullToRefreshBase<ExpandableListView> refreshView) {
-                mPullToRefreshExpandableListView.onRefreshComplete();
-                mCommentPage=0;
-                asyncRequestComment( mCommentURL,1);
 
-            }
-        });
+        mPullToRefreshExpandableListView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);// 设置下拉刷新模式
+//        mPullToRefreshExpandableListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ExpandableListView>() {
+//            @Override
+//            public void onRefresh(PullToRefreshBase<ExpandableListView> refreshView) {
+//                mPullToRefreshExpandableListView.onRefreshComplete();
+//                mCommentPage=0;
+//              if(mCommentURL!=null){  asyncRequestComment( mCommentURL,1);}
+//
+//            }
+//        });
 
         mPullToRefreshExpandableListView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
             @Override
             public void onLastItemVisible() {
-                mPullToRefreshExpandableListView.onRefreshComplete();
+
                 //获取每个按钮的id 例如 电影自习室 id是47 index=1；
                 mCommentPage++;
-                asyncRequestComment( mCommentURL,1+mCommentPage);
-
+                Log.i("ddsfec", "onLastItemVisible: "+mCommentPage+"URL:"+mCommentURL);
+                if(mCommentURL!=null){     asyncRequestComment( mCommentURL,1+mCommentPage);}
+                mPullToRefreshExpandableListView.onRefreshComplete();
 
             }
         });
@@ -595,10 +611,10 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
                 return true;
             }
         });
-        //默认所有的Group全部展开
-        for (int i = 0; i < mExpandableListView.getCount() - 2; i++) {
+        for (int i = 0; i < mCommentList.size(); i++) {
             mExpandableListView.expandGroup(i);
         }
+
         int[]location=new int[2];
          view.getLocationOnScreen(location);
 
@@ -623,8 +639,6 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
-
                 return false;
                 // 这里如果返回true的话，touch事件将被拦截
                 // 拦截后 PopupWindow的onTouchEvent不被调用，这样点击外部区域无法dismiss

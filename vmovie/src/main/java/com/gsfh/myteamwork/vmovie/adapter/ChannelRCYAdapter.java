@@ -58,7 +58,6 @@ public class ChannelRCYAdapter extends RecyclerView.Adapter<ChannelRCYAdapter.Ho
             String name = mBeanlist.get(position).getCatename();
             String mURL = mBeanlist.get(position).getIcon();
             Picasso.with(mContext).load(mURL).into(holder.imageView);
-            holder.imageView.setImageResource(R.mipmap.ic_launcher);
             holder.textView.setText("#" + name + "#");
         }
         holder.itemView.setTag(position);//监听事件
