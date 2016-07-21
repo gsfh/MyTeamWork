@@ -65,7 +65,7 @@
         android:orientation="vertical"
         android:paddingLeft="10dp">
 
-        <android.support.v4.widget.NestedScrollView
+        <com.gsfh.myteamwork.vmovie.widget.DummyNestedScrollView
             android:id="@+id/nestscrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -191,8 +191,7 @@
 
             </LinearLayout>
 
-
-        </android.support.v4.widget.NestedScrollView>
+        </com.gsfh.myteamwork.vmovie.widget.DummyNestedScrollView>
 
     </LinearLayout>
 
