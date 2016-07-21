@@ -38,7 +38,6 @@ public class MainFragment extends Fragment {
         mViewPagerAdapter = new MyViewPagerAdapter(getChildFragmentManager());
         //3.关联适配器
         mViewPager.setAdapter(mViewPagerAdapter);
-
         //4.TabLayout初始化
         mTabLayout.setupWithViewPager(mViewPager);
 
@@ -49,18 +48,15 @@ public class MainFragment extends Fragment {
 
         fragmentList.add(new LatestFragment());
         fragmentList.add(new ChannelFragment());
-
     }
 
     private void initTitleDatas() {
 
         mTitleDatas.add("最新");
         mTitleDatas.add("频道");
-
     }
 
     class MyViewPagerAdapter extends FragmentPagerAdapter {
-
 
         public MyViewPagerAdapter(FragmentManager fm) {
             super(fm);

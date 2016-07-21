@@ -70,7 +70,7 @@ public class ChannelSortLvAdapter extends BaseAdapter {
         String cate = mBeenlist.get(position).getCates().get(0).getCatename();
         String duration = mBeenlist.get(position).getDuration();
         Integer time = Integer.valueOf(duration);
-        String result = cate + " / " + time % 60 + ":" + time / 60;
+        String result = cate + " / " + time / 60 + "'" + time % 60+"''";
         String mUrl = mBeenlist.get(position).getImage();
 
         hoder.title.setText(title);

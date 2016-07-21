@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -60,17 +61,18 @@ public class ChannelSort_HotActivity extends AppCompatActivity implements Channe
         initListener();
 
     }
-   //监听跳转
+
+    //监听跳转
     private void initListener() {
         mLVAdapter.setOnitemClickListener(ChannelSort_HotActivity.this);
     }
 
     /**
-     *  @ 董传亮
-     *  创建绑定适配器
+     * @ 董传亮
+     * 创建绑定适配器
      */
     private void bindAdapter() {
-         mLVAdapter=new ChannelSortLvAdapter(ChannelSort_HotActivity.this,sortList);
+        mLVAdapter = new ChannelSortLvAdapter(ChannelSort_HotActivity.this, sortList);
         mListView.setAdapter(mLVAdapter);
     }
 
@@ -94,7 +96,7 @@ public class ChannelSort_HotActivity extends AppCompatActivity implements Channe
         tabname = intent.getStringExtra("type");
         tab = intent.getStringExtra("tab");
         cateid = intent.getStringExtra("cateid");
-        Log.i("ddsfec", "onResponse: "+tab);
+        Log.i("ddsfec", "onResponse: " + tab);
         //网络数据
         asyncRequest(cateid, 1);
     }
@@ -131,7 +133,7 @@ public class ChannelSort_HotActivity extends AppCompatActivity implements Channe
                     return;
                 }
                 Gson gson = new Gson();
-                ChannelDetailBean detailBean = gson.fromJson(result,ChannelDetailBean .class);
+                ChannelDetailBean detailBean = gson.fromJson(result, ChannelDetailBean.class);
                 sortList.addAll(detailBean.getData());
                 runOnUiThread(new Runnable() {
                     @Override
@@ -146,11 +148,14 @@ public class ChannelSort_HotActivity extends AppCompatActivity implements Channe
 
     @Override
     public void itemClick(String postid) {
-        Intent intent=new Intent(ChannelSort_HotActivity.this,FirstDetailActivity.class);
-        intent.putExtra("id",postid);
+        Intent intent = new Intent(ChannelSort_HotActivity.this, FirstDetailActivity.class);
+        intent.putExtra("id", postid);
         startActivity(intent);
 
+    }
 
+    public void back(View view) {
+        finish();
     }
 }
 

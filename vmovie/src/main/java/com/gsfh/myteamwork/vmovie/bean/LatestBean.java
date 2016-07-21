@@ -81,7 +81,7 @@ public class LatestBean {
         private String discussion;
         private String image;
         private String rating;
-        private String duration;
+        private int duration;
         private long publish_time;
         private String like_num;
         private String share_num;
@@ -213,11 +213,11 @@ public class LatestBean {
             this.rating = rating;
         }
 
-        public String getDuration() {
+        public int getDuration() {
             return duration;
         }
 
-        public void setDuration(String duration) {
+        public void setDuration(int duration) {
             this.duration = duration;
         }
 

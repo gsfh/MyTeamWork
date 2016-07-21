@@ -16,7 +16,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="15dp"
+            android:padding="13dp"
+            android:layout_gravity="center_vertical"
             android:src="@drawable/home_side"
             android:onClick="showMenu"/>
 
@@ -26,6 +27,7 @@
             android:layout_weight="5"
             android:gravity="center"
             android:text="系列"
+            android:textSize="16sp"
             android:textColor="#ffffff" />
 
         <ImageView
@@ -34,7 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="search"
-            android:padding="15dp"
+            android:padding="14dp"
+            android:layout_gravity="center_vertical"
             android:src="@drawable/home_search" />
 
     </LinearLayout>

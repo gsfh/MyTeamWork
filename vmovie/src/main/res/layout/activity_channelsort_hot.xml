@@ -3,47 +3,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gsfh.myteamwork.vmovie.MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.gsfh.myteamwork.vmovie.MainActivity">
 
 
+    <LinearLayout
+        android:id="@+id/channelsort_hot_bar_ll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal">
 
         <RelativeLayout
-            android:id="@+id/channelsort_hot_bar_ll"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-
-            android:background="@color/colorPrimaryDark"
-            android:orientation="horizontal">
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
 
             <ImageView
                 android:id="@+id/channelsort_hot_back_im"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onClick"
-                android:padding="15dp"
-                android:src="@drawable/abc_ab_back_alphai" />
-
-
-            <TextView
-                android:id="@+id/channelsort_hot_tab_tv"
-                android:layout_width="60dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:gravity="center"
-                android:text="可能热门"
-                android:textColor="#ffffff"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
-
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="10dp"
+                android:onClick="back"
+                android:src="@drawable/back_icon" />
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/channelsort_hot_tab_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center"
+            android:text="频道标题"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
     <ListView
         android:id="@+id/channelsort_hot_show_lv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="11"
-       >
-    </ListView>
+        android:layout_weight="10"
+        android:divider="#000000" />
 
 </LinearLayout>

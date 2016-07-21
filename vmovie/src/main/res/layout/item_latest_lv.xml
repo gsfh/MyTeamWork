@@ -12,9 +12,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="100dp"
             android:layout_alignBottom="@id/iv_latest_image"
-            android:padding="10dp"
+            android:padding="15dp"
             android:orientation="vertical">
 
             <TextView
@@ -22,9 +22,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/tv_latest_sort"
+                android:layout_marginBottom="10dp"
                 android:text="斩获国内外9项大奖文艺片《路边野餐》终极预告片"
                 android:textColor="#ffffff"
-                android:textSize="20sp" />
+                android:textStyle="bold"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_latest_sort"
@@ -32,14 +34,27 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:text="科幻"
+                android:textSize="13sp"
                 android:textColor="#ffffff" />
+            <TextView
+                android:id="@+id/tv_latest_divide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@id/tv_latest_sort"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:text="/"
+                android:textSize="13sp"
+                android:textColor="#ffffff"/>
             <TextView
                 android:id="@+id/tv_latest_video_play_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_toRightOf="@+id/tv_latest_sort"
+                android:layout_toRightOf="@id/tv_latest_divide"
                 android:text="4'39''"
+                android:textSize="13sp"
                 android:textColor="#ffffff" />
         </RelativeLayout>
 </RelativeLayout>

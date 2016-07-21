@@ -7,13 +7,14 @@
             android:id="@+id/item_channelsort_lv_item_im"
             android:layout_width="match_parent"
             android:layout_height="230dp"
+            android:scaleType="fitXY"
             android:src="@mipmap/ic_launcher" />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="230dp"
+            android:layout_height="100dp"
             android:layout_alignBottom="@id/item_channelsort_lv_item_im"
-            android:padding="10dp"
+            android:padding="15dp"
             android:orientation="vertical">
 
             <TextView
@@ -21,9 +22,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/item_channelsort_time_item_tv"
+                android:layout_marginBottom="10dp"
                 android:text="斩获国内外9项大奖文艺片《路边野餐》终极预告片"
                 android:textColor="#ffffff"
-                android:textSize="20sp" />
+                android:textStyle="bold"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/item_channelsort_time_item_tv"
@@ -32,6 +35,6 @@
                 android:layout_alignParentBottom="true"
                 android:text="科幻 / 4'39''"
                 android:textColor="@color/colorwrite"
-                />
+                android:textSize="13sp"/>
         </RelativeLayout>
 </RelativeLayout>
