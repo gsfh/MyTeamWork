@@ -56,6 +56,8 @@ public class SearchActivity extends AppCompatActivity {
     private List<Customer> customerList;
     private ListView historyListView;
     private SearchHistoryAdapter historyAdapter;
+    private DaoSession daoSession;
+    private DaoMaster daoMaster;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,16 +77,16 @@ public class SearchActivity extends AppCompatActivity {
         //通过Handler类获得数据库对象
         SQLiteDatabase readableDatabase = mHelper.getReadableDatabase();
         //通过数据库对象生成DaoMaster对象
-        DaoMaster daoMaster = new DaoMaster(readableDatabase);
-        //获取DaoSession对象
-        DaoSession daoSession = daoMaster.newSession();
-        //通过DaoSeesion对象获得CustomerDao对象
-        customerDao = daoSession.getCustomerDao();
-        updateHistoryList();
+        daoMaster = new DaoMaster(readableDatabase);
 
+        updateHistoryList();
     }
 
     private void updateHistoryList(){
+        //获取DaoSession对象
+        daoSession = daoMaster.newSession();
+        //通过DaoSeesion对象获得CustomerDao对象
+        customerDao = daoSession.getCustomerDao();
         customerList = customerDao.loadAll();
     }
 
@@ -217,6 +219,20 @@ public class SearchActivity extends AppCompatActivity {
                 listView.onRefreshComplete();
             }
         });
+
+        historyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                keyWord = customerList.get(position).getCustomerName();
+                mClearHistoryBtn.setVisibility(View.GONE);
+                reListView.setVisibility(View.VISIBLE);
+                historyListView.setVisibility(View.GONE);
+                listView.setVisibility(View.VISIBLE);
+                initData(keyWord,1);
+            }
+        });
+
     }
 
     private void initData(String keyWord,int page) {
@@ -235,6 +251,7 @@ public class SearchActivity extends AppCompatActivity {
                 SearchBean searchBean = gson.fromJson(result,SearchBean.class);
 
                 totalNum = searchBean.getTotal();
+                mDataBeanList.clear();
                 mDataBeanList.addAll(searchBean.getData());
 
                 initAdapter();

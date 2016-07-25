@@ -98,12 +98,12 @@ public class FirstDetailActivity extends AppCompatActivity {
         videoAdressList = firstDetailData.getContent().getVideo();
 
         //判断页面类型
-        if (videoAdressList.size() == 1){
+        if (videoAdressList.size() <= 2){
 
             showVideoPlayer = true;
 
             jcVideoPlayer.setVisibility(View.VISIBLE);
-            cache_btn.setVisibility(View.VISIBLE);
+//            cache_btn.setVisibility(View.VISIBLE);
             String videoAdress = videoAdressList.get(0).getQiniu_url();
             jcVideoPlayer.setUp(videoAdress, "");
 

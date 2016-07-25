@@ -16,9 +16,8 @@
         <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
             android:id="@+id/activity_series_detail_videoplayer_standard"
             android:layout_width="match_parent"
-            android:background="@color/colorblack"
-            android:layout_height="300dp" />
-
+            android:layout_height="300dp"
+            android:background="@color/colorblack" />
 
 
         <RelativeLayout
@@ -33,22 +32,21 @@
                 android:onClick="onClick"
                 android:padding="20dp"
                 android:src="@drawable/back_icon" />
+
             <ImageView
                 android:id="@+id/seriesdetail_share_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
                 android:onClick="onClick"
-                android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:paddingLeft="10dp"
-                android:src="@drawable/video_lan_share"
+                android:paddingTop="20dp"
 
-                android:layout_alignParentRight="true"
-                 />
+                android:src="@drawable/video_lan_share" />
         </RelativeLayout>
 
-                />
-
+        />
 
 
     </RelativeLayout>
@@ -94,36 +92,34 @@
                         android:textSize="20sp" />
 
 
+                    <RelativeLayout
+                        android:id="@+id/series_detail_plus_ll"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
 
-<RelativeLayout
-    android:id="@+id/series_detail_plus_ll"
-    android:layout_width="0dp"
-    android:layout_weight="2"
+                        android:layout_weight="2">
 
-    android:layout_height="match_parent">
-    <ImageView
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:src="@drawable/attention"
-        android:layout_marginTop="5dp"
-        android:id="@+id/imageView4"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-    <TextView
-        android:id="@+id/seriesdetail_itemsort_readcount_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-android:layout_marginTop="10dp"
-        android:lines="1"
-        android:textSize="10sp"
-        android:text="0人订阅"
-        android:layout_below="@+id/imageView4"
-        android:layout_centerHorizontal="true" />
-</RelativeLayout>
+                        <ImageView
+                            android:id="@+id/imageView4"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="5dp"
+                            android:src="@drawable/attention" />
 
-
-
+                        <TextView
+                            android:id="@+id/seriesdetail_itemsort_readcount_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/imageView4"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:lines="1"
+                            android:text="0人订阅"
+                            android:textSize="10sp" />
+                    </RelativeLayout>
 
 
                 </LinearLayout>
@@ -172,32 +168,33 @@ android:layout_marginTop="10dp"
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
                     <LinearLayout
                         android:id="@+id/seriesdetail_itemsort_showall_ll"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_centerInParent="true"
-                        android:visibility="gone"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
                         <TextView
                             android:id="@+id/seriesdetail_itemsort_showall_tv"
                             android:layout_width="60dp"
                             android:layout_height="30dp"
-                            android:lines="1"
-                            android:text="查看全部"
                             android:gravity="center_vertical|right"
-                             />
+                            android:lines="1"
+                            android:text="查看全部" />
+
                         <TextView
                             android:id="@+id/seriesdetail_itemsort_showall_im"
                             android:layout_width="14dp"
                             android:layout_height="9dp"
-                            android:clickable="true"
-                            android:background="@drawable/select_lines_change_series"
-                            android:gravity="center_horizontal"
                             android:layout_marginTop="6dp"
-                            />
+                            android:background="@drawable/select_lines_change_series"
+                            android:clickable="true"
+                            android:gravity="center_horizontal" />
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -258,10 +255,10 @@ android:layout_marginTop="10dp"
                 android:id="@+id/imageView"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/detail_bottom_share"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/textView"
-                android:layout_toStartOf="@+id/textView" />
+                android:layout_toStartOf="@+id/textView"
+                android:src="@drawable/detail_bottom_share" />
 
             <TextView
                 android:id="@+id/activity_series_detail_share_tv"
@@ -293,10 +290,10 @@ android:layout_marginTop="10dp"
                 android:id="@+id/imageView2"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:src="@drawable/details_bottom_comment"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/textView2"
-                android:layout_toStartOf="@+id/textView2" />
+                android:layout_toStartOf="@+id/textView2"
+                android:src="@drawable/details_bottom_comment" />
 
             <TextView
                 android:id="@+id/activity_series_detail_comment_tv2"
@@ -327,10 +324,10 @@ android:layout_marginTop="10dp"
                 android:id="@+id/imageView3"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/details_bottom_cache"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/textView3"
-                android:layout_toStartOf="@+id/textView3" />
+                android:layout_toStartOf="@+id/textView3"
+                android:src="@drawable/details_bottom_cache" />
 
             <TextView
                 android:id="@+id/activity_series_detail_cach_tv"
@@ -343,7 +340,6 @@ android:layout_marginTop="10dp"
 
                 android:text="缓存" />
         </RelativeLayout>
-
 
 
     </LinearLayout>

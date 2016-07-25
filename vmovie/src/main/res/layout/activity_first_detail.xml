@@ -22,7 +22,7 @@
     <LinearLayout
         android:id="@id/first_detail_bottom_bar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="#ffffff"
         android:orientation="horizontal">
@@ -51,8 +51,9 @@
 
             <TextView
                 android:id="@+id/first_detail_bottom_like_counts"
-                android:layout_width="30dp"
+                android:layout_width="wrap_content"
                 android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
                 android:layout_alignTop="@+id/textView"
                 android:layout_toEndOf="@+id/imageView"
                 android:layout_toRightOf="@+id/imageView"
@@ -77,22 +78,22 @@
 
             <ImageView
                 android:id="@+id/imageView2"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:src="@drawable/details_bottom_comment"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/detail_bottom_share"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/textView2"
                 android:layout_toStartOf="@+id/textView2" />
 
             <TextView
                 android:id="@+id/first_detail_bottom_share_counts"
-                android:layout_width="30dp"
+                android:layout_width="wrap_content"
                 android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
                 android:layout_alignTop="@+id/textView2"
                 android:layout_toEndOf="@+id/imageView2"
                 android:layout_toRightOf="@+id/imageView2"
                 android:gravity="center_vertical"
-
                 android:text="0" />
         </RelativeLayout>
 
@@ -114,23 +115,23 @@
 
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/details_bottom_cache"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/details_bottom_comment"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/textView3"
                 android:layout_toStartOf="@+id/textView3" />
 
             <TextView
                 android:id="@+id/first_detail_bottom_comment_counts"
-                android:layout_width="80dp"
+                android:layout_width="wrap_content"
                 android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
                 android:layout_alignTop="@+id/textView3"
                 android:layout_toEndOf="@+id/imageView3"
                 android:layout_toRightOf="@+id/imageView3"
                 android:gravity="center_vertical"
-
-                android:text="缓存" />
+                android:text="0" />
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>
