@@ -179,4 +179,10 @@ public class FirstDetailActivity extends AppCompatActivity {
         jcVideoPlayer.releaseAllVideos();
     }
 
+    public void onClick(View view){
+
+        Intent intent = new Intent(FirstDetailActivity.this,LoginActivity.class);
+        startActivity(intent);
+    }
+
 }

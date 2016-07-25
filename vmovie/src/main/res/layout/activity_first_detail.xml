@@ -47,7 +47,8 @@
                 android:src="@drawable/details_bottom_like"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/textView"
-                android:layout_toStartOf="@+id/textView" />
+                android:layout_toStartOf="@+id/textView"
+                android:onClick="onClick"/>
 
             <TextView
                 android:id="@+id/first_detail_bottom_like_counts"
@@ -83,7 +84,8 @@
                 android:src="@drawable/detail_bottom_share"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/textView2"
-                android:layout_toStartOf="@+id/textView2" />
+                android:layout_toStartOf="@+id/textView2"
+                android:onClick="onClick"/>
 
             <TextView
                 android:id="@+id/first_detail_bottom_share_counts"
@@ -120,7 +122,8 @@
                 android:src="@drawable/details_bottom_comment"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/textView3"
-                android:layout_toStartOf="@+id/textView3" />
+                android:layout_toStartOf="@+id/textView3"
+                android:onClick="onClick"/>
 
             <TextView
                 android:id="@+id/first_detail_bottom_comment_counts"

@@ -110,6 +110,32 @@ public class LatestFragment extends Fragment {
     private void initData(Integer page) {
 
         /**
+         * 头部视图的网络数据请求
+         */
+        OkHttpTool.newInstance().start(URLConstants.LATEST_BANNER_URL).callback(new IOKCallBack() {
+            @Override
+            public void success(String result) {
+
+                if (null == result){
+                    return;
+                }
+
+                Gson gson = new Gson();
+                MainBannerBean bannerBean = gson.fromJson(result,MainBannerBean.class);
+
+                bannerDataList.clear();
+                bannerDataList.addAll(bannerBean.getData());
+
+                bannerUrlList.clear();
+                for (MainBannerBean.DataBean data : bannerDataList) {
+                    bannerUrlList.add(data.getImage());
+                }
+
+                initBanner();
+            }
+        });
+
+        /**
          * 列表数据的网络请求
          */
         String p = page.toString();
@@ -180,31 +206,6 @@ public class LatestFragment extends Fragment {
             }
         });
 
-        /**
-         * 头部视图的网络数据请求
-         */
-        OkHttpTool.newInstance().start(URLConstants.LATEST_BANNER_URL).callback(new IOKCallBack() {
-            @Override
-            public void success(String result) {
-
-                if (null == result){
-                    return;
-                }
-
-                Gson gson = new Gson();
-                MainBannerBean bannerBean = gson.fromJson(result,MainBannerBean.class);
-
-                bannerDataList.clear();
-                bannerDataList.addAll(bannerBean.getData());
-
-                bannerUrlList.clear();
-                for (MainBannerBean.DataBean data : bannerDataList) {
-                    bannerUrlList.add(data.getImage());
-                }
-
-                initBanner();
-            }
-        });
     }
 
     private void initBanner() {
