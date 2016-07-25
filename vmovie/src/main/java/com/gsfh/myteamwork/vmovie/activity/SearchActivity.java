@@ -144,8 +144,8 @@ public class SearchActivity extends AppCompatActivity {
                 mClearHistoryBtn.setVisibility(View.VISIBLE);
                 reListView.setVisibility(View.GONE);
 
-                historyAdapter.notifyDataSetChanged();
                 historyListView.setVisibility(View.VISIBLE);
+                historyAdapter.notifyDataSetChanged();
 
                 mDataBeanList.clear();
                 page = 1;

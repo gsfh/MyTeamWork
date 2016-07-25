@@ -46,7 +46,7 @@ public class MainFragment extends Fragment {
 
     private void initData() {
 
-        fragmentList.add(new LatestFragment());
+        fragmentList.add(LatestFragment.newInstance(mTabLayout));
         fragmentList.add(new ChannelFragment());
     }
 

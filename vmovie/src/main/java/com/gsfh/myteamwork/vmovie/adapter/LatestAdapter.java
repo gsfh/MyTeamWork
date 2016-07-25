@@ -84,7 +84,7 @@ public class LatestAdapter extends BaseExpandableListAdapter {
         View view = convertView;
         GroupViewHolder groupViewHolder = null;
 
-        //第一条给一个1dp高度的布局,不显示
+        //第一条给一个1dp高度的布局,相当于不显示
         if (groupPosition==0){
             view = LayoutInflater.from(mContext).inflate(R.layout.item_latest_date_first, null);
             groupViewHolder = new GroupViewHolder(view);
@@ -166,9 +166,7 @@ public class LatestAdapter extends BaseExpandableListAdapter {
         childViewHolder.title.setText(bean.getTitle());
         childViewHolder.sort.setText(bean.getCates().get(0).getCatename());
         int time = bean.getDuration();
-        int min = time/60;
-        int seconds = time%60;
-        childViewHolder.time.setText(min+"'"+seconds+"''");
+        childViewHolder.time.setText(time/60+"'"+time%60+"''");
 
         return view;
     }

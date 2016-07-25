@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
 
                 super.onBackPressed();
             }else {
-                Toast.makeText(this,"再按一次返回键退出程序",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"再按一次退出程序",Toast.LENGTH_SHORT).show();
             }
         }
     }

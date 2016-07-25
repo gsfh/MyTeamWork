@@ -4,12 +4,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.handmark.pulltorefresh.library.PullToRefreshExpandableListView
-        android:id="@+id/pe_lv_main"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/latest_swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="#000000">
+        android:scrollbars="none">
 
-    </com.handmark.pulltorefresh.library.PullToRefreshExpandableListView>
+        <ExpandableListView
+            android:id="@+id/latest_expandable_lv_"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#000000">
+
+        </ExpandableListView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>
