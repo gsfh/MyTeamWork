@@ -75,7 +75,7 @@ public class ChannelSortLvAdapter extends BaseAdapter {
 
         hoder.title.setText(title);
         hoder.time.setText(result);
-        Picasso.with(context).load(mUrl).into(hoder.imageView);
+        Picasso.with(context).load(mUrl).placeholder(R.drawable.default_error).into(hoder.imageView);
       final   String postid=mBeenlist.get(position).getPostid();
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override

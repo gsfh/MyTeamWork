@@ -46,13 +46,18 @@
             android:layout_weight="1" />
 
     </LinearLayout>
+    <android.support.v4.widget.SwipeRefreshLayout
+             android:id="@+id/swipe_container"
+            android:layout_width="match_parent"
+             android:layout_height="0dp"
+        android:layout_weight="10">
+
 
     <ListView
         android:id="@+id/channelsort_hot_show_lv"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10"
+        android:layout_height="match_parent"
         android:scrollbars="none"
         android:divider="#000000" />
-
+</android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

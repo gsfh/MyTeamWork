@@ -1,12 +1,10 @@
 package com.gsfh.myteamwork.vmovie.activity;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,9 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -88,26 +87,32 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
     private TextView textUpdate;
     private TextView textType;
     private TextView textDetai;
-    private TextView textshowall;
     private String peoplecount;
     private TextView bluebtn;
+    private  View  textLinesChangell ;
+    private TextView textLinesChangeIv ;
+    private TextView textLinesChangeTv ;
+
 
     // 评论部分
     private SeriesDetailCommentEXLvAdapter mEXLvAdapter;
     private TextView textShare;
     private View sharelayout;
-    private View sendlayout;
+    private View pluslayout;
+
+
     private TextView textComment;
     private TextView textCash;
     private List<CommentBean.DataBean> mCommentList = new ArrayList<>();
     private String sharecount;
     private String mCommentURL;
-    private int mCommentPage=0;
+    private int mCommentPage = 0;
     //网络播放
     private ImageView ivback;
     private JCVideoPlayerStandard jcVideoPlayer;
     private int nestHeight;
     private int wHeight;
+    private int buttomHerght;
 
 
     @Override
@@ -128,15 +133,13 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
      * 上个页面传入的数据
      */
     private void initData() {
-//        Bundle bundle = getIntent().getBundleExtra("bundle");
-//         mBeenList = (ArrayList<SeriesBean.DataBean>) bundle.getSerializable("beans");
         Intent intent = getIntent();
         seriesid = intent.getStringExtra("seriesid");
         peoplecount = intent.getStringExtra("readcount");
         //获取屏幕的高
-        WindowManager mWmanger=getWindowManager();
-        Display display=mWmanger.getDefaultDisplay();
-         wHeight=display.getHeight();
+        WindowManager mWmanger = getWindowManager();
+        Display display = mWmanger.getDefaultDisplay();
+        wHeight = display.getHeight();
 
         asyncRequest(seriesid, -1);//网咯选择
         //评论在上个网络线程里面开启
@@ -172,17 +175,26 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
      */
     private void initvideoview() {
         jcVideoPlayer = (JCVideoPlayerStandard) findViewById(R.id.activity_series_detail_videoplayer_standard);
-        final NestedScrollView nestscrollview= (NestedScrollView) findViewById(R.id.nestscrollview);
-        ViewTreeObserver vto=nestscrollview.getViewTreeObserver();
-          vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-              @Override
-              public void onGlobalLayout() {
-                  nestscrollview.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                  nestHeight=nestscrollview.getHeight();
-              }
-          });
+        final NestedScrollView nestscrollview = (NestedScrollView) findViewById(R.id.nestscrollview);
+        final View heightlayout = findViewById(R.id.heightlayout);
+        ViewTreeObserver vto = heightlayout.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                heightlayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                wHeight = heightlayout.getHeight();
+            }
+        });
+        ViewTreeObserver vto2 = nestscrollview.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                nestscrollview.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                nestHeight = nestscrollview.getHeight();
+            }
+        });
         //返回键
-          ivback= (ImageView) findViewById(R.id.seriesdetail_back_im);
+        ivback = (ImageView) findViewById(R.id.seriesdetail_back_im);
         //分享按钮
     }
 
@@ -192,16 +204,23 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
      */
     private void initSortView() {
         textTitle = (TextView) findViewById(R.id.seriesdetail_itemsort_title_tv);
+        pluslayout = findViewById(R.id.series_detail_plus_ll);
+
         textName = (TextView) findViewById(R.id.seriesdetail_itemsort_name_tv);
         textMany = (TextView) findViewById(R.id.seriesdetail_itemsort_many_tv);
         textUpdate = (TextView) findViewById(R.id.seriesdetail_itemsort_update_tv);
         textType = (TextView) findViewById(R.id.seriesdetail_itemsort_type_tv);
         textDetai = (TextView) findViewById(R.id.seriesdetail_itemsort_detail_tv);
         //底部按钮用于和detail交互
-        textshowall = (TextView) findViewById(R.id.seriesdetail_itemsort_showall_tv);
+        textLinesChangell =  findViewById(R.id.seriesdetail_itemsort_showall_ll);
+        textLinesChangeIv = (TextView)textLinesChangell.findViewById(R.id.seriesdetail_itemsort_showall_im);
+        textLinesChangeTv = (TextView) textLinesChangell.findViewById(R.id.seriesdetail_itemsort_showall_tv);
+
+
+
         //蓝色按钮
         bluebtn = (TextView) findViewById(R.id.seriesdetail_itemsort_readcount_tv);
-        bluebtn.setText(peoplecount+"人订阅");
+        bluebtn.setText(peoplecount + "人订阅");
 
     }
 
@@ -211,7 +230,6 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
      */
     private void initBanner() {
         //列表部分  part3
-//        mTabLayout= (TabLayout) findViewById(R.id.activity_seriesdetail_title_tabll);
         mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.activity_seriesdetail_tabs_tabll);
         mSlidingTabLayout.setDataChange(tabNameList, SeriesDetail.this);
         mListView = (MyListView) findViewById(R.id.series_show_lv);
@@ -226,8 +244,7 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
      */
     private void initComment() {
         textShare = (TextView) findViewById(R.id.activity_series_detail_share_tv);
-         sharelayout=findViewById(R.id.seriesdetail_comment_ll);
-         sendlayout=findViewById(R.id.seriesdetail_send_show_ll);
+        sharelayout = findViewById(R.id.seriesdetail_comment_ll);
         textComment = (TextView) findViewById(activity_series_detail_comment_tv2);
         textCash = (TextView) findViewById(R.id.activity_series_detail_cach_tv);
         mEXLvAdapter = new SeriesDetailCommentEXLvAdapter(SeriesDetail.this, mCommentList);
@@ -242,7 +259,6 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
     private void asyncRequest(final String id, final int p) {
         String page = p + "";
         //封装Post请求的参数
-        Log.i("ddsfec", "asyncRequest:"+id);
         FormBody formBody = new FormBody.Builder()
                 .add("seriesid", id)//添加Post请求的参数
                 .build();
@@ -265,6 +281,8 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
                 Gson gson = new Gson();
                 SeriesDetailBean seriesDetailBean = gson.fromJson(result, SeriesDetailBean.class);
                 mSerieslist.add(seriesDetailBean.getData());//所有数据的bean对象
+                //评论按钮未点击前初始化评论url
+                mCommentURL=mSerieslist.get(0).getPosts().get(0).getList().get(0).getSeries_postid();
                 //所有的标题按钮的名字
                 final List<SeriesDetailBean.DataBean.PostsBean> lvlist = new ArrayList<>();
                 lvlist.addAll(mSerieslist.get(0).getPosts());                         //创建viewpager的fragment所需要的数据
@@ -340,7 +358,7 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
                 //分享的网址在这里-------评论总数-----------getdata-- getshare_link----------------------------------
                 SeriesDetailVideoBean videobean = gson.fromJson(result, SeriesDetailVideoBean.class);
                 final String videoURL = videobean.getData().getVideo_link();
-                sharecount=videobean.getData().getCount_comment();
+                sharecount = videobean.getData().getCount_comment();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -358,9 +376,9 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
      * 从子线程里面再来一个子线程来请求聊天 post 请求数据
      * postid 1792 从上层的解析的到  type 1  p 1  size 10          评论使用
      */
-    private void asyncRequestComment(String id,  int p) {
+    private void asyncRequestComment(String id, int p) {
         String page = p + "";
-       final int mP=p;
+        final int mP = p;
         //封装Post请求的参数
         FormBody formBody = new FormBody.Builder()
                 .add("postid", id)//添加Post请求的参数
@@ -390,10 +408,6 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
                 //分享的网址在这里------------------getdata-- getshare_link----------------------------------
 
                 CommentBean commentbean = gson.fromJson(result, CommentBean.class);
-//                if(mCommentList!=null && mP==1){
-//                    mCommentList.clear();
-//                }
-                Log.i("ddsfec", "onResponse:表单数据 "+mCommentList.size());
                 mCommentList.addAll(commentbean.getData());
 
                 runOnUiThread(new Runnable() {
@@ -435,34 +449,29 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
      */
     private void initDetailListener() {
 
-        textshowall.setOnClickListener(new View.OnClickListener() {
+        textLinesChangell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String detaik = (String) textDetai.getText();
                 if (detaik == null) {
                     return;
                 }
-                if (detaik.length() > 65 && textshowall.getText().toString().equals("查看全部")) {
+                if(textLinesChangeTv.getText().equals("查看全部")){
+                    textLinesChangeIv.setSelected(true);
                     textDetai.setMaxLines(10);
-
-                    textshowall.setText("收起简介");
-                    Drawable drawable1 = getResources().getDrawable(R.drawable.dropup);
-                    drawable1.setBounds(0, 0, 30, 20);
-                    textshowall.setCompoundDrawables(null, null, drawable1, null);
-                } else {
-
+                    textLinesChangeTv.setText("收起简介");
+                }else {
+                    textLinesChangeTv.setText("查看全部");
+                    textLinesChangeIv.setSelected(false);
                     textDetai.setMaxLines(2);
-                    textshowall.setText("查看全部");
-                    Drawable drawable2 = getResources().getDrawable(R.drawable.dropdown);
-                    drawable2.setBounds(0, 3, 15, 17);
-                    textshowall.setCompoundDrawables(null, null, drawable2, null);
+
                 }
             }
         });
-        bluebtn.setOnClickListener(new View.OnClickListener() {
+        pluslayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(SeriesDetail.this,LoginActivity.class);
+                Intent intent = new Intent(SeriesDetail.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -490,12 +499,12 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
         String mweekly = "更新:" + weekly;
         textUpdate.setText(mweekly);
         String mmany = "集数:更新至" + many + "集";
-        textMany.setText(mmany);//ok
-        String mtype = "类型:" + type;//0k
-        textType.setText(mtype);//0k
-        textDetai.setText(detail);//ok
-        if (detail.length() > 60 && detail != null) {
-            textshowall.setVisibility(View.VISIBLE);
+        textMany.setText(mmany);
+        String mtype = "类型:" + type;
+        textType.setText(mtype);
+        textDetai.setText(detail);
+        if (detail.length() > 65 && detail != null) {
+            textLinesChangell.setVisibility(View.VISIBLE);
         }
     }
 
@@ -517,11 +526,11 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.seriesdetail_comment_ll:
                 showPopupWindow(v);
-               // sendlayout.setVisibility(View.VISIBLE);
+                // sendlayout.setVisibility(View.VISIBLE);
                 break;
             case R.id.activity_series_detail_comment_tv2:
                 showPopupWindow(v);
-               // sendlayout.setVisibility(View.VISIBLE);
+                // sendlayout.setVisibility(View.VISIBLE);
                 break;
         }
 
@@ -535,8 +544,10 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
         asyncRequestVideoID(mURL, -1);
         jcVideoPlayer.setUp(mURL, "");                               //播放器开始播放
         //标题栏更改
-         mCommentURL=mURL;                   //初始化可能会为空
-        asyncRequestComment( mURL,1);   // 评论数据   mUR记录到全局
+        mCommentURL = mURL;        //初始化可能会为空 已经解决
+        mCommentPage=0;//初始化评论页数
+        mCommentList.clear();//之前的评论数据清空
+        asyncRequestComment(mURL, 1);   // 评论数据   mUR记录到全局
     }
 
 
@@ -560,9 +571,27 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
 
         //宽高
         final PopupWindow popupWindow = new PopupWindow(contentView,
-                ViewGroup.LayoutParams.MATCH_PARENT,nestHeight, true);
-       TextView textview= (TextView) contentView.findViewById(R.id.seriesdetail_pupupwindow_commentperson_tv);
-           textview.setText(textComment.getText()+"人评论");
+                ViewGroup.LayoutParams.MATCH_PARENT, nestHeight + wHeight, true);
+        TextView textview = (TextView) contentView.findViewById(R.id.seriesdetail_pupupwindow_commentperson_tv);
+        textview.setText(textComment.getText() + "人评论");
+
+       View editSendtext=  contentView.findViewById(R.id.seriesdetail_pupupwindow_editsend_ll);
+             //editlayout.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,wHeight));
+        RelativeLayout.LayoutParams mlayParams= (RelativeLayout.LayoutParams) editSendtext.getLayoutParams();
+        mlayParams.height=wHeight;
+        editSendtext.setLayoutParams(mlayParams);
+        editSendtext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(SeriesDetail.this,LoginActivity.class);
+                startActivity(intent);
+
+
+            }
+        });
+
+
         // 设置按钮的点击事件
         View button = contentView.findViewById(R.id.seriesdetail_pupupwindow_top_ll);
         button.setOnClickListener(new View.OnClickListener() {
@@ -575,34 +604,24 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
         //评论部分
 
         final PullToRefreshExpandableListView mPullToRefreshExpandableListView = (PullToRefreshExpandableListView) contentView.findViewById(R.id.seriesdetail_pupupwindow_detail_lv);
-        ExpandableListView  mExpandableListView = mPullToRefreshExpandableListView.getRefreshableView();
+        ExpandableListView mExpandableListView = mPullToRefreshExpandableListView.getRefreshableView();
         mExpandableListView.setGroupIndicator(null);
 
 
-
         mPullToRefreshExpandableListView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);// 设置下拉刷新模式
-//        mPullToRefreshExpandableListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ExpandableListView>() {
-//            @Override
-//            public void onRefresh(PullToRefreshBase<ExpandableListView> refreshView) {
-//                mPullToRefreshExpandableListView.onRefreshComplete();
-//                mCommentPage=0;
-//              if(mCommentURL!=null){  asyncRequestComment( mCommentURL,1);}
-//
-//            }
-//        });
-
-        mPullToRefreshExpandableListView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
+        mPullToRefreshExpandableListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ExpandableListView>() {
             @Override
-            public void onLastItemVisible() {
-
-                //获取每个按钮的id 例如 电影自习室 id是47 index=1；
+            public void onRefresh(PullToRefreshBase<ExpandableListView> refreshView) {
+                mPullToRefreshExpandableListView.onRefreshComplete();
                 mCommentPage++;
-                Log.i("ddsfec", "onLastItemVisible: "+mCommentPage+"URL:"+mCommentURL);
-                if(mCommentURL!=null){     asyncRequestComment( mCommentURL,1+mCommentPage);}
+                if (mCommentURL != null) {
+                    asyncRequestComment(mCommentURL, 1 + mCommentPage);
+                }
                 mPullToRefreshExpandableListView.onRefreshComplete();
 
             }
         });
+
         mExpandableListView.setAdapter(mEXLvAdapter);
         //设置ExpandableListView点击不收缩
         mExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -615,26 +634,34 @@ public class SeriesDetail extends AppCompatActivity implements View.OnClickListe
             mExpandableListView.expandGroup(i);
         }
 
-        int[]location=new int[2];
-         view.getLocationOnScreen(location);
+        int[] location = new int[2];
+        view.getLocationOnScreen(location);
 
         popupWindow.setTouchable(true);
 //        // 设置popWindow弹出窗体可点击，这句话必须添加，并且是true
         popupWindow.setFocusable(true);
 //        // 设置popWindow的显示和消失动画
-//        window.setAnimationStyle(R.style.mypopwindow_anim_style);
-       // popupWindow.
+        Animation anim1= AnimationUtils.loadAnimation(this,R.anim.popexpanlistviewtrans);
+        Animation anim2= AnimationUtils.loadAnimation(this,R.anim.popexpanlistviewtrans);
+        editSendtext.startAnimation(anim1);
+        mExpandableListView.startAnimation(anim2);
+
+
+        // popupWindow.
 
         // 在底部显示
 //        popupWindow.showAtLocation(SeriesDetail.this.findViewById(R.id.activity_series_detail_comment_tv2),
 //                Gravity.BOTTOM, 0, 0);
+//        popupWindow.showAtLocation(view,
+//                Gravity.NO_GRAVITY, location[0], location[1]-popupWindow.getHeight());
         popupWindow.showAtLocation(view,
-                Gravity.NO_GRAVITY, location[0], location[1]-popupWindow.getHeight());
+                Gravity.NO_GRAVITY, location[0], location[1]);
+
+
+        popupWindow.setOutsideTouchable(true);
 
         //移动
         popupWindow.showAsDropDown(view);
-
-
         popupWindow.setTouchInterceptor(new View.OnTouchListener() {
 
             @Override

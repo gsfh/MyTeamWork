@@ -74,22 +74,6 @@ public class BackStageFragment extends Fragment {
         mViewPager.setAdapter(mVPAdapter);
         mTablaylout.setupWithViewPager(mViewPager);
         mTablaylout.setTabGravity(TabLayout.GRAVITY_FILL);
-//        mTablaylout.setViewPager(mViewPager);
-//        mTablaylout.setDividerColors(Color.BLUE);
-//        mTablaylout.setSelectedIndicatorColors(Color.GREEN);
-//        mTablaylout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
-//            @Override
-//            public int getIndicatorColor(int position) {
-//                return Color.RED;
-//            }
-//
-//            @Override
-//            public int getDividerColor(int position) {
-//                return Color.RED;
-//            }
-//        });
-
-
     }
 
     /**
@@ -116,7 +100,7 @@ public class BackStageFragment extends Fragment {
                     Gson gson=new Gson();
                     BackStageTitleBean beenBackStageTitle=gson.fromJson(result,BackStageTitleBean.class);
                    for (int i=0;i<beenBackStageTitle.getData().size();i++){
-                       tablist.add(beenBackStageTitle.getData().get(i).getCatename()+"   |");
+                       tablist.add(beenBackStageTitle.getData().get(i).getCatename());
                     tabmap.add(beenBackStageTitle.getData().get(i).getCateid());}
                 }
                 //初始化fragment列表

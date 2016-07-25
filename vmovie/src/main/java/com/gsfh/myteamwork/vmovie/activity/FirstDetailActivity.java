@@ -58,7 +58,7 @@ public class FirstDetailActivity extends AppCompatActivity {
         like_counts = (TextView) findViewById(R.id.first_detail_bottom_like_counts);
         share_counts = (TextView) findViewById(R.id.first_detail_bottom_share_counts);
         comment_counts = (TextView) findViewById(R.id.first_detail_bottom_comment_counts);
-        cache_btn = (TextView) findViewById(R.id.first_detail_bottom_cache);
+        //cache_btn = (TextView) findViewById(R.id.first_detail_bottom_cache);
     }
 
     private void initData() {

@@ -92,6 +92,7 @@ public class SeriesDetailitemLvAdapter extends BaseAdapter {
             hoder.duration = (TextView) convertView.findViewById(R.id.seriesdetailitem_duration_lv_im);
             hoder.updata = (TextView) convertView.findViewById(R.id.seriesdetailitem_update_lv_tv);
             hoder.imageView = (ImageView) convertView.findViewById(R.id.seriesdetailitem_lv_im);
+            hoder.playing.getBackground().setAlpha(150);
             convertView.setTag(hoder);
         } else {
             hoder = (viewHoder) convertView.getTag();
@@ -126,7 +127,7 @@ public class SeriesDetailitemLvAdapter extends BaseAdapter {
         hoder.playing.setText(playing);
         hoder.duration.setText(time);
         hoder.updata.setText(updata);
-        Picasso.with(mContext).load(mUrl).placeholder(R.mipmap.ic_launcher).into(hoder.imageView);
+        Picasso.with(mContext).load(mUrl).placeholder(R.drawable.default_error).into(hoder.imageView);
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override

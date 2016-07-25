@@ -16,5 +16,13 @@
         <attr name="bottomLineHeight"/>
         <attr name="dividerWidth"/>
     </declare-styleable>
+    <declare-styleable name="Theme">
+        <attr name="UIImageViewStyle" format="reference" />
+    </declare-styleable>
+    <declare-styleable name="UIImageView">
+        <attr name="circle" format="boolean" />
+        <attr name="radius" format="dimension" />
+    </declare-styleable>
+
 </resources>
 <!--indicator是下划线-->

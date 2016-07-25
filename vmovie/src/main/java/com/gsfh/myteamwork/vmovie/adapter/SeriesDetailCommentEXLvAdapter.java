@@ -1,6 +1,8 @@
 package com.gsfh.myteamwork.vmovie.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +14,15 @@ import android.widget.TextView;
 import com.gsfh.myteamwork.vmovie.R;
 import com.gsfh.myteamwork.vmovie.activity.SeriesDetail;
 import com.gsfh.myteamwork.vmovie.bean.CommentBean;
+import com.gsfh.myteamwork.vmovie.util.TimeEXchange;
+import com.gsfh.myteamwork.vmovie.widget.CircleImageView;
+import com.gsfh.myteamwork.vmovie.widget.CircleTransform;
+import com.gsfh.myteamwork.vmovie.widget.UIImageView;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -84,15 +93,18 @@ public class SeriesDetailCommentEXLvAdapter extends BaseExpandableListAdapter {
         }
         String name=mCommentGroupList.get(groupPosition).getUserinfo().getUsername();
         String texttime=mCommentGroupList.get(groupPosition).getAddtime();
+        long longtime=Long.valueOf(texttime);
+
         String textcontext=mCommentGroupList.get(groupPosition).getContent();
         String textcount=mCommentGroupList.get(groupPosition).getCount_approve();
-
         String mURL=mCommentGroupList.get(groupPosition).getUserinfo().getAvatar();
+
+
         holder.textname.setText(name);
-        holder.texttime.setText(texttime);
+        holder.texttime.setText(TimeEXchange.datamake(longtime)+"  "+TimeEXchange.clockmake(longtime) );
         holder.textcount.setText(textcount);
         holder.textcontext.setText(textcontext);
-        Picasso.with(mContext).load(mURL).into(holder.imageView);
+        Picasso.with(mContext).load(mURL).transform(new CircleTransform()).into(holder.imageView);
         return view;
     }
 
@@ -121,11 +133,13 @@ public class SeriesDetailCommentEXLvAdapter extends BaseExpandableListAdapter {
         String ctextcount=mCommentGroupList.get(groupPosition).getSubcomment().get(childPosition).getCount_approve();
         String mURL=mCommentGroupList.get(groupPosition).getSubcomment().get(childPosition).getUserinfo().getAvatar();
 
-        holder.ctexttime.setText(ctexttime);
+        long clongtime=Long.valueOf(ctexttime);
+
+
+        holder.ctexttime.setText(TimeEXchange.datamake(clongtime)+"  "+TimeEXchange.clockmake(clongtime));
         holder.ctextcontext.setText(ctextcontext);
         holder.ctextcount.setText(ctextcount);
-        Picasso.with(mContext).load(mURL).into(holder.cimageView);
-        ;
+        Picasso.with(mContext).load(mURL).transform(new CircleTransform()).into(holder.cimageView);
         holder.ctextname.setText(cname);
         return view;
 

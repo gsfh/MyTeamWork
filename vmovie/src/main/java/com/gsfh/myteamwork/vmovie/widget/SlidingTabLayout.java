@@ -2,6 +2,7 @@ package com.gsfh.myteamwork.vmovie.widget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 
 
 /**
+ * 重写后
  * Created by moon.zhong on 2015/3/9.
  */
 public class SlidingTabLayout extends LinearLayout {
@@ -173,7 +175,7 @@ public class SlidingTabLayout extends LinearLayout {
         /*绘制滑动的页卡*/
         canvas.drawRect(left, height - mIndicatorHeight, right, height, mIndicatorPaint);
         canvas.drawRect(0,height - mBottomLineHeight,getWidth(),height,mBottomPaint);
-        int bili=2;
+        int bili=5;
         for (int i = 0; i < getChildCount() - 0; i++) {//改了建议。divider
             View child = getChildAt(i);
             canvas.drawLine(child.getRight(), mDividerMargin*bili,
@@ -210,7 +212,8 @@ public class SlidingTabLayout extends LinearLayout {
         for (int i = 0; i < tabNameList.size(); i++) {
             TextView textView = createDefaultTabView(getContext());
             textView.setOnClickListener(tabOnClickListener);
-            textView.setText(tabNameList.get(i));
+            textView.setText("    "+tabNameList.get(i)+"    ");
+            if (i==0){textView.setSelected(true);}
             addView(textView);
         }
     }
@@ -218,8 +221,14 @@ public class SlidingTabLayout extends LinearLayout {
         @Override
         public void onClick(View v) {
             for (int i = 0; i < getChildCount(); i++) {
+                getChildAt(i).setSelected(false);
+            }
+
+            for (int i = 0; i < getChildCount(); i++) {
+
                 if (v == getChildAt(i)) {
                   mSlidingTabClickListener.giveYouTheTabName(tabNameList.get(i),i);
+                    v.setSelected(true);
 
                     return;
                 }
@@ -235,14 +244,21 @@ public class SlidingTabLayout extends LinearLayout {
      */
     private TextView createDefaultTabView(Context context) {
         TextView textView = new TextView(context);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, DEFAULT_TEXT_SIZE);
+       // textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, DEFAULT_TEXT_SIZE);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
         textView.setGravity(Gravity.CENTER);
-        LayoutParams layoutParams = new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
+        LayoutParams layoutParams = new LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
         textView.setLayoutParams(layoutParams);
         int padding = (int) (DEFAULT_TEXT_PADDING * getResources().getDisplayMetrics().density);
-        //   textView.setPadding(padding, padding, padding, padding);
-        textView.setPadding(10,10,10,5);
+       //   textView.setPadding(padding, padding, padding, padding);
+       textView.setPadding(10,17,10,5);
+
         textView.setLines(1);
+
+
+        ColorStateList color=getResources().getColorStateList(R.color.slt_text_view);
+        textView.setTextColor(color);
+
 
 
         textView.setAllCaps(true);

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by admin on 2016/7/13.
  */
-public class BackStageVPAdapter extends FragmentPagerAdapter {
+public class BackStageVPAdapter extends FragmentPagerAdapter  {
     private List<Fragment> fragmentList;
     private ArrayList<String> titleDatas;
     public BackStageVPAdapter(ArrayList<String> datas , List<Fragment> fragmentList, FragmentManager fm ){

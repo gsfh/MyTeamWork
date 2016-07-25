@@ -41,12 +41,16 @@
             android:src="@drawable/home_search" />
 
     </LinearLayout>
-
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_container_series"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10">
     <ListView
         android:id="@+id/series_show_lv2"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10"
+        android:layout_height="match_parent"
         android:divider="@null" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

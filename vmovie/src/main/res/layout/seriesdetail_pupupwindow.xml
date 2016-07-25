@@ -1,48 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/colorwrite"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/seriesdetail_pupupwindow_top_ll"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
+
         <TextView
             android:id="@+id/seriesdetail_pupupwindow_commentperson_tv"
             android:layout_width="0dp"
-            android:layout_weight="7"
             android:layout_height="match_parent"
-            android:text="44人评论"
+            android:layout_weight="7"
             android:gravity="center"
+            android:lines="1"
             android:paddingLeft="20dp"
             android:paddingRight="230dp"
-            android:textSize="20sp"
+            android:text="44人评论"
+            android:textSize="15sp"
 
             />
+
         <ImageView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            android:src="@drawable/share_dialog_close_icon"
-            android:padding="15dp"
             android:layout_gravity="center"
-            />
+            android:layout_weight="1"
+            android:padding="17dp"
+            android:src="@drawable/share_dialog_close_icon" />
     </LinearLayout>
-
     <com.handmark.pulltorefresh.library.PullToRefreshExpandableListView
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
+        android:id="@+id/seriesdetail_pupupwindow_detail_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@id/seriesdetail_pupupwindow_top_ll"
-    android:id="@+id/seriesdetail_pupupwindow_detail_lv"
+
         android:divider="@null"
         android:scrollbars="none"
+        android:layout_above="@+id/seriesdetail_pupupwindow_editsend_ll">
+    </com.handmark.pulltorefresh.library.PullToRefreshExpandableListView>
+    <LinearLayout
+        android:id="@+id/seriesdetail_pupupwindow_editsend_ll"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="bottom"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:clickable="true"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+       >
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="我来说两句"
 
-        >
-
-</com.handmark.pulltorefresh.library.PullToRefreshExpandableListView>
+            android:paddingLeft="20dp"
+            android:textSize="14sp"
+            android:textCursorDrawable="@null"
+            android:background="@null"
+            android:lines="1"/>
+<TextView
+    android:layout_width="80dp"
+    android:layout_height="match_parent"
+    android:text="发送"
+    android:gravity="center"
+    android:textColor="@color/colorwrite"
+    android:background="@color/colormiddlexgary"/>
+    </LinearLayout>
 
 
 

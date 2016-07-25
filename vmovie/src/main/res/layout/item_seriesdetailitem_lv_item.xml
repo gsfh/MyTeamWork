@@ -21,6 +21,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textColor="@color/colorwrite"
+            android:background="@color/colorblack"
             android:visibility="invisible"
             android:text="正在播放"/>
         <TextView

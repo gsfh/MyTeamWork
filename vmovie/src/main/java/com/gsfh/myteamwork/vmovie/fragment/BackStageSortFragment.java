@@ -177,7 +177,7 @@ public class BackStageSortFragment extends Fragment {
      */
     private void initView(View view) {
         pullToRefreshListView = (PullToRefreshListView) view.findViewById(R.id.backstagesort_show_lv);
-        //  mListView= (ListView) view.findViewById(R.id.backstagesort_show_lv);
+        //  mListView= (ListView) view.findViewById(R.id.backstagesort_shotenw_lv);
         mListView = pullToRefreshListView.getRefreshableView();
     }
 
